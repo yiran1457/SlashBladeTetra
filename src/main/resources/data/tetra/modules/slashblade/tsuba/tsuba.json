@@ -1,0 +1,48 @@
+{
+  "type": "slashbladetetra:blade",
+  "slots": [
+    "slashblade/tsuba"
+  ],
+  "improvements": [
+    "tetra:slashblade/shared/"
+  ],
+  "variants": [
+    {
+      "materials": [
+        "tetra:metal/",
+        "tetra:wood/"
+      ],
+      "aspects": {
+        "slashblade": 2
+      },
+      "key": "tsuba/",
+      "extract": {
+        "primaryAttributes": {
+          "generic.attack_damage": -0.4
+        },
+        "secondaryAttributes": {
+          "generic.attack_damage": 0.3
+        },
+        "tertiaryAttributes": {
+          "generic.attack_damage":0.4
+        },
+        "primaryEffects": {
+          "RefineStrengthening": 0.4
+        },
+        "secondaryEffects":{
+          "RefineStrengthening": -0.2
+        },
+        "tertiaryEffects": {
+          "RefineStrengthening":2
+        },
+        "durability": 0.5,
+        "magicCapacity": 4.3,
+        "glyph": {
+          "textureX": 48,
+          "textureY": 0,
+          "textureLocation": "slashbladetetra:textures/gui/texture.png"
+        }
+      }
+    }
+  ]
+}

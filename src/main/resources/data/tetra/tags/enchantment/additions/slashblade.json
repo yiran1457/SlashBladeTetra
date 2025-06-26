@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:fire_protection",
+    "minecraft:feather_falling",
+    "minecraft:thorns",
+    "minecraft:soul_speed",
+    "minecraft:power"
+  ]
+}

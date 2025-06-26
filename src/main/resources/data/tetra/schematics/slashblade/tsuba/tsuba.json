@@ -1,0 +1,25 @@
+{
+    "replace": true,
+    "slots": [
+        "slashblade/tsuba"
+    ],
+    "materialSlotCount": 1,
+    "displayType": "major",
+    "glyph": {
+        "textureX": 48,
+        "textureY": 0,
+        "textureLocation": "slashbladetetra:textures/gui/texture.png"
+    },
+    "outcomes": [
+        {
+            "materials": [
+                "tetra:metal/",
+                "tetra:wood/"
+            ],
+            "countOffset" :-1,
+            "countFactor" :2.3,
+            "moduleKey": "slashblade/tsuba/tsuba",
+            "moduleVariant": "tsuba/"
+        }
+    ]
+}

@@ -1,0 +1,90 @@
+[
+  {
+    "key": "settled",
+    "level": 1,
+    "effects": {
+      "RefineStrengthening": 1
+    }
+  },
+  {
+    "key": "settled",
+    "level": 2,
+    "effects": {
+      "RefineStrengthening": 2
+    }
+  },
+  {
+    "key": "settled",
+    "level": 3,
+    "effects": {
+      "RefineStrengthening": 3
+    }
+  },
+  {
+    "key": "settled",
+    "level": 4,
+    "effects": {
+      "RefineStrengthening": 4
+    }
+  },
+  {
+    "key": "settled",
+    "level": 5,
+    "effects": {
+      "RefineStrengthening": 5
+    }
+  },
+  {
+    "key": "settled",
+    "level": 6,
+    "effects": {
+      "RefineStrengthening": 6
+    }
+  },
+  {
+    "key": "settled",
+    "level": 7,
+    "effects": {
+      "RefineStrengthening": 7
+    }
+  },
+  {
+    "key": "settled",
+    "level": 8,
+    "effects": {
+      "RefineStrengthening": 8
+    }
+  },
+  {
+    "key": "settled",
+    "level": 9,
+    "effects": {
+      "RefineStrengthening": 9
+    }
+  },
+  {
+    "key": "settled",
+    "level": 10,
+    "effects": {
+      "RefineStrengthening": 10
+    }
+  },
+  {
+    "key": "settled",
+    "level": 11,
+    "effects": {
+      "RefineStrengthening": 11
+    }
+  },
+  {
+    "key": "settled",
+    "level": 12,
+    "effects": {
+      "RefineStrengthening": 12
+    }
+  },
+  {
+    "key": "arrested",
+    "textured": false
+  }
+]

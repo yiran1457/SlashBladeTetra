@@ -1,0 +1,78 @@
+{
+  "tetra.holo.craft.slashblade": "拔刀剑",
+  "tetra.slot.slashblade/handle": "刀柄",
+  "tetra.slot.slashblade/blade": "刀条",
+  "tetra.slot.slashblade/tsuba": "刀镡",
+  "tetra.slot.slashblade/scabbard": "刀鞘",
+  "tetra.slot.slashblade/soul": "刀魂",
+
+  "tetra.stats.RefineStrengthening": "刀魂增幅",
+  "tetra.stats.RefineStrengthening.tooltip": "拔刀锻造提供的伤害上限为§e%s§r点 ",
+  "tetra.stats.RefineStrengthening.tooltip_extended": "从tetra获取§e%s§r。\\n拔刀基础值§e%s§r。",
+  "tetra.stats.KillCount": "杀敌数",
+  "tetra.stats.KillCount.tooltip": "这把刀击杀了§e%s§r个生物",
+  "tetra.stats.ProudSoulCount": "耀魂数",
+  "tetra.stats.ProudSoulCount.tooltip": "这把刀击拥有§e%s§r耀魂值",
+  "tetra.stats.RefineCount": "锻造数",
+  "tetra.stats.RefineCount.tooltip": "这把刀拥有§e%s§r锻造数",
+
+  "tetra.improvement.soul_infusion.name": "注魂",
+  "tetra.improvement.soul_infusion.description": "向部件注入耀魂的力量，获取更高的极限",
+
+  "tetra/schematic/slashblade/shared/hone/soul_infusion_1.name": "注魂 I",
+  "tetra/schematic/slashblade/shared/hone/soul_infusion_1.slot1": "注魂材料",
+  "tetra/schematic/slashblade/shared/hone/soul_infusion_1.description": "使用§e破碎的耀魂§r进行注魂",
+
+  "tetra/schematic/slashblade/shared/hone/soul_infusion_2.name": "注魂 II",
+  "tetra/schematic/slashblade/shared/hone/soul_infusion_2.slot1": "注魂材料",
+  "tetra/schematic/slashblade/shared/hone/soul_infusion_2.description": "使用§e耀魂碎片§r进行注魂",
+
+  "tetra/schematic/slashblade/shared/hone/soul_infusion_3.name": "注魂 II",
+  "tetra/schematic/slashblade/shared/hone/soul_infusion_3.slot1": "注魂材料",
+  "tetra/schematic/slashblade/shared/hone/soul_infusion_3.description": "使用§e耀魂铁锭§r进行注魂",
+
+  "tetra/schematic/slashblade/shared/hone/soul_infusion_4.name": "注魂 IV",
+  "tetra/schematic/slashblade/shared/hone/soul_infusion_4.slot1": "注魂材料",
+  "tetra/schematic/slashblade/shared/hone/soul_infusion_4.description": "使用§e耀魂宝珠§r进行注魂",
+
+  "tetra/schematic/slashblade/shared/hone/soul_infusion_5.name": "注魂 V",
+  "tetra/schematic/slashblade/shared/hone/soul_infusion_5.slot1": "注魂材料",
+  "tetra/schematic/slashblade/shared/hone/soul_infusion_5.description": "使用§e耀魂结晶§r进行注魂",
+
+  "tetra/schematic/slashblade/shared/hone/soul_infusion_6.name": "注魂 VI",
+  "tetra/schematic/slashblade/shared/hone/soul_infusion_6.slot1": "注魂材料",
+  "tetra/schematic/slashblade/shared/hone/soul_infusion_6.description": "使用§e耀偏方三八面魂§r进行注魂\n这是最高等级的注魂",
+
+  "tetra.module.slashblade/handle/handle.material_name": "%s 刀柄",
+  "tetra.module.slashblade/handle/handle.description": "SlashBladeTetra的预设刀柄",
+  "tetra/schematic/slashblade/handle/handle.name": "基础刀柄",
+  "tetra/schematic/slashblade/handle/handle.description": "使用材料制作刀柄",
+  "tetra/schematic/slashblade/handle/handle.slot1": "刀柄材料",
+
+  "tetra.module.slashblade/blade/blade.material_name": "%s 刀条",
+  "tetra.module.slashblade/blade/blade.description": "SlashBladeTetra的预设刀条",
+  "tetra.module.slashblade/blade/blade.prefix": "无铭 「 %s 」",
+  "tetra/schematic/slashblade/blade/blade.name": "基础刀条",
+  "tetra/schematic/slashblade/blade/blade.description": "使用材料制作刀条",
+  "tetra/schematic/slashblade/blade/blade.slot1": "刀条材料",
+
+  "tetra.module.slashblade/tsuba/tsuba.material_name": "%s 刀镡",
+  "tetra.module.slashblade/tsuba/tsuba.description": "SlashBladeTetra的预设刀镡",
+  "tetra/schematic/slashblade/tsuba/tsuba.name": "基础刀镡",
+  "tetra/schematic/slashblade/tsuba/tsuba.description": "使用材料制作刀镡",
+  "tetra/schematic/slashblade/tsuba/tsuba.slot1": "刀镡材料",
+
+  "tetra.module.slashblade/scabbard/scabbard.material_name": "%s 刀鞘",
+  "tetra.module.slashblade/scabbard/scabbard.description": "SlashBladeTetra的预设刀鞘",
+  "tetra/schematic/slashblade/scabbard/scabbard.name": "基础刀鞘",
+  "tetra/schematic/slashblade/scabbard/scabbard.description": "使用材料制作刀鞘",
+  "tetra/schematic/slashblade/scabbard/scabbard.slot1": "刀鞘材料",
+
+  "tetra.module.slashblade/soul/sa.material_name": "%s 刀魂",
+  "tetra.module.slashblade/soul/sa.description": "SlashBladeTetra的预设刀魂\n妖化的拔刀剑提供的额外槽位",
+  "tetra/schematic/slashblade/soul/sa.name": "基础刀魂",
+  "tetra/schematic/slashblade/soul/sa.description": "使用材料注入刀魂",
+  "tetra/schematic/slashblade/soul/sa.slot1": "附魂材料",
+
+  "tetra.variant_category.proudsoul_trapezohedron.label": "aaa"
+}

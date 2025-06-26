@@ -1,0 +1,26 @@
+[
+  {
+    "predicate": {
+      "tag": "slashbladetetra:replacement"
+    },
+    "item": "slashbladetetra:slashblade",
+    "modules": {
+      "slashblade/handle": [
+        "slashblade/handle/handle",
+        "handle/iron"
+      ],
+      "slashblade/blade": [
+        "slashblade/blade/blade",
+        "blade/iron"
+      ],
+      "slashblade/tsuba": [
+        "slashblade/tsuba/tsuba",
+        "tsuba/gold"
+      ],
+      "slashblade/scabbard": [
+        "slashblade/scabbard/scabbard",
+        "scabbard/oak"
+      ]
+    }
+  }
+]

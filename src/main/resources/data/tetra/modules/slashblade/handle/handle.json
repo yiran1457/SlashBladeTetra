@@ -1,0 +1,48 @@
+{
+  "type": "slashbladetetra:blade",
+  "slots": [
+    "slashblade/handle"
+  ],
+  "improvements": [
+    "tetra:slashblade/shared/"
+  ],
+  "variants": [
+    {
+      "materials": [
+        "tetra:metal/",
+        "tetra:wood/"
+      ],
+      "aspects": {
+        "slashblade": 2
+      },
+      "key": "handle/",
+      "extract": {
+        "primaryAttributes": {
+          "generic.attack_damage": 0.5
+        },
+        "secondaryAttributes": {
+          "generic.attack_damage": -0.2
+        },
+        "tertiaryAttributes": {
+          "generic.attack_damage": 1.2
+        },
+        "primaryEffects": {
+          "RefineStrengthening": 0.4
+        },
+        "secondaryEffects":{
+          "RefineStrengthening": 2.1
+        },
+        "tertiaryEffects": {
+          "RefineStrengthening": -0.5
+        },
+        "durability": 0.5,
+        "magicCapacity": 4.3,
+        "glyph": {
+          "textureX": 0,
+          "textureY": 0,
+          "textureLocation": "slashbladetetra:textures/gui/texture.png"
+        }
+      }
+    }
+  ]
+}

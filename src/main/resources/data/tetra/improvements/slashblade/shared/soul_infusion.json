@@ -1,0 +1,44 @@
+[
+  {
+    "key": "soul_infusion",
+    "level": 1,
+    "effects": {
+      "RefineStrengthening":1
+    }
+  },
+  {
+    "key": "soul_infusion",
+    "level": 2,
+    "effects": {
+      "RefineStrengthening":2
+    }
+  },
+  {
+    "key": "soul_infusion",
+    "level": 3,
+    "effects": {
+      "RefineStrengthening":4
+    }
+  },
+  {
+    "key": "soul_infusion",
+    "level": 4,
+    "effects": {
+      "RefineStrengthening":7
+    }
+  },
+  {
+    "key": "soul_infusion",
+    "level": 5,
+    "effects": {
+      "RefineStrengthening":11
+    }
+  },
+  {
+    "key": "soul_infusion",
+    "level": 6,
+    "effects": {
+      "RefineStrengthening":16
+    }
+  }
+]

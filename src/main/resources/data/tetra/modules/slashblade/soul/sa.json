@@ -1,0 +1,25 @@
+{
+  "type": "slashbladetetra:blade",
+  "slots": [
+    "slashblade/soul"
+  ],
+  "improvements": [
+    "tetra:slashblade/shared/"
+  ],
+  "variants": [
+    {
+      "key": "sa/slashblade:sakura_end",
+      "attributes": {
+        "forge:entity_reach": 3
+      },
+      "effects": {
+        "RefineStrengthening": 16
+      },
+      "glyph": {
+        "textureX": 64,
+        "textureY": 0,
+        "textureLocation": "slashbladetetra:textures/gui/texture.png"
+      }
+    }
+  ]
+}

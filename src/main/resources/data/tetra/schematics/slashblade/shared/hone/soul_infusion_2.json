@@ -1,0 +1,52 @@
+{
+  "replace": true,
+  "slots": [
+    "slashblade/handle",
+    "slashblade/blade",
+    "slashblade/tsuba",
+    "slashblade/scabbard"
+  ],
+  "materialSlotCount": 1,
+  "materialRevealSlot": 0,
+  "hone": true,
+  "rarity": "hone",
+  "displayType": "major",
+  "glyph": {
+    "textureX": 112,
+    "textureY": 240
+  },
+  "requirement": {
+    "type": "tetra:and",
+    "requirements": [
+      {
+        "type": "tetra:improvement",
+        "improvement": "soul_infusion",
+        "level": 1
+      },
+      {
+        "type": "tetra:improvement",
+        "improvement": "settled",
+        "level": {
+          "min": 2
+        }
+      }
+    ]
+  },
+  "outcomes": [
+    {
+      "material": {
+        "items": [
+          "slashblade:proudsoul"
+        ],
+        "count": 9
+      },
+      "requiredTools": {
+        "hammer_dig": 2
+      },
+      "experienceCost": 3,
+      "improvements": {
+        "soul_infusion": 2
+      }
+    }
+  ]
+}

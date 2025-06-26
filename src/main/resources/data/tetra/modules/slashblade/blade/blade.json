@@ -1,0 +1,55 @@
+{
+  "type": "slashbladetetra:blade",
+  "slots": [
+    "slashblade/blade"
+  ],
+  "improvements": [
+    "tetra:slashblade/shared/"
+  ],
+  "variants": [
+    {
+      "materials": [
+        "tetra:metal/",
+        "tetra:wood/",
+        "tetra:gem/"
+      ],
+      "aspects": {
+        "slashblade": 2
+      },
+      "key": "blade/",
+      "effects": {
+        "intuit": 1
+      },
+      "attributes": {
+        "forge:entity_reach":2.5
+      },
+      "extract": {
+        "primaryAttributes": {
+          "generic.attack_damage": 2
+        },
+        "secondaryAttributes": {
+          "generic.attack_damage": 0.3
+        },
+        "tertiaryAttributes": {
+          "generic.attack_damage": -0.4
+        },
+        "primaryEffects": {
+          "RefineStrengthening": -0.7
+        },
+        "secondaryEffects":{
+          "RefineStrengthening": 1.2
+        },
+        "tertiaryEffects": {
+          "RefineStrengthening": 3.1
+        },
+        "durability": 0.5,
+        "magicCapacity": 4.3,
+        "glyph": {
+          "textureX": 16,
+          "textureY": 0,
+          "textureLocation": "slashbladetetra:textures/gui/texture.png"
+        }
+      }
+    }
+  ]
+}

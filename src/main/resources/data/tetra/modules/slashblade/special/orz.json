@@ -1,0 +1,24 @@
+{
+  "type": "slashbladetetra:blade",
+  "slots": [
+    "slashblade/special"
+  ],
+  "improvements": [
+    "tetra:slashblade/shared/"
+  ],
+  "variants": [
+    {
+      "materials": [
+      ],
+      "key": "orz/",
+      "extract": {
+        "durability": 0.1,
+        "glyph": {
+          "textureX": 48,
+          "textureY": 0,
+          "textureLocation": "slashbladetetra:textures/gui/texture.png"
+        }
+      }
+    }
+  ]
+}

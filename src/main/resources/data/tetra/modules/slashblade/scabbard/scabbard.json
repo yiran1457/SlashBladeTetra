@@ -1,0 +1,51 @@
+{
+  "type": "slashbladetetra:blade",
+  "slots": [
+    "slashblade/scabbard"
+  ],
+  "improvements": [
+    "tetra:slashblade/shared/"
+  ],
+  "variants": [
+    {
+      "materials": [
+        "tetra:fibre/",
+        "tetra:skin/",
+        "tetra:fabric/",
+        "tetra:metal/",
+        "tetra:wood/"
+      ],
+      "aspects": {
+        "slashblade": 2
+      },
+      "key": "scabbard/",
+      "extract": {
+        "primaryAttributes": {
+          "generic.attack_damage": 2.1
+        },
+        "secondaryAttributes": {
+          "generic.attack_damage": 0
+        },
+        "tertiaryAttributes": {
+          "generic.attack_damage": -0.5
+        },
+        "primaryEffects": {
+          "RefineStrengthening": 0
+        },
+        "secondaryEffects":{
+          "RefineStrengthening": -0.3
+        },
+        "tertiaryEffects": {
+          "RefineStrengthening": 1.3
+        },
+        "durability": 0.5,
+        "magicCapacity": 4.3,
+        "glyph": {
+          "textureX": 80,
+          "textureY": 0,
+          "textureLocation": "slashbladetetra:textures/gui/texture.png"
+        }
+      }
+    }
+  ]
+}
