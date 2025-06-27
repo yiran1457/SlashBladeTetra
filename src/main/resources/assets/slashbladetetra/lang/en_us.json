@@ -1,0 +1,76 @@
+{
+  "tetra.holo.craft.slashblade": "SlashBlade",
+  "tetra.slot.slashblade/handle": "Handle",
+  "tetra.slot.slashblade/blade": "Blade",
+  "tetra.slot.slashblade/tsuba": "Tsuba",
+  "tetra.slot.slashblade/scabbard": "Scabbard",
+  "tetra.slot.slashblade/soul": "Soul",
+
+  "tetra.stats.RefineStrengthening": "Refine Amplification",
+  "tetra.stats.RefineStrengthening.tooltip": "SlashBlade refining grants up to §e%s§r damage",
+  "tetra.stats.RefineStrengthening.tooltip_extended": "§e%s§r from tetra.\\nBase value: §e%s§r.",
+  "tetra.stats.KillCount": "Kill Count",
+  "tetra.stats.KillCount.tooltip": "This blade has slain §e%s§r creatures",
+  "tetra.stats.ProudSoulCount": "Proud Souls",
+  "tetra.stats.ProudSoulCount.tooltip": "This blade contains §e%s§r Proud Souls",
+  "tetra.stats.RefineCount": "Refinement Count",
+  "tetra.stats.RefineCount.tooltip": "This blade has §e%s§r refinements",
+
+  "tetra.improvement.soul_infusion.name": "Soul Infusion",
+  "tetra.improvement.soul_infusion.description": "Infuse parts with Proud Souls to unlock greater potential",
+
+  "tetra/schematic/slashblade/shared/hone/soul_infusion_1.name": "Soul Infusion I",
+  "tetra/schematic/slashblade/shared/hone/soul_infusion_1.slot1": "Infusion Material",
+  "tetra/schematic/slashblade/shared/hone/soul_infusion_1.description": "Infuse using §eBroken Proud Souls§r",
+
+  "tetra/schematic/slashblade/shared/hone/soul_infusion_2.name": "Soul Infusion II",
+  "tetra/schematic/slashblade/shared/hone/soul_infusion_2.slot1": "Infusion Material",
+  "tetra/schematic/slashblade/shared/hone/soul_infusion_2.description": "Infuse using §eProud Soul Fragments§r",
+
+  "tetra/schematic/slashblade/shared/hone/soul_infusion_3.name": "Soul Infusion III",
+  "tetra/schematic/slashblade/shared/hone/soul_infusion_3.slot1": "Infusion Material",
+  "tetra/schematic/slashblade/shared/hone/soul_infusion_3.description": "Infuse using §eProud Soul Ingots§r",
+
+  "tetra/schematic/slashblade/shared/hone/soul_infusion_4.name": "Soul Infusion IV",
+  "tetra/schematic/slashblade/shared/hone/soul_infusion_4.slot1": "Infusion Material",
+  "tetra/schematic/slashblade/shared/hone/soul_infusion_4.description": "Infuse using §eProud Soul Pearls§r",
+
+  "tetra/schematic/slashblade/shared/hone/soul_infusion_5.name": "Soul Infusion V",
+  "tetra/schematic/slashblade/shared/hone/soul_infusion_5.slot1": "Infusion Material",
+  "tetra/schematic/slashblade/shared/hone/soul_infusion_5.description": "Infuse using §eProud Soul Crystals§r",
+
+  "tetra/schematic/slashblade/shared/hone/soul_infusion_6.name": "Soul Infusion VI",
+  "tetra/schematic/slashblade/shared/hone/soul_infusion_6.slot1": "Infusion Material",
+  "tetra/schematic/slashblade/shared/hone/soul_infusion_6.description": "Infuse using §eProud Trapezohedron Souls§r\nHighest infusion level achievable",
+
+  "tetra.module.slashblade/handle/handle.material_name": "%s Handle",
+  "tetra.module.slashblade/handle/handle.description": "Default handle for SlashBladeTetra",
+  "tetra/schematic/slashblade/handle/handle.name": "Basic Handle",
+  "tetra/schematic/slashblade/handle/handle.description": "Craft a handle using materials",
+  "tetra/schematic/slashblade/handle/handle.slot1": "Handle Material",
+
+  "tetra.module.slashblade/blade/blade.material_name": "%s Blade",
+  "tetra.module.slashblade/blade/blade.description": "Default blade for SlashBladeTetra",
+  "tetra.module.slashblade/blade/blade.prefix": "Nameless 「 %s 」",
+  "tetra/schematic/slashblade/blade/blade.name": "Basic Blade",
+  "tetra/schematic/slashblade/blade/blade.description": "Craft a blade using materials",
+  "tetra/schematic/slashblade/blade/blade.slot1": "Blade Material",
+
+  "tetra.module.slashblade/tsuba/tsuba.material_name": "%s Tsuba",
+  "tetra.module.slashblade/tsuba/tsuba.description": "Default tsuba for SlashBladeTetra",
+  "tetra/schematic/slashblade/tsuba/tsuba.name": "Basic Tsuba",
+  "tetra/schematic/slashblade/tsuba/tsuba.description": "Craft a tsuba using materials",
+  "tetra/schematic/slashblade/tsuba/tsuba.slot1": "Tsuba Material",
+
+  "tetra.module.slashblade/scabbard/scabbard.material_name": "%s Scabbard",
+  "tetra.module.slashblade/scabbard/scabbard.description": "Default scabbard for SlashBladeTetra",
+  "tetra/schematic/slashblade/scabbard/scabbard.name": "Basic Scabbard",
+  "tetra/schematic/slashblade/scabbard/scabbard.description": "Craft a scabbard using materials",
+  "tetra/schematic/slashblade/scabbard/scabbard.slot1": "Scabbard Material",
+
+  "tetra.module.sa": "Blade Soul「 %s 」",
+  "tetra.module.slashblade/soul/sa.description": "Default soul for SlashBladeTetra\nAdditional slot provided by awakened SlashBlades",
+  "tetra/schematic/slashblade/soul/sa.name": "Basic Blade Soul",
+  "tetra/schematic/slashblade/soul/sa.description": "Infuse materials to awaken blade soul",
+  "tetra/schematic/slashblade/soul/sa.slot1": "Soul Material"
+}

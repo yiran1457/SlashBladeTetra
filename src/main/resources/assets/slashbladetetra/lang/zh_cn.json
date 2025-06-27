@@ -68,11 +68,10 @@
   "tetra/schematic/slashblade/scabbard/scabbard.description": "使用材料制作刀鞘",
   "tetra/schematic/slashblade/scabbard/scabbard.slot1": "刀鞘材料",
 
-  "tetra.module.slashblade/soul/sa.material_name": "%s 刀魂",
+  "tetra.module.sa": "刀魂「 %s 」",
   "tetra.module.slashblade/soul/sa.description": "SlashBladeTetra的预设刀魂\n妖化的拔刀剑提供的额外槽位",
   "tetra/schematic/slashblade/soul/sa.name": "基础刀魂",
   "tetra/schematic/slashblade/soul/sa.description": "使用材料注入刀魂",
   "tetra/schematic/slashblade/soul/sa.slot1": "附魂材料",
 
-  "tetra.variant_category.proudsoul_trapezohedron.label": "aaa"
 }
