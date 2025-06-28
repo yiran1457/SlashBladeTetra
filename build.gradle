@@ -121,6 +121,9 @@ dependencies {
     implementation fg.deobf("blank:ModernKubeEvent-2001:1.0.0")
     implementation fg.deobf("blank:SlashBladeResharped-1.20.1:1.2.35")
 
+
+    implementation fg.deobf("blank:cialloblade-1.0.1:test")
+
     // annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
     // For more info:
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html

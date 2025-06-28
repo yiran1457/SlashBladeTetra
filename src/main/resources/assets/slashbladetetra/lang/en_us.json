@@ -72,5 +72,13 @@
   "tetra.module.slashblade/soul/sa.description": "Default soul for SlashBladeTetra\nAdditional slot provided by awakened SlashBlades",
   "tetra/schematic/slashblade/soul/sa.name": "Basic Blade Soul",
   "tetra/schematic/slashblade/soul/sa.description": "Infuse materials to awaken blade soul",
-  "tetra/schematic/slashblade/soul/sa.slot1": "Soul Material"
+  "tetra/schematic/slashblade/soul/sa.slot1": "Soul Material",
+
+  "sbtetra.stats.limit_damage": "(SlashBlade) Limit Damage",
+  "sbtetra.stats.refine": "(SlashBlade) Refine Damage",
+
+  "tetra/schematic/ciallo.name": "Ciallo",
+  "tetra/schematic/ciallo.description": "Adds the 'Ciallo' sound effect to your SlashBlade",
+  "tetra/schematic/unciallo.name": "UnCiallo",
+  "tetra/schematic/unciallo.description": "Removes the 'Ciallo' sound effect from your SlashBlade"
 }

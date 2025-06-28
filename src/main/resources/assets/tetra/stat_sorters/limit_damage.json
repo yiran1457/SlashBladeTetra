@@ -1,0 +1,23 @@
+{
+  "type": "tetra:default",
+  "key": "sbtetra.stats.limit_damage",
+  "stat": {
+    "type": "tetra:sum",
+    "stats": [
+      {
+        "type": "tetra:effect_level",
+        "effect": "RefineStrengthening"
+      },
+      {
+        "type": "tetra:attribute",
+        "attribute": "minecraft:generic.attack_damage",
+        "ignoreBase": true,
+        "ignoreBonuses": false
+      }
+    ]
+  },
+  "format": {
+    "type": "tetra:basic",
+    "format": "single_decimal"
+  }
+}

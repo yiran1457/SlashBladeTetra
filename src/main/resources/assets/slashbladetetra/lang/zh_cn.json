@@ -72,6 +72,14 @@
   "tetra.module.slashblade/soul/sa.description": "SlashBladeTetra的预设刀魂\n妖化的拔刀剑提供的额外槽位",
   "tetra/schematic/slashblade/soul/sa.name": "基础刀魂",
   "tetra/schematic/slashblade/soul/sa.description": "使用材料注入刀魂",
-  "tetra/schematic/slashblade/soul/sa.slot1": "附魂材料"
+  "tetra/schematic/slashblade/soul/sa.slot1": "附魂材料",
+
+  "sbtetra.stats.limit_damage": "(拔刀)极限伤害",
+  "sbtetra.stats.refine": "(拔刀)锻造伤害",
+
+  "tetra/schematic/ciallo.name": "Ciallo",
+  "tetra/schematic/ciallo.description": "将「 Ciallo 」SE加入你的拔刀",
+  "tetra/schematic/unciallo.name": "UnCiallo",
+  "tetra/schematic/unciallo.description": "将「 Ciallo 」SE从你的拔刀移除"
 
 }

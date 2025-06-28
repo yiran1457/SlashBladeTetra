@@ -1,0 +1,12 @@
+{
+  "type": "tetra:default",
+  "key": "sbtetra.stats.refine",
+  "stat": {
+    "type": "tetra:effect_level",
+    "effect": "RefineStrengthening"
+  },
+  "format": {
+    "type": "tetra:basic",
+    "format": "single_decimal"
+  }
+}

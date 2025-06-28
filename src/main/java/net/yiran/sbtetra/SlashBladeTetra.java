@@ -16,6 +16,7 @@ import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+import net.yiran.sbtetra.compat.CompatHandler;
 import net.yiran.sbtetra.item.SlashBladeModularItem;
 import net.yiran.sbtetra.module.SlashBladeModule;
 import net.yiran.sbtetra.module.SlashBladeSoulRegistry;
@@ -44,7 +45,7 @@ public class SlashBladeTetra {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         ITEMS.register(modEventBus);
-
+        CompatHandler.init();
         commonInit(modEventBus);
         if (FMLEnvironment.dist.isClient()) {
             clientInit(modEventBus);
@@ -52,18 +53,22 @@ public class SlashBladeTetra {
     }
 
     public static void clientInit(IEventBus bus) {
+        bus.addListener(CompatHandler::clientSetup);
+
         bus.addListener(SlashBladeClientHandler::doClientStuff);
         bus.addListener(SlashBladeClientHandler::Baked);
         bus.addListener(SlashBladeClientHandler::buildContents);
     }
 
     public static void commonInit(IEventBus bus) {
+        bus.addListener(CompatHandler::setup);
+
         bus.addListener(SlashBladeTetra::onCommonSetup);
     }
 
-    public static void onCommonSetup(FMLCommonSetupEvent event){
+    public static void onCommonSetup(FMLCommonSetupEvent event) {
 
-        TetraEnchantmentHelper.registerMapping(ItemAspect.get("slashblade"), new TetraEnchantmentHelper.EnchantmentRules("additions/slashblade", "exclusions/slashblade",EnchantmentCategory.WEAPON,EnchantmentCategory.BREAKABLE)  );
+        TetraEnchantmentHelper.registerMapping(ItemAspect.get("slashblade"), new TetraEnchantmentHelper.EnchantmentRules("additions/slashblade", "exclusions/slashblade", EnchantmentCategory.WEAPON, EnchantmentCategory.BREAKABLE));
 
         ModuleRegistry moduleRegistry = ModuleRegistry.instance;
         moduleRegistry.registerModuleType(new ResourceLocation("slashbladetetra", "blade"), SlashBladeModule::new);
@@ -74,7 +79,8 @@ public class SlashBladeTetra {
     }
 
     public static ItemStack replacementHook(ItemStack itemStack, ItemStack replaceItemStack) {
-        if (!(replaceItemStack.getItem() instanceof SlashBladeModularItem slashBladeModularItem)) return replaceItemStack;
+        if (!(replaceItemStack.getItem() instanceof SlashBladeModularItem slashBladeModularItem))
+            return replaceItemStack;
         replaceItemStack.getOrCreateTag().put("bladeState", itemStack.getTag().getCompound("bladeState").copy());
         replaceItemStack.getCapability(BLADESTATE).map(s -> {
             s.deserializeNBT(itemStack.capNBT.copy().getCompound("Parent"));
