@@ -5,7 +5,6 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.collect.Multimap;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import mods.flammpfeil.slashblade.item.SwordType;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -19,7 +18,6 @@ import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.gui.GuiModuleOffsets;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.ItemModuleMajor;
-import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.SchematicRegistry;
 import se.mickelus.tetra.module.data.EffectData;
 import se.mickelus.tetra.module.data.ItemProperties;
@@ -80,7 +78,7 @@ public abstract class AbstractSlashBladeModularItem extends ItemSlashBlade imple
     @Override
     public String[] getMajorModuleKeys(ItemStack itemStack) {
         List<String> list= new ArrayList<>(List.of(DEF_SLOTS));
-        if(issss(itemStack))
+        if(hasSoul(itemStack))
             list.add("slashblade/soul");
         if(checkLimit(itemStack))
             list.add("slashblade/special");
@@ -110,7 +108,7 @@ public abstract class AbstractSlashBladeModularItem extends ItemSlashBlade imple
         list.add(19);
         list.add(4);
         list.add(-2);
-        if(issss(itemStack)){
+        if(hasSoul(itemStack)){
             list.add(50);
             list.add(12);
         }
@@ -121,11 +119,13 @@ public abstract class AbstractSlashBladeModularItem extends ItemSlashBlade imple
         return new GuiModuleOffsets(list.stream().mapToInt(i->i).toArray());
     }
 
-    public boolean issss(ItemStack itemStack) {
-        return SwordType.from(itemStack).containsAll(List.of(SwordType.BEWITCHED,SwordType.FIERCEREDGE));
-
+    public boolean hasSoul(ItemStack itemStack) {
+        try {
+            return SwordType.from(itemStack).containsAll(List.of(SwordType.BEWITCHED,SwordType.FIERCEREDGE));
+        }catch(Exception e) {
+            return false;
+        }
     }
-
     public boolean checkLimit(ItemStack itemStack) {
         return false;
         /*
