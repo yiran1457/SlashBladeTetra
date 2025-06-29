@@ -10,6 +10,8 @@
     {
       "materials": [
         "tetra:metal/",
+        "tetra:gem/",
+        "tetra:bone/",
         "tetra:wood/"
       ],
       "aspects": {

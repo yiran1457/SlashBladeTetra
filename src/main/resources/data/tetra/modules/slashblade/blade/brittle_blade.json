@@ -1,48 +1,50 @@
 {
   "type": "slashbladetetra:blade",
   "slots": [
-    "slashblade/scabbard"
+    "slashblade/blade"
   ],
   "improvements": [
-    "tetra:slashblade/shared/"
   ],
   "variants": [
     {
       "materials": [
-        "tetra:fibre/",
-        "tetra:skin/",
-        "tetra:fabric/",
-        "tetra:metal/",
-        "tetra:wood/",
-        "tetra:scale/"
+        "tetra:gem/",
+        "tetra:bone/",
+        "tetra:stone/"
       ],
       "aspects": {
         "slashblade": 2
       },
-      "key": "scabbard/",
+      "key": "brittle_blade/",
+      "effects": {
+        "intuit": 1
+      },
+      "attributes": {
+        "forge:entity_reach":2.5
+      },
       "extract": {
         "primaryAttributes": {
-          "generic.attack_damage": 2.1
+          "generic.attack_damage": 4
         },
         "secondaryAttributes": {
-          "generic.attack_damage": 0
+          "generic.attack_damage": 0.1
         },
         "tertiaryAttributes": {
-          "generic.attack_damage": -0.5
+          "generic.attack_damage":2
         },
         "primaryEffects": {
-          "RefineStrengthening": 0
+          "RefineStrengthening": 0.9
         },
         "secondaryEffects":{
-          "RefineStrengthening": -0.3
+          "RefineStrengthening": 1.2
         },
         "tertiaryEffects": {
-          "RefineStrengthening": 1.3
+          "RefineStrengthening": 1.6
         },
-        "durability": 0.5,
-        "magicCapacity": 4.3,
+        "durability": -0.2,
+        "magicCapacity": 0.5,
         "glyph": {
-          "textureX": 80,
+          "textureX": 16,
           "textureY": 0,
           "textureLocation": "slashbladetetra:textures/gui/texture.png"
         }

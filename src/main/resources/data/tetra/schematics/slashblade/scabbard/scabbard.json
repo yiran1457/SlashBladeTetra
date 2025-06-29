@@ -6,7 +6,7 @@
     "materialSlotCount": 1,
     "displayType": "major",
     "glyph": {
-        "textureX": 32,
+        "textureX": 80,
         "textureY": 0,
         "textureLocation": "slashbladetetra:textures/gui/texture.png"
     },
@@ -17,7 +17,8 @@
                 "tetra:skin/",
                 "tetra:fabric/",
                 "tetra:metal/",
-                "tetra:wood/"
+                "tetra:wood/",
+                "tetra:scale/"
             ],
             "countOffset" :1,
             "countFactor" :2.3,

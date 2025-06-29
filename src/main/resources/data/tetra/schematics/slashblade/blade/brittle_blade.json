@@ -13,14 +13,14 @@
     "outcomes": [
         {
             "materials": [
-                "tetra:metal/",
-                "tetra:wood/",
-                "tetra:bone/"
+                "tetra:gem/",
+                "tetra:bone/",
+                "tetra:stone/"
             ],
             "countOffset" :-1,
             "countFactor" :5.4,
-            "moduleKey": "slashblade/blade/blade",
-            "moduleVariant": "blade/"
+            "moduleKey": "slashblade/blade/brittle_blade",
+            "moduleVariant": "brittle_blade/"
         }
     ]
 }

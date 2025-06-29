@@ -10,7 +10,9 @@
     {
       "materials": [
         "tetra:metal/",
-        "tetra:wood/"
+        "tetra:wood/",
+        "tetra:bone/",
+        "tetra:rod/"
       ],
       "aspects": {
         "slashblade": 2

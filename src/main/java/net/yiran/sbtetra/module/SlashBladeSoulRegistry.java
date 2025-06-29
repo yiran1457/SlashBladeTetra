@@ -113,6 +113,8 @@ public class SlashBladeSoulRegistry {
         );
 
         SCHEMATIC.outcomes = OUTCOME_DEFINITION.toArray(new OutcomeDefinition[0]);
+
+        SchematicRegistry.instance.registerSchematic(new SoulExtractionSchematic());
     }
 
 }

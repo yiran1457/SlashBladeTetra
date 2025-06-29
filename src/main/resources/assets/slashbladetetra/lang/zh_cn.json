@@ -56,6 +56,13 @@
   "tetra/schematic/slashblade/blade/blade.description": "使用材料制作刀条",
   "tetra/schematic/slashblade/blade/blade.slot1": "刀条材料",
 
+  "tetra.module.slashblade/blade/brittle_blade.material_name": "%s 易碎刀条",
+  "tetra.module.slashblade/blade/brittle_blade.description": "SlashBladeTetra的预设刀条",
+  "tetra.module.slashblade/blade/brittle_blade.prefix": "无铭 「 %s 」",
+  "tetra/schematic/slashblade/blade/brittle_blade.name": "易碎刀条",
+  "tetra/schematic/slashblade/blade/brittle_blade.description": "使用脆性材料制作刀条，失去进一步的可能",
+  "tetra/schematic/slashblade/blade/brittle_blade.slot1": "刀条材料",
+
   "tetra.module.slashblade/tsuba/tsuba.material_name": "%s 刀镡",
   "tetra.module.slashblade/tsuba/tsuba.description": "SlashBladeTetra的预设刀镡",
   "tetra/schematic/slashblade/tsuba/tsuba.name": "基础刀镡",
@@ -80,6 +87,8 @@
   "tetra/schematic/ciallo.name": "Ciallo",
   "tetra/schematic/ciallo.description": "将「 Ciallo 」SE加入你的拔刀",
   "tetra/schematic/unciallo.name": "UnCiallo",
-  "tetra/schematic/unciallo.description": "将「 Ciallo 」SE从你的拔刀移除"
+  "tetra/schematic/unciallo.description": "将「 Ciallo 」SE从你的拔刀移除",
+  "tetra/schematic/soulextraction.name": "萃魂",
+  "tetra/schematic/soulextraction.description": "将耀魂值转换成破碎耀魂，一次最多16个，每个耀魂消耗500耀魂值"
 
 }

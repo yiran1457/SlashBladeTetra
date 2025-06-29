@@ -56,6 +56,13 @@
   "tetra/schematic/slashblade/blade/blade.description": "Craft a blade using materials",
   "tetra/schematic/slashblade/blade/blade.slot1": "Blade Material",
 
+  "tetra.module.slashblade/blade/brittle_blade.material_name": "Brittle Blade",
+  "tetra.module.slashblade/blade/brittle_blade.description": "Default blade for SlashBladeTetra",
+  "tetra.module.slashblade/blade/brittle_blade.prefix": "Nameless 「%s」",
+  "tetra/schematic/slashblade/blade/brittle_blade.name": "Brittle Blade",
+  "tetra/schematic/slashblade/blade/brittle_blade.description": "Craft a blade using brittle materials. Limits further potential.",
+  "tetra/schematic/slashblade/blade/brittle_blade.slot1": "Blade Material",
+
   "tetra.module.slashblade/tsuba/tsuba.material_name": "%s Tsuba",
   "tetra.module.slashblade/tsuba/tsuba.description": "Default tsuba for SlashBladeTetra",
   "tetra/schematic/slashblade/tsuba/tsuba.name": "Basic Tsuba",
@@ -80,5 +87,7 @@
   "tetra/schematic/ciallo.name": "Ciallo",
   "tetra/schematic/ciallo.description": "Adds the 'Ciallo' sound effect to your SlashBlade",
   "tetra/schematic/unciallo.name": "UnCiallo",
-  "tetra/schematic/unciallo.description": "Removes the 'Ciallo' sound effect from your SlashBlade"
+  "tetra/schematic/unciallo.description": "Removes the 'Ciallo' sound effect from your SlashBlade",
+  "tetra/schematic/soulextraction.name": "Soul Extraction",
+  "tetra/schematic/soulextraction.description": "Converts soul essence into Broken Radiant Soul. Up to 16 at a time, each consuming 500 soul essence points."
 }
