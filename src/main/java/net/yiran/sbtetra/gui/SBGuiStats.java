@@ -2,8 +2,8 @@ package net.yiran.sbtetra.gui;
 
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.yiran.sbtetra.gui.tooltipgetter.ToolTipGetterSBCap;
 import net.yiran.sbtetra.gui.tooltipgetter.ToolTipGetterRefineStrengthening;
+import net.yiran.sbtetra.gui.tooltipgetter.ToolTipGetterSBCap;
 import se.mickelus.tetra.blocks.workbench.gui.WorkbenchStatsGui;
 import se.mickelus.tetra.gui.stats.StatsHelper;
 import se.mickelus.tetra.gui.stats.bar.GuiStatBar;

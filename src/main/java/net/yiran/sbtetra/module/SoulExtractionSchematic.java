@@ -5,7 +5,6 @@ import mods.flammpfeil.slashblade.init.SBItems;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.ToolAction;
 import net.yiran.sbtetra.item.SlashBladeModularItem;
@@ -20,7 +19,6 @@ import java.util.Collections;
 import java.util.Map;
 
 import static mods.flammpfeil.slashblade.item.ItemSlashBlade.BLADESTATE;
-import static net.yiran.sbtetra.compat.cialloblade.CialloHandler.CIALLO_SE;
 
 @SuppressWarnings("all")
 public class SoulExtractionSchematic implements UpgradeSchematic {

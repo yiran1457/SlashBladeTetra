@@ -3,7 +3,10 @@ package net.yiran.sbtetra.gui.tooltipgetter;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import se.mickelus.tetra.gui.stats.getter.*;
+import se.mickelus.tetra.gui.stats.getter.IStatGetter;
+import se.mickelus.tetra.gui.stats.getter.ITooltipGetter;
+import se.mickelus.tetra.gui.stats.getter.StatGetterEffectEfficiency;
+import se.mickelus.tetra.gui.stats.getter.StatGetterEffectLevel;
 
 import static net.yiran.sbtetra.itemeffect.SBItemEffects.REFINE;
 

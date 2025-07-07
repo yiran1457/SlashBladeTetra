@@ -6,6 +6,7 @@ import mods.flammpfeil.slashblade.capability.slashblade.ISlashBladeState;
 import mods.flammpfeil.slashblade.event.SlashBladeEvent;
 import mods.flammpfeil.slashblade.item.SwordType;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -17,6 +18,9 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.LazyOptional;
 import net.yiran.sbtetra.itemeffect.SBItemEffects;
+import se.mickelus.tetra.effect.ItemEffect;
+import se.mickelus.tetra.effect.ItemEffectHandler;
+import se.mickelus.tetra.effect.SculkTaintEffect;
 import se.mickelus.tetra.event.ModularItemDamageEvent;
 import se.mickelus.tetra.module.data.EffectData;
 
@@ -119,4 +123,21 @@ public class SlashBladeModularItem extends AbstractSlashBladeModularItem {
         return result;
     }
 
+    @Override
+    public boolean hurtEnemy(ItemStack itemStack, LivingEntity target, LivingEntity attacker) {
+        if (!this.isBroken(itemStack)) {
+
+            ItemEffectHandler.applyHitEffects(itemStack, target, attacker);
+            this.applyPositiveUsageEffects(attacker, itemStack, 1.0F);
+
+
+            int skulkTaintLevel = this.getEffectLevel(itemStack, ItemEffect.sculkTaint);
+            if (skulkTaintLevel > 0) {
+                SculkTaintEffect.perform((ServerLevel) target.level(), target.blockPosition(), skulkTaintLevel, this.getEffectEfficiency(itemStack, ItemEffect.sculkTaint));
+            }
+
+            this.applyNegativeUsageEffects(attacker, itemStack, (double) 1.0F);
+        }
+        return super.hurtEnemy(itemStack, target, attacker);
+    }
 }

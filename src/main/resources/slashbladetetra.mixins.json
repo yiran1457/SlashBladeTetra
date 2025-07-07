@@ -9,9 +9,6 @@
     "OutcomeMaterialMixin"
   ],
   "client": [
-    "HoloPageMixin",
-    "HoloGuiMixin",
-    "HoloItemGuiMixin",
     "GuiModuleListMixin",
     "ItemModuleMixin"
   ],

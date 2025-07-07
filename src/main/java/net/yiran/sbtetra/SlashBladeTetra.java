@@ -3,11 +3,14 @@ package net.yiran.sbtetra;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
-import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.living.LivingAttackEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -22,11 +25,8 @@ import net.yiran.sbtetra.module.SlashBladeModule;
 import net.yiran.sbtetra.module.SlashBladeSoulRegistry;
 import se.mickelus.tetra.aspect.ItemAspect;
 import se.mickelus.tetra.aspect.TetraEnchantmentHelper;
-import se.mickelus.tetra.items.modular.impl.holo.HoloPage;
-import se.mickelus.tetra.items.modular.impl.holo.gui.HoloGui;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.ModuleRegistry;
-import se.mickelus.tetra.module.schematic.InvalidSchematicException;
 
 import java.util.Optional;
 
@@ -50,6 +50,7 @@ public class SlashBladeTetra {
         if (FMLEnvironment.dist.isClient()) {
             clientInit(modEventBus);
         }
+        MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGHEST, SlashBladeTetra::onBladeStandAttack);
     }
 
     public static void clientInit(IEventBus bus) {
@@ -58,6 +59,13 @@ public class SlashBladeTetra {
         bus.addListener(SlashBladeClientHandler::doClientStuff);
         bus.addListener(SlashBladeClientHandler::Baked);
         bus.addListener(SlashBladeClientHandler::buildContents);
+    }
+
+    public static void onBladeStandAttack(LivingHurtEvent event) {
+        if (!(event.getSource().getEntity() instanceof LivingEntity livingEntity)) return;
+        if (!(livingEntity.getMainHandItem().getItem() instanceof SlashBladeModularItem)) return;
+        MinecraftForge.EVENT_BUS.post(new LivingAttackEvent(event.getEntity(), event.getSource(), event.getAmount()));
+
     }
 
     public static void commonInit(IEventBus bus) {

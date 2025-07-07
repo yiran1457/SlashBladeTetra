@@ -17,7 +17,8 @@
       },
       "key": "brittle_blade/",
       "effects": {
-        "intuit": 1
+        "intuit": 1,
+        "bleeding": 1
       },
       "attributes": {
         "forge:entity_reach":2.5
