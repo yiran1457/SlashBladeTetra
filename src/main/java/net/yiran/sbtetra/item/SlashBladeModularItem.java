@@ -47,14 +47,16 @@ public class SlashBladeModularItem extends AbstractSlashBladeModularItem {
 
     @Override
     public int getMaxDamage(ItemStack stack) {
-        //s.setMaxDamage(Optional.of(this.getPropertiesCached(stack)).map((properties) -> properties.durability * properties.durabilityMultiplier).map(Math::round).orElse(0));
-        return stack.getCapability(BLADESTATE).map(ISlashBladeState::getMaxDamage).orElse(super.getMaxDamage(stack));
+        return Math.max(1,  Optional.of(this.getPropertiesCached(stack)).map((properties) -> properties.durability * properties.durabilityMultiplier).map(Math::round).orElse(0));
+        //return stack.getCapability(BLADESTATE).map(ISlashBladeState::getMaxDamage).orElse(super.getMaxDamage(stack));
     }
 
     @Override
     public void assemble(ItemStack itemStack, @Nullable Level world, float severity) {
         itemStack.getCapability(BLADESTATE).ifPresent(state -> {
-            state.setMaxDamage(Math.max(1, Optional.of(this.getPropertiesCached(itemStack)).map((properties) -> properties.durability * properties.durabilityMultiplier).map(Math::round).orElse(0)));
+            state.setMaxDamage(getMaxDamage(itemStack));
+            /*
+            state.setMaxDamage(Math.max(1, Optional.of(this.getPropertiesCached(itemStack)).map((properties) -> properties.durability * properties.durabilityMultiplier).map(Math::round).orElse(0)));*/
         });
         super.assemble(itemStack, world, severity);
     }

@@ -90,6 +90,7 @@ public class SlashBladeTetra {
         if (!(replaceItemStack.getItem() instanceof SlashBladeModularItem slashBladeModularItem))
             return replaceItemStack;
         replaceItemStack.getOrCreateTag().put("bladeState", itemStack.getTag().getCompound("bladeState").copy());
+        if(itemStack.capNBT!=null)
         replaceItemStack.getCapability(BLADESTATE).map(s -> {
             s.deserializeNBT(itemStack.capNBT.copy().getCompound("Parent"));
             s.setMaxDamage(Optional.of(slashBladeModularItem.getPropertiesCached(itemStack)).map((properties) -> properties.durability * properties.durabilityMultiplier).map(Math::round).orElse(0));
