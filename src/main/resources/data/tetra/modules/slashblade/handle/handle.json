@@ -31,7 +31,7 @@
         "primaryEffects": {
           "RefineStrengthening": 0.4
         },
-        "secondaryEffects":{
+        "secondaryEffects": {
           "RefineStrengthening": 2.1
         },
         "tertiaryEffects": {
@@ -44,6 +44,18 @@
           "textureY": 0,
           "textureLocation": "slashbladetetra:textures/gui/texture.png"
         }
+      }
+    },
+    {
+      "aspects": {
+        "slashblade": 2
+      },
+      "key": "handle/unnamed",
+      "durability": 50,
+      "glyph": {
+        "textureX": 0,
+        "textureY": 0,
+        "textureLocation": "slashbladetetra:textures/gui/texture.png"
       }
     }
   ]

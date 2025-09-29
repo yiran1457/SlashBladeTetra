@@ -26,16 +26,16 @@
           "generic.attack_damage": 0.3
         },
         "tertiaryAttributes": {
-          "generic.attack_damage":0.4
+          "generic.attack_damage": 0.4
         },
         "primaryEffects": {
           "RefineStrengthening": 0.4
         },
-        "secondaryEffects":{
+        "secondaryEffects": {
           "RefineStrengthening": -0.2
         },
         "tertiaryEffects": {
-          "RefineStrengthening":2
+          "RefineStrengthening": 2
         },
         "durability": 0.5,
         "magicCapacity": 4.3,
@@ -44,6 +44,15 @@
           "textureY": 0,
           "textureLocation": "slashbladetetra:textures/gui/texture.png"
         }
+      }
+    },
+    {
+      "key": "tsuba/unnamed",
+      "durability": 50,
+      "glyph": {
+        "textureX": 48,
+        "textureY": 0,
+        "textureLocation": "slashbladetetra:textures/gui/texture.png"
       }
     }
   ]

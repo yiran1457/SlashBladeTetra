@@ -5,6 +5,7 @@
   "tetra.slot.slashblade/tsuba": "刀镡",
   "tetra.slot.slashblade/scabbard": "刀鞘",
   "tetra.slot.slashblade/soul": "刀魂",
+  "tetra.material.unnamed.prefix": "无名",
 
   "tetra.stats.RefineStrengthening": "刀魂增幅",
   "tetra.stats.RefineStrengthening.tooltip": "拔刀锻造提供的伤害上限为§e%s§r点 ",

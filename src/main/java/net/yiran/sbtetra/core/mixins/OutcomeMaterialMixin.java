@@ -10,7 +10,7 @@ import se.mickelus.tetra.module.schematic.OutcomeMaterial;
 
 import java.util.Collection;
 
-@Mixin(OutcomeMaterial.class)
+@Mixin(value = OutcomeMaterial.class,remap = false)
 public class OutcomeMaterialMixin implements IOutcomeMaterial {
     @Shadow protected Collection<ItemStack> itemStacks;
 

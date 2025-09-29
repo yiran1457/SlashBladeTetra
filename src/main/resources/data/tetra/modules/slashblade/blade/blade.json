@@ -50,6 +50,24 @@
           "textureLocation": "slashbladetetra:textures/gui/texture.png"
         }
       }
+    },
+    {
+      "aspects": {
+        "slashblade": 2
+      },
+      "key": "blade/unnamed",
+      "durability": 50,
+      "effects": {
+        "intuit": 1
+      },
+      "attributes": {
+        "forge:entity_reach":2.5
+      },
+      "glyph": {
+        "textureX": 16,
+        "textureY": 0,
+        "textureLocation": "slashbladetetra:textures/gui/texture.png"
+      }
     }
   ]
 }

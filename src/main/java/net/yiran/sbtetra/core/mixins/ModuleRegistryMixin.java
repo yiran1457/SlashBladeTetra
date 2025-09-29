@@ -17,7 +17,7 @@ import se.mickelus.tetra.module.schematic.InvalidSchematicException;
 
 import java.util.*;
 
-@Mixin(ModuleRegistry.class)
+@Mixin(value = ModuleRegistry.class,remap = false)
 public class ModuleRegistryMixin implements IModuleRegistry {
     @Shadow
     private Map<ResourceLocation, ItemModule> moduleMap;

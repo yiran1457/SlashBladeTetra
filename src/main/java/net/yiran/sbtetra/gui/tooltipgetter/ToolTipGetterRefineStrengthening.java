@@ -20,7 +20,7 @@ public class ToolTipGetterRefineStrengthening implements ITooltipGetter {
 
     public String getTooltipBase(Player player, ItemStack itemStack) {
         return I18n.get("tetra.stats.RefineStrengthening.tooltip",
-                String.format("%.1f",this.levelGetter.getValue(player, itemStack))
+                String.format("%.1f", levelGetter.getValue(player, itemStack))
         );
     }
 
@@ -29,8 +29,8 @@ public class ToolTipGetterRefineStrengthening implements ITooltipGetter {
     }
 
     public String getTooltipExtension(Player player, ItemStack itemStack) {
-        double level = this.levelGetter.getValue(player, itemStack);
-        double efficiency = this.efficiencyGetter.getValue(player, itemStack);
+        double level = levelGetter.getValue(player, itemStack);
+        double efficiency = efficiencyGetter.getValue(player, itemStack);
         return I18n.get("tetra.stats.RefineStrengthening.tooltip_extended",
                 String.format("%.1f", level-efficiency),
                 String.format("%.1f", efficiency)

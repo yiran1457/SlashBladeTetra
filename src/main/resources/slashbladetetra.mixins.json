@@ -3,10 +3,12 @@
   "minVersion": "0.8",
   "package": "net.yiran.sbtetra.core.mixins",
   "compatibilityLevel": "JAVA_17",
-  "refmap": "tetra_addition.refmap.json",
+  "refmap": "slashbladetetra.refmap.json",
   "mixins": [
     "ModuleRegistryMixin",
-    "OutcomeMaterialMixin"
+    "OutcomeMaterialMixin",
+    "SlashBladeIngredientMixin",
+    "SlashBladeShapedRecipeMixin"
   ],
   "client": [
     "GuiModuleListMixin",

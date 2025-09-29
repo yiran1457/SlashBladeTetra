@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import se.mickelus.tetra.module.ItemModule;
 
-@Mixin(ItemModule.class)
+@Mixin(value = ItemModule.class,remap = false)
 public class ItemModuleMixin {
     @Inject(method = "getName(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;", at = @At(value = "HEAD"), cancellable = true)
     private static void getName(String moduleKey, String variantKey, CallbackInfoReturnable<String> cir) {

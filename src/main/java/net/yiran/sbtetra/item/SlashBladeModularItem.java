@@ -13,6 +13,7 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.MinecraftForge;
@@ -22,7 +23,9 @@ import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.effect.ItemEffectHandler;
 import se.mickelus.tetra.effect.SculkTaintEffect;
 import se.mickelus.tetra.event.ModularItemDamageEvent;
+import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.data.EffectData;
+import se.mickelus.tetra.properties.AttributeHelper;
 
 import javax.annotation.Nullable;
 import java.util.*;
@@ -40,6 +43,17 @@ public class SlashBladeModularItem extends AbstractSlashBladeModularItem {
     }
 
     @Override
+    public ItemStack getDefaultInstance() {
+        var stack = new ItemStack(this);
+        stack.getOrCreateTag().putString("id", "DefaultInstance");
+        IModularItem.putModuleInSlot(stack, "slashblade/handle", "slashblade/handle/handle", "handle/unnamed");
+        IModularItem.putModuleInSlot(stack, "slashblade/blade", "slashblade/blade/blade", "blade/unnamed");
+        IModularItem.putModuleInSlot(stack, "slashblade/tsuba", "slashblade/tsuba/tsuba", "tsuba/unnamed");
+        IModularItem.putModuleInSlot(stack, "slashblade/scabbard", "slashblade/scabbard/scabbard", "scabbard/unnamed");
+        return stack;
+    }
+
+    @Override
     public int getDamage(ItemStack stack) {
         //return stack.getOrCreateTagElement("bladeState").getInt("Damage");
         return stack.getCapability(BLADESTATE).map((s) -> s.getDamage()).orElse(0);
@@ -47,7 +61,7 @@ public class SlashBladeModularItem extends AbstractSlashBladeModularItem {
 
     @Override
     public int getMaxDamage(ItemStack stack) {
-        return Math.max(1,  Optional.of(this.getPropertiesCached(stack)).map((properties) -> properties.durability * properties.durabilityMultiplier).map(Math::round).orElse(0));
+        return Math.max(1, Optional.of(this.getPropertiesCached(stack)).map((properties) -> properties.durability * properties.durabilityMultiplier).map(Math::round).orElse(0));
         //return stack.getCapability(BLADESTATE).map(ISlashBladeState::getMaxDamage).orElse(super.getMaxDamage(stack));
     }
 
@@ -97,6 +111,28 @@ public class SlashBladeModularItem extends AbstractSlashBladeModularItem {
                         .reduce(null, EffectData::merge);
     }
 
+
+    public Multimap<Attribute, AttributeModifier> getModuleAttributes(ItemStack itemStack) {
+        return this.getAllModules(itemStack)
+                .stream()
+                .map((module) -> {
+                    if (Objects.equals(module.getVariantData(itemStack).key, "blade/unnamed")) {
+                        Multimap<Attribute, AttributeModifier> result = ArrayListMultimap.create();
+                        result.putAll(module.getAttributeModifiers(itemStack));
+                        LazyOptional<ISlashBladeState> state = itemStack.getCapability(BLADESTATE);
+                        state.ifPresent((s) -> {
+                            result.put(Attributes.ATTACK_DAMAGE,
+                                    new AttributeModifier(SwordItem.BASE_ATTACK_DAMAGE_UUID, "Weapon modifier", s.getBaseAttackModifier(), AttributeModifier.Operation.ADDITION)
+                            );
+                        });
+                        return result;
+                    }
+                    return module.getAttributeModifiers(itemStack);
+                })
+                .filter(Objects::nonNull)
+                .reduce(null, AttributeHelper::merge);
+    }
+
     @Override
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot slot, ItemStack itemStack) {
         Multimap<Attribute, AttributeModifier> result = ArrayListMultimap.create();
@@ -111,7 +147,23 @@ public class SlashBladeModularItem extends AbstractSlashBladeModularItem {
                 int refine = s.getRefine();
                 float refineFactor = swordType.contains(SwordType.FIERCEREDGE) ? 0.1F : 0.05F;
                 float attackAmplifier = (1.0F - 1.0F / (1.0F + refineFactor * (float) refine)) * baseAttackModifier;
-
+/*
+                if (Objects.equals(getModuleFromSlot(itemStack, "slashblade/blade").getVariantData(itemStack).key, "blade/unnamed")) {
+                    var vanilla = result.get(Attributes.ATTACK_DAMAGE).stream()
+                            .filter(attributeModifier -> attributeModifier.getId().equals(SwordItem.BASE_ATTACK_DAMAGE_UUID))
+                            .findAny();
+                    if (vanilla.isPresent()) {
+                        var amount = vanilla.get().getAmount() + s.getBaseAttackModifier();
+                        result.get(Attributes.ATTACK_DAMAGE).remove(vanilla.get());
+                        result.put(Attributes.ATTACK_DAMAGE,
+                                new AttributeModifier(SwordItem.BASE_ATTACK_DAMAGE_UUID, "Weapon modifier", amount, AttributeModifier.Operation.ADDITION)
+                        );
+                    } else {
+                        result.put(Attributes.ATTACK_DAMAGE,
+                                new AttributeModifier(SwordItem.BASE_ATTACK_DAMAGE_UUID, "Weapon modifier", s.getBaseAttackModifier(), AttributeModifier.Operation.ADDITION)
+                        );
+                    }
+                }*/
 
                 //double damage = (double) attackAmplifier;//+ (double) baseAttackModifier  - (double) 4.0F;
                 SlashBladeEvent.UpdateAttackEvent event = new SlashBladeEvent.UpdateAttackEvent(itemStack, s, attackAmplifier);

@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
-@Mixin(GuiModuleList.class)
+@Mixin(value = GuiModuleList.class,remap = false)
 public class GuiModuleListMixin extends GuiElement {
 
     @Shadow private GuiModuleMajor[] majorModuleElements;

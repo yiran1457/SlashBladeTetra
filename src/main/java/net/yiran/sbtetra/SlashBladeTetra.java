@@ -55,10 +55,7 @@ public class SlashBladeTetra {
 
     public static void clientInit(IEventBus bus) {
         bus.addListener(CompatHandler::clientSetup);
-
-        bus.addListener(SlashBladeClientHandler::doClientStuff);
-        bus.addListener(SlashBladeClientHandler::Baked);
-        bus.addListener(SlashBladeClientHandler::buildContents);
+        SlashBladeClientHandler.init(bus);
     }
 
     public static void onBladeStandAttack(LivingHurtEvent event) {

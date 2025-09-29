@@ -7,19 +7,19 @@
     "modules": {
       "slashblade/handle": [
         "slashblade/handle/handle",
-        "handle/iron"
+        "handle/unnamed"
       ],
       "slashblade/blade": [
         "slashblade/blade/blade",
-        "blade/iron"
+        "blade/unnamed"
       ],
       "slashblade/tsuba": [
         "slashblade/tsuba/tsuba",
-        "tsuba/gold"
+        "tsuba/unnamed"
       ],
       "slashblade/scabbard": [
         "slashblade/scabbard/scabbard",
-        "scabbard/oak"
+        "scabbard/unnamed"
       ]
     }
   }
