@@ -6,8 +6,10 @@ import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import mods.flammpfeil.slashblade.recipe.SlashBladeShapedRecipe;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.world.inventory.CraftingContainer;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.yiran.sbtetra.SlashBladeTetra;
+import net.yiran.sbtetra.craft.SBTIngredientManager;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -20,6 +22,26 @@ public abstract class SlashBladeShapedRecipeMixin {
 
     @Inject(method = "assemble(Lnet/minecraft/world/inventory/CraftingContainer;Lnet/minecraft/core/RegistryAccess;)Lnet/minecraft/world/item/ItemStack;",at=@At("RETURN"),cancellable = true)
     private void sbt$assemble(CraftingContainer container, RegistryAccess access, CallbackInfoReturnable<ItemStack> cir){
+        Item item = SBTIngredientManager.getReplacement(cir.getReturnValue());
+        if(item!=null){
+            container.getItems()
+                    .stream()
+                    .filter(stack -> SBTIngredientManager.ITEMS.contains(stack.getItem()))
+                    .findFirst()
+                    .map(itemStack -> {
+                        var result = itemStack.copy();
+                        ISlashBladeState resultState = result.getCapability(ItemSlashBlade.BLADESTATE).orElseThrow(NullPointerException::new);
+
+                        var stack = cir.getReturnValue();
+
+                        ISlashBladeState ingredientState =stack.getCapability(ItemSlashBlade.BLADESTATE).orElseThrow(NullPointerException::new);
+                        resultState.deserializeNBT(ingredientState.serializeNBT());
+                        result.getOrCreateTag().put("bladeState", resultState.serializeNBT());
+                        this.updateEnchantment(result, stack);
+                        return result;
+                    })
+                    .ifPresent(cir::setReturnValue);
+        }/*
         if(cir.getReturnValue().is(SlashBladeTetra.REPLACEMENT)){
             container.getItems()
                     .stream()
@@ -38,6 +60,6 @@ public abstract class SlashBladeShapedRecipeMixin {
                         return result;
                     })
                     .ifPresent(cir::setReturnValue);
-        }
+        }*/
     }
 }

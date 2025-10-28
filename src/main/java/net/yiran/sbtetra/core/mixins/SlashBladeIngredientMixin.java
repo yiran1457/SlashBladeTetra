@@ -5,7 +5,10 @@ import mods.flammpfeil.slashblade.recipe.SlashBladeIngredient;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.yiran.sbtetra.Config;
 import net.yiran.sbtetra.SlashBladeTetra;
+import net.yiran.sbtetra.craft.SBTIngredientManager;
 import net.yiran.sbtetra.item.SlashBladeModularItem;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -38,7 +41,18 @@ public class SlashBladeIngredientMixin extends Ingredient {
     @Inject(method = "<init>", at = @At("RETURN"))
     private void init(Set<Item> items, RequestDefinition request, CallbackInfo ci) {
         Set<Item> itemSet = new HashSet<>(items);
-        itemSet.add(SlashBladeTetra.MODLUAR.get());
+        boolean wrapper = false;
+        for (Item item : itemSet) {
+            if (Config.CantWrapperItems.get().contains(ForgeRegistries.ITEMS.getKey(item).toString())) {
+                continue;
+            }
+            itemSet.addAll(SBTIngredientManager.ITEMS);
+            wrapper = true;
+            break;
+        }
+        if (!wrapper) {
+            return;
+        }
         this.values = itemSet.stream()
                 .map((item) -> {
                     if (item instanceof SlashBladeModularItem) {

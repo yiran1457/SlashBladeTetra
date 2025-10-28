@@ -12,7 +12,9 @@ import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLEnvironment;
@@ -20,6 +22,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.yiran.sbtetra.compat.CompatHandler;
+import net.yiran.sbtetra.craft.SBTIngredientManager;
 import net.yiran.sbtetra.item.SlashBladeModularItem;
 import net.yiran.sbtetra.module.SlashBladeModule;
 import net.yiran.sbtetra.module.SlashBladeSoulRegistry;
@@ -28,6 +31,8 @@ import se.mickelus.tetra.aspect.TetraEnchantmentHelper;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.ModuleRegistry;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static mods.flammpfeil.slashblade.item.ItemSlashBlade.BLADESTATE;
@@ -43,6 +48,10 @@ public class SlashBladeTetra {
 
     public SlashBladeTetra() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+        ModLoadingContext.get().registerConfig(
+                ModConfig.Type.COMMON,
+                Config.SPEC
+        );
 
         ITEMS.register(modEventBus);
         CompatHandler.init();
@@ -74,7 +83,7 @@ public class SlashBladeTetra {
     public static void onCommonSetup(FMLCommonSetupEvent event) {
 
         TetraEnchantmentHelper.registerMapping(ItemAspect.get("slashblade"), new TetraEnchantmentHelper.EnchantmentRules("additions/slashblade", "exclusions/slashblade", EnchantmentCategory.WEAPON, EnchantmentCategory.BREAKABLE));
-
+        SBTIngredientManager.register(MODLUAR.get());
         ModuleRegistry moduleRegistry = ModuleRegistry.instance;
         moduleRegistry.registerModuleType(new ResourceLocation("slashbladetetra", "blade"), SlashBladeModule::new);
         ItemUpgradeRegistry.instance.registerReplacementHook(SlashBladeTetra::replacementHook);
@@ -87,12 +96,12 @@ public class SlashBladeTetra {
         if (!(replaceItemStack.getItem() instanceof SlashBladeModularItem slashBladeModularItem))
             return replaceItemStack;
         replaceItemStack.getOrCreateTag().put("bladeState", itemStack.getTag().getCompound("bladeState").copy());
-        if(itemStack.capNBT!=null)
-        replaceItemStack.getCapability(BLADESTATE).map(s -> {
-            s.deserializeNBT(itemStack.capNBT.copy().getCompound("Parent"));
-            s.setMaxDamage(Optional.of(slashBladeModularItem.getPropertiesCached(itemStack)).map((properties) -> properties.durability * properties.durabilityMultiplier).map(Math::round).orElse(0));
-            return s;
-        });
+        if (itemStack.capNBT != null)
+            replaceItemStack.getCapability(BLADESTATE).map(s -> {
+                s.deserializeNBT(itemStack.capNBT.copy().getCompound("Parent"));
+                s.setMaxDamage(Optional.of(slashBladeModularItem.getPropertiesCached(itemStack)).map((properties) -> properties.durability * properties.durabilityMultiplier).map(Math::round).orElse(0));
+                return s;
+            });
         return replaceItemStack;
     }
 }
