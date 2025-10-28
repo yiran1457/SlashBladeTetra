@@ -46,7 +46,7 @@ public class SlashBladeIngredientMixin extends Ingredient {
             if (Config.CantWrapperItems.get().contains(ForgeRegistries.ITEMS.getKey(item).toString())) {
                 continue;
             }
-            itemSet.addAll(SBTIngredientManager.ITEMS);
+            itemSet.addAll(SBTIngredientManager.getItems());
             wrapper = true;
             break;
         }

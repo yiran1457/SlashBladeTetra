@@ -8,7 +8,8 @@
     "ModuleRegistryMixin",
     "OutcomeMaterialMixin",
     "SlashBladeIngredientMixin",
-    "SlashBladeShapedRecipeMixin"
+    "SlashBladeShapedRecipeMixin",
+    "SlashBladeSmithingRecipeMixin"
   ],
   "client": [
     "GuiModuleListMixin",

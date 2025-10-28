@@ -54,6 +54,7 @@ public class SlashBladeTetra {
         );
 
         ITEMS.register(modEventBus);
+        SBTIngredientManager.register(MODLUAR);
         CompatHandler.init();
         commonInit(modEventBus);
         if (FMLEnvironment.dist.isClient()) {
@@ -83,7 +84,6 @@ public class SlashBladeTetra {
     public static void onCommonSetup(FMLCommonSetupEvent event) {
 
         TetraEnchantmentHelper.registerMapping(ItemAspect.get("slashblade"), new TetraEnchantmentHelper.EnchantmentRules("additions/slashblade", "exclusions/slashblade", EnchantmentCategory.WEAPON, EnchantmentCategory.BREAKABLE));
-        SBTIngredientManager.register(MODLUAR.get());
         ModuleRegistry moduleRegistry = ModuleRegistry.instance;
         moduleRegistry.registerModuleType(new ResourceLocation("slashbladetetra", "blade"), SlashBladeModule::new);
         ItemUpgradeRegistry.instance.registerReplacementHook(SlashBladeTetra::replacementHook);

@@ -5,6 +5,7 @@
   "tetra.slot.slashblade/tsuba": "Tsuba",
   "tetra.slot.slashblade/scabbard": "Scabbard",
   "tetra.slot.slashblade/soul": "Soul",
+  "tetra.material.unnamed.prefix": "unnamed",
 
   "tetra.stats.RefineStrengthening": "Refine Amplification",
   "tetra.stats.RefineStrengthening.tooltip": "SlashBlade refining grants up to §e%s§r damage",

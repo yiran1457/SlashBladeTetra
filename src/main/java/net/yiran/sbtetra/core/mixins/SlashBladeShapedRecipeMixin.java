@@ -1,14 +1,12 @@
 package net.yiran.sbtetra.core.mixins;
 
 import mods.flammpfeil.slashblade.capability.slashblade.ISlashBladeState;
-import mods.flammpfeil.slashblade.init.SBItems;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import mods.flammpfeil.slashblade.recipe.SlashBladeShapedRecipe;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.yiran.sbtetra.SlashBladeTetra;
 import net.yiran.sbtetra.craft.SBTIngredientManager;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -27,10 +25,11 @@ public abstract class SlashBladeShapedRecipeMixin {
         if (item != null) {
             container.getItems()
                     .stream()
-                    .filter(stack -> SBTIngredientManager.ITEMS.contains(stack.getItem()))
+                    .filter(stack -> SBTIngredientManager.getItems().contains(stack.getItem()))
                     .findFirst()
                     .map(itemStack -> {
-                        var result = itemStack.copy();
+                        var result = new ItemStack(item);
+                        result.setTag(itemStack.getOrCreateTag());
                         ISlashBladeState resultState = result.getCapability(ItemSlashBlade.BLADESTATE).orElseThrow(NullPointerException::new);
 
                         var stack = cir.getReturnValue();

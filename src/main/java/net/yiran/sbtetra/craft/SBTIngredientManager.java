@@ -2,19 +2,29 @@ package net.yiran.sbtetra.craft;
 
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.registries.RegistryObject;
 import net.yiran.sbtetra.SlashBladeTetra;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class SBTIngredientManager {
-    public static List<Item> ITEMS = new ArrayList<>();
+    private static List<Item> ITEMS ;
+    public static List<RegistryObject<Item>> REGISTER_OBJECT = new ArrayList<>();
     public static List<Function<Item, Item>> REPLACE_HANDLER = new ArrayList<>();
 
-    public static void register(Item item) {
-        ITEMS.add(item);
+    public static void register(RegistryObject<Item> item) {
+        REGISTER_OBJECT.add(item);
+    }
+
+    public static List<Item> getItems() {
+        if (ITEMS == null) {
+            ITEMS = REGISTER_OBJECT.stream().map(RegistryObject::get).collect(Collectors.toList());
+        }
+        return ITEMS;
     }
 
     public static void registerReplaceHandler(Function<Item, Item> replacement) {

@@ -37,7 +37,9 @@ public class SlashBladeClientHandler {
     }
 
     public static void registerItemDecoration(RegisterItemDecorationsEvent event) {
-        event.register(MODLUAR.get(), SlashBladeClientHandler::sbtDecoration);
+        for (Item item : SBTIngredientManager.getItems()) {
+            event.register(item, SlashBladeClientHandler::sbtDecoration);
+        }
     }
 
     public static boolean sbtDecoration(GuiGraphics guiGraphics, Font font, ItemStack stack, int xOffset, int yOffset) {
@@ -69,22 +71,26 @@ public class SlashBladeClientHandler {
     }
 
     public static void doClientStuff(FMLClientSetupEvent event) {
-        ItemProperties.register(MODLUAR.get(),
-                new ResourceLocation("slashblade:user"),
-                (stack, clientLevel, livingEntity, i) -> {
-                    BladeModel.user = livingEntity;
-                    return 0;
-                });
+        for (Item item : SBTIngredientManager.getItems()) {
+            ItemProperties.register(item,
+                    new ResourceLocation("slashblade:user"),
+                    (stack, clientLevel, livingEntity, i) -> {
+                        BladeModel.user = livingEntity;
+                        return 0;
+                    });
+        }
         SBGuiStats.clientInit();
     }
 
     public static void Baked(ModelEvent.ModifyBakingResult event) {
-        bakeBlade(MODLUAR.get(), event);
+        for (Item item : SBTIngredientManager.getItems()) {
+            bakeBlade(item, event);
+        }
     }
 
     public static void buildContents(BuildCreativeModeTabContentsEvent event) {
         if (event.getTabKey() == ResourceKey.create(Registries.CREATIVE_MODE_TAB, new ResourceLocation("tetra", "default"))) {
-            for (Item item : SBTIngredientManager.ITEMS) {
+            for (Item item : SBTIngredientManager.getItems()) {
                 ItemStack itemStack = new ItemStack(item);
                 ISlashBladeTetra.putDefaultModule(itemStack);
                 event.accept(itemStack);
