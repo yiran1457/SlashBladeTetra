@@ -7,13 +7,16 @@ import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.client.event.RegisterItemDecorationsEvent;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.yiran.sbtetra.craft.SBTIngredientManager;
 import net.yiran.sbtetra.gui.SBGuiStats;
+import net.yiran.sbtetra.item.ISlashBladeTetra;
 import net.yiran.sbtetra.item.SlashBladeModularItem;
 import org.joml.Quaternionf;
 import se.mickelus.tetra.TetraToolActions;
@@ -81,13 +84,11 @@ public class SlashBladeClientHandler {
 
     public static void buildContents(BuildCreativeModeTabContentsEvent event) {
         if (event.getTabKey() == ResourceKey.create(Registries.CREATIVE_MODE_TAB, new ResourceLocation("tetra", "default"))) {
-            SlashBladeModularItem item = (SlashBladeModularItem) MODLUAR.get();
-            ItemStack itemStack = new ItemStack(item);
-            IModularItem.putModuleInSlot(itemStack, "slashblade/handle", "slashblade/handle/handle", "handle/unnamed");
-            IModularItem.putModuleInSlot(itemStack, "slashblade/blade", "slashblade/blade/blade", "blade/unnamed");
-            IModularItem.putModuleInSlot(itemStack, "slashblade/tsuba", "slashblade/tsuba/tsuba", "tsuba/unnamed");
-            IModularItem.putModuleInSlot(itemStack, "slashblade/scabbard", "slashblade/scabbard/scabbard", "scabbard/unnamed");
-            event.accept(itemStack);
+            for (Item item : SBTIngredientManager.ITEMS) {
+                ItemStack itemStack = new ItemStack(item);
+                ISlashBladeTetra.putDefaultModule(itemStack);
+                event.accept(itemStack);
+            }
         }
     }
 

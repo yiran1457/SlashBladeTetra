@@ -99,11 +99,7 @@ public class SlashBladeModularItem extends ItemSlashBlade implements ISlashBlade
     @Override
     public ItemStack getDefaultInstance() {
         var stack = new ItemStack(this);
-        stack.getOrCreateTag().putString("id", "DefaultInstance");
-        IModularItem.putModuleInSlot(stack, "slashblade/handle", "slashblade/handle/handle", "handle/unnamed");
-        IModularItem.putModuleInSlot(stack, "slashblade/blade", "slashblade/blade/blade", "blade/unnamed");
-        IModularItem.putModuleInSlot(stack, "slashblade/tsuba", "slashblade/tsuba/tsuba", "tsuba/unnamed");
-        IModularItem.putModuleInSlot(stack, "slashblade/scabbard", "slashblade/scabbard/scabbard", "scabbard/unnamed");
+        ISlashBladeTetra.putDefaultModule(stack);
         return stack;
     }
 

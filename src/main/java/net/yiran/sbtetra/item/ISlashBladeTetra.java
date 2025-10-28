@@ -208,4 +208,12 @@ public interface ISlashBladeTetra extends IModularItem , IForgeItem {
         return result;
     }
 
+    static void putDefaultModule(ItemStack itemStack) {
+        itemStack.getOrCreateTag().putString("id", "DefaultInstance");
+        IModularItem.putModuleInSlot(itemStack, "slashblade/handle", "slashblade/handle/handle", "handle/unnamed");
+        IModularItem.putModuleInSlot(itemStack, "slashblade/blade", "slashblade/blade/blade", "blade/unnamed");
+        IModularItem.putModuleInSlot(itemStack, "slashblade/tsuba", "slashblade/tsuba/tsuba", "tsuba/unnamed");
+        IModularItem.putModuleInSlot(itemStack, "slashblade/scabbard", "slashblade/scabbard/scabbard", "scabbard/unnamed");
+    }
+
 }

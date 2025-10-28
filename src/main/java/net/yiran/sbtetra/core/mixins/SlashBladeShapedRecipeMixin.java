@@ -18,12 +18,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(SlashBladeShapedRecipe.class)
 public abstract class SlashBladeShapedRecipeMixin {
-    @Shadow(remap = false) protected abstract void updateEnchantment(ItemStack result, ItemStack ingredient);
+    @Shadow(remap = false)
+    protected abstract void updateEnchantment(ItemStack result, ItemStack ingredient);
 
-    @Inject(method = "assemble(Lnet/minecraft/world/inventory/CraftingContainer;Lnet/minecraft/core/RegistryAccess;)Lnet/minecraft/world/item/ItemStack;",at=@At("RETURN"),cancellable = true)
-    private void sbt$assemble(CraftingContainer container, RegistryAccess access, CallbackInfoReturnable<ItemStack> cir){
+    @Inject(method = "assemble(Lnet/minecraft/world/inventory/CraftingContainer;Lnet/minecraft/core/RegistryAccess;)Lnet/minecraft/world/item/ItemStack;", at = @At("RETURN"), cancellable = true)
+    private void sbt$assemble(CraftingContainer container, RegistryAccess access, CallbackInfoReturnable<ItemStack> cir) {
         Item item = SBTIngredientManager.getReplacement(cir.getReturnValue());
-        if(item!=null){
+        if (item != null) {
             container.getItems()
                     .stream()
                     .filter(stack -> SBTIngredientManager.ITEMS.contains(stack.getItem()))
@@ -34,7 +35,7 @@ public abstract class SlashBladeShapedRecipeMixin {
 
                         var stack = cir.getReturnValue();
 
-                        ISlashBladeState ingredientState =stack.getCapability(ItemSlashBlade.BLADESTATE).orElseThrow(NullPointerException::new);
+                        ISlashBladeState ingredientState = stack.getCapability(ItemSlashBlade.BLADESTATE).orElseThrow(NullPointerException::new);
                         resultState.deserializeNBT(ingredientState.serializeNBT());
                         result.getOrCreateTag().put("bladeState", resultState.serializeNBT());
                         this.updateEnchantment(result, stack);
