@@ -12,6 +12,7 @@ import net.yiran.sbtetra.craft.SBTIngredientManager;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Coerce;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -21,8 +22,13 @@ public abstract class SlashBladeSmithingRecipeMixin implements SmithingRecipe {
     @Shadow(remap = false)
     protected abstract void updateEnchantment(ItemStack result, ItemStack ingredient);
 
-    @Inject(method = "assemble", remap = false, at = @At("RETURN"), cancellable = true)
-    private void sbt$assemble(Container container, RegistryAccess access, CallbackInfoReturnable<ItemStack> cir) {
+    @Inject(
+            method = "m_5874_(Lnet/minecraft/world/Container;Lnet/minecraft/core/RegistryAccess;)Lnet/minecraft/world/item/ItemStack;",
+            remap = false,
+            at = @At("RETURN"),
+            cancellable = true
+    )
+    private void sbt$assemble(@Coerce Container container, RegistryAccess access, CallbackInfoReturnable<ItemStack> cir) {
         Item item = SBTIngredientManager.getReplacement(cir.getReturnValue());
         if (item != null) {
             ItemStack itemStack = container.getItem(1);

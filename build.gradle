@@ -114,7 +114,9 @@ dependencies {
     //implementation fg.deobf("blank:kubejs-forge:2001.6.5-build.16")
 
     //implementation fg.deobf("blank:ModernKubeEvent-2001:1.0.0")
-    implementation fg.deobf("curse.maven:slashblade-resharped-1022428:6982173")
+    //1.8.57
+    implementation fg.deobf("curse.maven:slashblade-resharped-1022428:7131890")
+    //implementation fg.deobf("curse.maven:slashblade-resharped-1022428:6982173")
     //implementation fg.deobf("blank:SlashBladeResharped-1.20.1:1.2.35")
 
     implementation fg.deobf("curse.maven:mysterious-mountain-lib-368098:6955193")
