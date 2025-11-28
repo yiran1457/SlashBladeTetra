@@ -7,7 +7,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.yiran.sbtetra.Config;
-import net.yiran.sbtetra.SlashBladeTetra;
 import net.yiran.sbtetra.craft.SBTIngredientManager;
 import net.yiran.sbtetra.item.SlashBladeModularItem;
 import org.spongepowered.asm.mixin.Final;
@@ -38,7 +37,7 @@ public class SlashBladeIngredientMixin extends Ingredient {
         super(p_43907_);
     }
 
-    @Inject(method = "<init>", at = @At("RETURN"))
+    @Inject(method = "<init>", remap = false, at = @At("RETURN"))
     private void init(Set<Item> items, RequestDefinition request, CallbackInfo ci) {
         Set<Item> itemSet = new HashSet<>(items);
         boolean wrapper = false;

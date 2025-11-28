@@ -14,7 +14,6 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.MinecraftForge;
@@ -137,7 +136,8 @@ public interface ISlashBladeTetra extends IModularItem , IForgeItem {
     @Override
     default void assemble(ItemStack itemStack, @Nullable Level world, float severity) {
         itemStack.getCapability(ItemSlashBlade.BLADESTATE).ifPresent(state -> {
-            state.setMaxDamage(getMaxDamage(itemStack));});
+            state.setMaxDamage(sbt$getMaxDamage(itemStack));
+        });
         IModularItem.super.assemble(itemStack, world, severity);
     }
 

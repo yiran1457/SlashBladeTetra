@@ -1,188 +1,220 @@
 plugins {
     id 'idea'
+    id 'java-library'
     id 'maven-publish'
-    id 'net.minecraftforge.gradle' version '[6.0,6.2)'
-    id 'org.spongepowered.mixin' version '0.7.+'
-    id 'org.parchmentmc.librarian.forgegradle' version '1.+'
+    id 'net.neoforged.moddev.legacyforge' version '2.0.91'
+}
+
+tasks.named('wrapper', Wrapper).configure {
+    // 在这里定义包装器值，以便在更新 gradlew.properties 时不必总是这样做。
+    // 将其切换为 Wrapper.DistributionType.ALL 将下载附带的完整 gradle 源
+    // 光标悬停在 gradle 类和方法上的附加文档。然而，这伴随着增加
+    // Gradle 的文件大小。如果您确实将其切换为 ALL，请随后运行 Gradle 包装器任务两次。
+    // （通过检查 gradle/wrapper/gradle-wrapper.properties 来验证 distributionUrl 现在是否指向 `-all`）
+    distributionType = Wrapper.DistributionType.BIN
 }
 
 version = mod_version
 group = mod_group_id
 
+repositories {
+    mavenLocal()
+}
+
 base {
     archivesName = mod_name
 }
 
-// Mojang ships Java 17 to end users in 1.18+, so your mod should target Java 17.
+// Mojang ships Java 17 to end users in 1.20.1, so mods should target Java 17.
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
-println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty 'java.vm.version'} (${System.getProperty 'java.vendor'}), Arch: ${System.getProperty 'os.arch'}"
-minecraft {
-    mappings channel: mapping_channel, version: mapping_version
+legacyForge {
+    // Specify the version of MinecraftForge to use.
+    version = project.minecraft_version + '-' + project.forge_version
 
-    copyIdeResources = true
+    parchment {
+        mappingsVersion = project.parchment_mappings_version
+        minecraftVersion = project.parchment_minecraft_version
+    }
 
-    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+    // This line is optional. Access Transformers are automatically detected
+    // accessTransformers = project.files('src/main/resources/META-INF/accesstransformer.cfg')
 
     // Default run configurations.
     // These can be tweaked, removed, or duplicated as needed.
     runs {
-        // applies to all the run configs below
-        configureEach {
-            jvmArgs.add "-XX:+AllowEnhancedClassRedefinition"
-            jvmArgs.add "-XX:HotswapAgent=fatjar"
-            workingDirectory project.file('run')
-
-            property 'forge.logging.markers', 'REGISTRIES'
-            property 'forge.logging.console.level', 'debug'
-
-            mods {
-                "${mod_id}" {
-                    source sourceSets.main
-                }
-            }
-        }
-
         client {
+            client()
+
             // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
-            property 'forge.enabledGameTestNamespaces', mod_id
+            systemProperty 'forge.enabledGameTestNamespaces', project.mod_id
         }
 
         server {
-            property 'forge.enabledGameTestNamespaces', mod_id
-            args '--nogui'
+            server()
+            //programArgument '--nogui'
+            systemProperty 'forge.enabledGameTestNamespaces', project.mod_id
         }
 
+        // 此运行配置启动 GameTestServer 并运行所有已注册的游戏测试，然后退出。
+        // 默认情况下，如果没有提供游戏测试，服务器将会崩溃。
+        // 对于 /test 命令下的其他运行配置，默认情况下也会启用游戏测试系统。
         gameTestServer {
-            property 'forge.enabledGameTestNamespaces', mod_id
+            type = "gameTestServer"
+            systemProperty 'forge.enabledGameTestNamespaces', project.mod_id
         }
 
         data {
-            // example of overriding the workingDirectory set in configureEach above
-            workingDirectory project.file('run-data')
+            data()
+
+            // example of overriding the workingDirectory set in configureEach above, uncomment if you want to use it
+            // gameDirectory = project.file('run-data')
 
             // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
-            args '--mod', mod_id, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+            programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
+        }
+
+        // applies to all the run configs above
+        configureEach {
+            // Recommended logging data for a userdev environment
+            // The markers can be added/remove as needed separated by commas.
+            // "SCAN": For mods scan.
+            // "REGISTRIES": For firing of registry events.
+            // "REGISTRYDUMP": For getting the contents of all registries.
+            systemProperty 'forge.logging.markers', 'REGISTRIES'
+
+            jvmArguments.add "-XX:+AllowEnhancedClassRedefinition"
+            jvmArguments.add "-XX:HotswapAgent=fatjar"
+            // Recommended logging level for the console
+            // You can set various levels here.
+            // Please read: https://stackoverflow.com/questions/2031163/when-to-use-the-different-log-levels
+            logLevel = org.slf4j.event.Level.DEBUG
+        }
+    }
+
+    mods {
+        // 定义 mod <-> 源绑定
+        // 这些用于告诉游戏哪些来源适用于哪个模组
+        // 在单个 mod 项目中大部分是可选的
+        // 但多 mod 项目应该为每个 mod 定义一个
+        "${mod_id}" {
+            sourceSet(sourceSets.main)
         }
     }
 }
 
+// 包括数据生成器生成的资源。
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
+// 设置一个名为“localRuntime”的依赖配置和一个名为“modLocalRuntime”的反混淆配置
+// 这些配置应该使用而不是'runtimeOnly'来声明
+// 将存在用于运行时测试的依赖项，但那是
+// “可选”，意味着它不会被该 mod 的依赖者拉动。
+configurations {
+    runtimeClasspath.extendsFrom localRuntime
+}
+obfuscation {
+    createRemappingConfiguration(configurations.localRuntime)
+}
 repositories {
     maven {
         url 'https://cursemaven.com'
     }
-    // Put repositories for dependencies here
-    // ForgeGradle automatically adds the Forge maven and Maven Central for you
-
-    // If you have mod jar dependencies in ./libs, you can declare them as a repository like so.
-    // See https://docs.gradle.org/current/userguide/declaring_repositories.html#sub:flat_dir_resolver
     flatDir {
         dir 'libs'
     }
 }
 
-// Mixins
+dependencies {
+    implementation 'org.jetbrains:annotations:24.0.1'
+    modCompileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:0.2.0-rc.2"))
+    modImplementation("io.github.llamalad7:mixinextras-forge:0.2.0-rc.2") /*{
+        jarJar.ranged(it, "[0.2.0-rc.2,)")
+    }*/
+    modImplementation("curse.maven:jei-238222:6600311")
+    modImplementation("curse.maven:mutil-351914:6418901")
+    modImplementation("curse.maven:tetra-289712:6418957")
+    modCompileOnly("curse.maven:extraholopage-1301292:7021781")
+    //modImplementation("blank:ExtraHoloPage-6.9.0:1.0.0")
+
+    //modImplementation("blank:architectury-9.2.14:forge")
+
+    //modImplementation("blank:jei-1.20.1:forge-15.20.0.106")
+    //modImplementation("blank:emi-1.1.20+1.20.1:forge")
+    modRuntimeOnly("blank:IBEEditor-1.20:2.2.8-forge")
+    modRuntimeOnly("blank:ModernUI-Forge:1.20.1-3.11.1.6-universal")
+
+    //modImplementation("blank:rhino-forge:2001.2.3-build.10")
+    //modImplementation("blank:kubejs-forge:2001.6.5-build.16")
+
+
+    //1.8.57
+    //modImplementation("curse.maven:slashblade-resharped-1022428:7131890")
+    //1.8.60
+    modImplementation("curse.maven:slashblade-resharped-1022428:7194599")
+    //modImplementation("curse.maven:slashblade-resharped-1022428:6982173")
+    //modImplementation("blank:SlashBladeResharped-1.20.1:1.2.35")
+
+    modImplementation("curse.maven:mysterious-mountain-lib-368098:6955193")
+    modImplementation("curse.maven:slashblade-hf-blade-1299888:6917439")
+    modImplementation("curse.maven:the-last-smith-306385:6982449")
+}
+
+// Uncomment the lines below if you wish to configure mixin. The mixin file should be named modid.mixins.json.
 
 mixin {
-    add sourceSets.main, "slashbladetetra.refmap.json"
-    config "slashbladetetra.mixins.json"
+    add sourceSets.main, "${mod_id}.refmap.json"
+    config "${mod_id}.mixins.json"
 }
 
 dependencies {
-    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
-
-    compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:0.2.0-rc.2"))
-    implementation("io.github.llamalad7:mixinextras-forge:0.2.0-rc.2") /*{
-        jarJar.ranged(it, "[0.2.0-rc.2,)")
-    }*/
-    implementation fg.deobf("curse.maven:jei-238222:6600311")
-    implementation fg.deobf("blank:mutil-1.20.1:6.2.0")
-    implementation fg.deobf("blank:tetra-1.20.1:6.9.0")
-    implementation fg.deobf("curse.maven:extraholopage-1301292:7021781")
-    //implementation fg.deobf("blank:ExtraHoloPage-6.9.0:1.0.0")
-
-    //implementation fg.deobf("blank:architectury-9.2.14:forge")
-
-    //implementation fg.deobf("blank:jei-1.20.1:forge-15.20.0.106")
-    //implementation fg.deobf("blank:emi-1.1.20+1.20.1:forge")
-    implementation fg.deobf("blank:IBEEditor-1.20:2.2.8-forge")
-    implementation fg.deobf("blank:ModernUI-Forge:1.20.1-3.11.1.6-universal")
-
-    //implementation fg.deobf("blank:rhino-forge:2001.2.3-build.10")
-    //implementation fg.deobf("blank:kubejs-forge:2001.6.5-build.16")
-
-    //implementation fg.deobf("blank:ModernKubeEvent-2001:1.0.0")
-    //1.8.57
-    implementation fg.deobf("curse.maven:slashblade-resharped-1022428:7131890")
-    //implementation fg.deobf("curse.maven:slashblade-resharped-1022428:6982173")
-    //implementation fg.deobf("blank:SlashBladeResharped-1.20.1:1.2.35")
-
-    implementation fg.deobf("curse.maven:mysterious-mountain-lib-368098:6955193")
-    implementation fg.deobf("curse.maven:slashblade-hf-blade-1299888:6917439")
-    implementation fg.deobf("curse.maven:the-last-smith-306385:6982449")
-    //implementation fg.deobf("blank:cialloblade-1.0.1:test")
-/*
-    compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:0.4.1"))
-    implementation(jarJar("io.github.llamalad7:mixinextras-forge:0.4.1")) {
-        jarJar.ranged(it, "[0.4.1,)")
-    }*/
-    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+    annotationProcessor 'org.spongepowered:mixin:0.8.6:processor'
 }
 
-// This block of code expands all declared replace properties in the specified resource targets.
-// A missing property will result in an error. Properties are expanded using ${} Groovy notation.
-// When "copyIdeResources" is enabled, this will also run before the game launches in IDE environments.
-// See https://docs.gradle.org/current/dsl/org.gradle.language.jvm.tasks.ProcessResources.html
-tasks.named('processResources', ProcessResources).configure {
+jar {
+    manifest.attributes([
+            "MixinConfigs": "${mod_id}.mixins.json"
+    ])
+}
+
+
+// 此代码块扩展指定资源目标中所有声明的替换属性。
+// 缺少属性将导致错误。属性使用 ${} Groovy 表示法进行扩展。
+var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
     var replaceProperties = [
-            minecraft_version: minecraft_version, minecraft_version_range: minecraft_version_range,
-            forge_version: forge_version, forge_version_range: forge_version_range,
-            loader_version_range: loader_version_range,
-            mod_id: mod_id, mod_name: mod_name, mod_license: mod_license, mod_version: mod_version,
-            mod_authors: mod_authors, mod_description: mod_description,
+            minecraft_version      : minecraft_version,
+            minecraft_version_range: minecraft_version_range,
+            forge_version          : forge_version,
+            forge_version_range    : forge_version_range,
+            loader_version_range   : loader_version_range,
+            mod_id                 : mod_id,
+            mod_name               : mod_name,
+            mod_license            : mod_license,
+            mod_version            : mod_version,
+            mod_authors            : mod_authors,
+            mod_description        : mod_description
     ]
     inputs.properties replaceProperties
-
-    filesMatching(['META-INF/mods.toml', 'pack.mcmeta']) {
-        expand replaceProperties + [project: project]
-    }
+    expand replaceProperties
+    from "src/main/templates"
+    into "build/generated/sources/modMetadata"
 }
+// 包含“generateModMetadata”的输出作为构建的输入目录
+// 这适用于通过 Gradle 和 IDE 构建.
+sourceSets.main.resources.srcDir generateModMetadata
+// 为了避免手动运行“generateModMetadata”，请使其在每次项目重新加载时运行
+legacyForge.ideSyncTask generateModMetadata
 
-// Example for how to get properties into the manifest for reading at runtime.
-tasks.named('jar', Jar).configure {
-    manifest {
-        attributes([
-                'Specification-Title'     : mod_id,
-                'Specification-Vendor'    : mod_authors,
-                'Specification-Version'   : '1', // We are version 1 of ourselves
-                'Implementation-Title'    : project.name,
-                'Implementation-Version'  : project.jar.archiveVersion,
-                'Implementation-Vendor'   : mod_authors,
-                'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
-        ])
-    }
-
-    // This is the preferred method to reobfuscate your jar file
-    finalizedBy 'reobfJar'
-}
-
-// However if you are in a multi-project build, dev time needs unobfed jar files, so you can delay the obfuscation until publishing by doing:
-// tasks.named('publish').configure {
-//     dependsOn 'reobfJar'
-// }
-
-// Example configuration to allow publishing using the maven-publish plugin
+// 允许使用 maven-publish 插件进行发布的示例配置
 publishing {
     publications {
         register('mavenJava', MavenPublication) {
-            artifact jar
+            from components.java
         }
     }
     repositories {
         maven {
-            url "file://${project.projectDir}/mcmodsrepo"
+            url "file://${project.projectDir}/repo"
         }
     }
 }
@@ -190,5 +222,11 @@ publishing {
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
 }
-compileJava.options.compilerArgs.add '-parameters'
-compileTestJava.options.compilerArgs.add '-parameters'
+
+// IDEA no longer automatically downloads sources/javadoc jars for dependencies, so we need to explicitly enable the behavior.
+idea {
+    module {
+        downloadSources = true
+        downloadJavadoc = true
+    }
+}

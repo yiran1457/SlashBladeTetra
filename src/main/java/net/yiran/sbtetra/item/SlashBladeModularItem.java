@@ -17,7 +17,6 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.common.MinecraftForge;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.event.ModularItemDamageEvent;
-import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.SchematicRegistry;
 import se.mickelus.tetra.module.data.EffectData;
 import se.mickelus.tetra.module.data.ItemProperties;
@@ -48,7 +47,6 @@ public class SlashBladeModularItem extends ItemSlashBlade implements ISlashBlade
         DataManager.instance.moduleData.onReload(this::clearCaches);
         SchematicRegistry.instance.registerSchematic(new RepairSchematic(this, "slashblade"));
     }
-
 
     @Override
     public Item getItem() {
@@ -103,10 +101,11 @@ public class SlashBladeModularItem extends ItemSlashBlade implements ISlashBlade
         return stack;
     }
 
+    /*
     @Override
     public int getMaxDamage(ItemStack stack) {
         return sbt$getMaxDamage(stack);
-    }
+    }*/
 
     @Override
     public <T extends LivingEntity> int damageItem(ItemStack stack, int amount, T entity, Consumer<T> onBroken) {

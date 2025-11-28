@@ -9,13 +9,14 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.SmithingRecipe;
 import net.yiran.sbtetra.craft.SBTIngredientManager;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Coerce;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+@SuppressWarnings("all")
 @Mixin(SlashBladeSmithingRecipe.class)
 public abstract class SlashBladeSmithingRecipeMixin implements SmithingRecipe {
 
@@ -24,11 +25,12 @@ public abstract class SlashBladeSmithingRecipeMixin implements SmithingRecipe {
 
     @Inject(
             method = "m_5874_(Lnet/minecraft/world/Container;Lnet/minecraft/core/RegistryAccess;)Lnet/minecraft/world/item/ItemStack;",
+            //method = "assemble",
             remap = false,
             at = @At("RETURN"),
             cancellable = true
     )
-    private void sbt$assemble(@Coerce Container container, RegistryAccess access, CallbackInfoReturnable<ItemStack> cir) {
+    private void sbt$assemble(@Nullable Container container,@Nullable RegistryAccess access, CallbackInfoReturnable<ItemStack> cir) {
         Item item = SBTIngredientManager.getReplacement(cir.getReturnValue());
         if (item != null) {
             ItemStack itemStack = container.getItem(1);
