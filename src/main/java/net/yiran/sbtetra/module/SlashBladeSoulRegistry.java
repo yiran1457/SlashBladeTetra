@@ -12,6 +12,7 @@ import net.minecraft.world.item.ItemStack;
 import net.yiran.sbtetra.api.SAModuleRegister;
 import net.yiran.sbtetra.core.IModuleRegistry;
 import net.yiran.sbtetra.core.IOutcomeMaterial;
+import se.mickelus.tetra.module.ModuleRegistry;
 import se.mickelus.tetra.module.SchematicRegistry;
 import se.mickelus.tetra.module.data.ModuleData;
 import se.mickelus.tetra.module.data.VariantData;
@@ -77,7 +78,7 @@ public class SlashBladeSoulRegistry {
     }
 
     public static void registerModule(ResourceLocation identifier, ModuleData data) {
-        IModuleRegistry.instance.registerModule(
+        ((IModuleRegistry)ModuleRegistry.instance).registerModule(
                 identifier,
                 new SlashBladeSoulModule(identifier, data)
         );
