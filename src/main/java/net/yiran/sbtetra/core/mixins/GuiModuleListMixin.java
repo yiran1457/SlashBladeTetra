@@ -32,6 +32,7 @@ public class GuiModuleListMixin extends GuiElement {
     public GuiModuleListMixin(int x, int y, int width, int height) {
         super(x, y, width, height);
     }
+
     @Inject(method = "updateMajorModules",at = @At(
             value = "HEAD"
     ), cancellable = true)

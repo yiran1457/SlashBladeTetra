@@ -31,8 +31,6 @@ import se.mickelus.tetra.aspect.TetraEnchantmentHelper;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 import se.mickelus.tetra.module.ModuleRegistry;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import static mods.flammpfeil.slashblade.item.ItemSlashBlade.BLADESTATE;
@@ -96,7 +94,7 @@ public class SlashBladeTetra {
         if (!(replaceItemStack.getItem() instanceof SlashBladeModularItem slashBladeModularItem))
             return replaceItemStack;
         var z = SBTIngredientManager.getReplacement(replaceItemStack);
-        ItemStack result = new ItemStack(SBTIngredientManager.getReplacement(itemStack)) ;
+        ItemStack result = new ItemStack(SBTIngredientManager.getReplacement(itemStack));
         result.setTag(replaceItemStack.getOrCreateTag());
         result.getTag().put("bladeState", itemStack.getTag().getCompound("bladeState").copy());
         if (itemStack.capNBT != null)

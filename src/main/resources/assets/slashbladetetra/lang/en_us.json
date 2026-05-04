@@ -16,6 +16,10 @@
   "tetra.stats.ProudSoulCount.tooltip": "This blade contains §e%s§r Proud Souls",
   "tetra.stats.RefineCount": "Refinement Count",
   "tetra.stats.RefineCount.tooltip": "This blade has §e%s§r refinements",
+  "tetra.stats.sbtdurability": "Durability",
+  "tetra.stats.sbtdurability.tooltip": "This item has §e%s§r durability",
+  "tetra.stats.sbtdurability.tooltip_extended": "§7Items typically take 1 or 2 durability damage when used, when the durability reaches 0 the item breaks and it has to be repaired in a workbench before it can be used again",
+
 
   "tetra.improvement.soul_infusion.name": "Soul Infusion",
   "tetra.improvement.soul_infusion.description": "Infuse parts with Proud Souls to unlock greater potential",

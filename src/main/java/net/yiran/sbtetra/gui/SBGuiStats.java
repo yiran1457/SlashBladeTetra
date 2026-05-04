@@ -2,12 +2,14 @@ package net.yiran.sbtetra.gui;
 
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.yiran.sbtetra.gui.statgetter.SBTStatGetterDurability;
 import net.yiran.sbtetra.gui.tooltipgetter.ToolTipGetterRefineStrengthening;
 import net.yiran.sbtetra.gui.tooltipgetter.ToolTipGetterSBCap;
 import se.mickelus.tetra.blocks.workbench.gui.WorkbenchStatsGui;
 import se.mickelus.tetra.gui.stats.StatsHelper;
 import se.mickelus.tetra.gui.stats.bar.GuiStatBar;
 import se.mickelus.tetra.gui.stats.getter.LabelGetterBasic;
+import se.mickelus.tetra.gui.stats.getter.TooltipGetterInteger;
 import se.mickelus.tetra.items.modular.impl.holo.gui.craft.HoloStatsGui;
 
 import java.util.ArrayList;
@@ -21,6 +23,7 @@ public class SBGuiStats {
     public static GuiStatBar KILL_COUNT;
     public static GuiStatBar PROUD_SOUL_COUNT;
     public static GuiStatBar REFINE_COUNT;
+    public static GuiStatBar SBT_DURABILITY;
     static{
         BARS = new ArrayList<>();
         REFINE = new GuiStatBar(0, 0, StatsHelper.barLength,
@@ -46,6 +49,10 @@ public class SBGuiStats {
                 new ToolTipGetterSBCap("RefineCount",ToolTipGetterSBCap.REFINE_COUNT)
         );
         BARS.add(REFINE_COUNT);
+
+        SBT_DURABILITY=new GuiStatBar(0, 0, StatsHelper.barLength,
+                "tetra.stats.sbtdurability", 0, 2400, false, SBTStatGetterDurability.instance, LabelGetterBasic.integerLabel, new TooltipGetterInteger("tetra.stats.sbtdurability.tooltip", SBTStatGetterDurability.instance));
+        BARS.add(SBT_DURABILITY);
     }
 
     @OnlyIn(Dist.CLIENT)

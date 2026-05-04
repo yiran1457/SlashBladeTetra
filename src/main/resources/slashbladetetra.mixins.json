@@ -9,11 +9,13 @@
     "OutcomeMaterialMixin",
     "SlashBladeIngredientMixin",
     "SlashBladeShapedRecipeMixin",
-    "SlashBladeSmithingRecipeMixin"
+    "SlashBladeSmithingRecipeMixin",
+    "StatGetterDurabilityMixin"
   ],
   "client": [
     "GuiModuleListMixin",
-    "ItemModuleMixin"
+    "ItemModuleMixin",
+    "WorkbenchScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1

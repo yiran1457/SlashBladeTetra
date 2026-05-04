@@ -16,6 +16,9 @@
   "tetra.stats.ProudSoulCount.tooltip": "这把刀击拥有§e%s§r耀魂值",
   "tetra.stats.RefineCount": "锻造数",
   "tetra.stats.RefineCount.tooltip": "这把刀拥有§e%s§r锻造数",
+  "tetra.stats.sbtdurability": "耐久度",
+  "tetra.stats.sbtdurability.tooltip": "该拔刀有§e%s§r最大耐久度",
+  "tetra.stats.sbtdurability.tooltip_extended": "§7器具在使用时通常会损失1或2点耐久度，剩余耐久度被试图降低到比1低的值时，器具就会损坏，必须在加工台修复后才能再次使用",
 
   "tetra.improvement.soul_infusion.name": "注魂",
   "tetra.improvement.soul_infusion.description": "向部件注入耀魂的力量，获取更高的极限",
