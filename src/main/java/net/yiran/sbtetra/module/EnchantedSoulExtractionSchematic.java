@@ -1,14 +1,17 @@
 package net.yiran.sbtetra.module;
 
+import mods.flammpfeil.slashblade.SlashBladeConfig;
 import mods.flammpfeil.slashblade.capability.slashblade.ISlashBladeState;
-import mods.flammpfeil.slashblade.init.SBItems;
+import mods.flammpfeil.slashblade.registry.SlashBladeItems;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraftforge.common.ToolAction;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.yiran.sbtetra.Config;
-import net.yiran.sbtetra.item.SlashBladeModularItem;
+import net.yiran.sbtetra.item.ISlashBladeTetra;
 import org.jetbrains.annotations.Nullable;
 import se.mickelus.tetra.TetraToolActions;
 import se.mickelus.tetra.module.data.GlyphData;
@@ -17,19 +20,21 @@ import se.mickelus.tetra.module.schematic.SchematicType;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import static mods.flammpfeil.slashblade.item.ItemSlashBlade.BLADESTATE;
 
 @SuppressWarnings("all")
-public class SoulExtractionSchematic implements UpgradeSchematic {
+public class EnchantedSoulExtractionSchematic implements UpgradeSchematic {
     public GlyphData glyph;
     public String key;
     public SchematicType schematicType = SchematicType.other;
 
-    public SoulExtractionSchematic() {
+    public EnchantedSoulExtractionSchematic() {
         this.glyph = new GlyphData(new ResourceLocation("slashbladetetra:textures/gui/texture.png"), 64, 0);
-        this.key = "soulextraction";
+        this.key = "enchantedsoulextraction";
     }
 
     @Override
@@ -49,7 +54,7 @@ public class SoulExtractionSchematic implements UpgradeSchematic {
 
     @Override
     public String getDescription(@Nullable ItemStack itemStack) {
-        return I18n.get("tetra/schematic/" + key + ".description", Config.MaxSoulDrop.get(), Config.SoulDropNeeded.get());
+        return I18n.get("tetra/schematic/" + key + ".description", Config.MaxEnchantedSoulDrop.get(), Config.EnchantedSoulDropNeeded.get());
     }
 
 
@@ -80,7 +85,7 @@ public class SoulExtractionSchematic implements UpgradeSchematic {
 
     @Override
     public boolean isRelevant(ItemStack itemStack) {
-        return itemStack.getItem() instanceof SlashBladeModularItem;
+        return itemStack.getItem() instanceof ISlashBladeTetra;
     }
 
     @Override
@@ -88,7 +93,7 @@ public class SoulExtractionSchematic implements UpgradeSchematic {
         if (slot == null || !slot.equals("slashblade/soul")) return false;
         ISlashBladeState state = targetStack.getCapability(BLADESTATE).orElse(null);
         if (state == null) return false;
-        if (state.getProudSoulCount() < Config.SoulDropNeeded.get()) return false;
+        if (state.getKillCount() - 1000 < Config.EnchantedSoulDropNeeded.get()) return false;
         return true;
     }
 
@@ -114,16 +119,28 @@ public class SoulExtractionSchematic implements UpgradeSchematic {
         ItemStack newStack = itemStack.copy();
         if (b)
             newStack.getCapability(BLADESTATE).ifPresent((bladeState) -> {
-                int soulCount = bladeState.getProudSoulCount();
-                int count = Math.min(Config.MaxSoulDrop.get(), soulCount / Config.SoulDropNeeded.get());
-                ItemStack soulStack = new ItemStack(SBItems.proudsoul_tiny.asItem());
-                soulStack.setCount(count);
-                if (!player.getInventory().add(soulStack)) {
-                    player.drop(soulStack, false);
+
+                int need = Config.EnchantedSoulDropNeeded.get();
+                int count = Math.min((bladeState.getKillCount() - 1000) / need, Config.MaxEnchantedSoulDrop.get());
+
+                List<Enchantment> enchantments = ForgeRegistries.ENCHANTMENTS.getValues().stream()
+                        .filter(newStack::canApplyAtEnchantingTable)
+                        .filter(enchantment -> !SlashBladeConfig.NON_DROPPABLE_ENCHANTMENT.get()
+                                .contains(Objects.requireNonNull(ForgeRegistries.ENCHANTMENTS.getKey(enchantment)).toString()))
+                        .toList();
+                for (int i = 0; i < count; i += 1) {
+                    ItemStack enchanted_soul = new ItemStack(SlashBladeItems.PROUDSOUL_TINY.get());
+                    Enchantment enchant = enchantments.get(player.getRandom().nextInt(0, enchantments.size()));
+                    if (enchant != null) {
+
+                        enchanted_soul.enchant(enchant, 1);
+                        if (!player.getInventory().add(enchanted_soul)) {
+                            player.drop(enchanted_soul, false);
+                        }
+
+                    }
+                    bladeState.setKillCount(bladeState.getKillCount() - need);
                 }
-                bladeState.setProudSoulCount(soulCount - Config.SoulDropNeeded.get() * count);
-
-
             });
         return newStack;
     }

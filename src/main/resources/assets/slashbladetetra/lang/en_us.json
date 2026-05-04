@@ -90,5 +90,9 @@
   "tetra/schematic/unciallo.name": "UnCiallo",
   "tetra/schematic/unciallo.description": "Removes the 'Ciallo' sound effect from your SlashBlade",
   "tetra/schematic/soulextraction.name": "Soul Extraction",
-  "tetra/schematic/soulextraction.description": "Converts soul essence into Broken Radiant Soul. Up to 16 at a time, each consuming 500 soul essence points."
+  "tetra/schematic/soulextraction.description": "Converts soul essence into Broken Radiant Soul. Up to 16 at a time, each consuming 500 soul essence points.",
+  "tetra/schematic/soulextraction.name": "Basic Soul Extraction",
+  "tetra/schematic/soulextraction.description": "Convert ProudSoul into ProudSoul Tiny, up to §e%s§r at a time, each consuming §e%s§r ProudSoul",
+  "tetra/schematic/enchantedsoulextraction.name": "Enchanted Soul Extraction",
+  "tetra/schematic/enchantedsoulextraction.description": "Convert kill count into Enchanted ProudSoul, up to §e%s§r at a time, each consuming §e%s§r kill count\nKill count will not drop below 1,000"
 }

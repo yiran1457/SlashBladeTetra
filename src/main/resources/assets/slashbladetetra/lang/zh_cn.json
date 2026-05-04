@@ -89,7 +89,9 @@
   "tetra/schematic/ciallo.description": "将「 Ciallo 」SE加入你的拔刀",
   "tetra/schematic/unciallo.name": "UnCiallo",
   "tetra/schematic/unciallo.description": "将「 Ciallo 」SE从你的拔刀移除",
-  "tetra/schematic/soulextraction.name": "萃魂",
-  "tetra/schematic/soulextraction.description": "将耀魂值转换成破碎耀魂，一次最多16个，每个耀魂消耗500耀魂值"
+  "tetra/schematic/soulextraction.name": "普·萃魂",
+  "tetra/schematic/soulextraction.description": "将耀魂值转换成破碎耀魂，一次最多§e%s§r个，每个耀魂消耗§e%s§r耀魂值",
+  "tetra/schematic/enchantedsoulextraction.name": "魔·萃魂",
+  "tetra/schematic/enchantedsoulextraction.description": "将杀敌数转换成附魔耀魂，一次最多§e%s§r个，每个耀魂消耗§e%s§r杀敌数\n杀敌数不会减少至1,000以下"
 
 }

@@ -24,13 +24,15 @@ public abstract class SlashBladeSmithingRecipeMixin implements SmithingRecipe {
     protected abstract void updateEnchantment(ItemStack result, ItemStack ingredient);
 
     @Inject(
-            method = "m_5874_(Lnet/minecraft/world/Container;Lnet/minecraft/core/RegistryAccess;)Lnet/minecraft/world/item/ItemStack;",
-            //method = "assemble",
+            method = {
+                    "m_5874_(Lnet/minecraft/world/Container;Lnet/minecraft/core/RegistryAccess;)Lnet/minecraft/world/item/ItemStack;",
+                    "assemble"
+            },
             remap = false,
             at = @At("RETURN"),
             cancellable = true
     )
-    private void sbt$assemble(@Nullable Container container,@Nullable RegistryAccess access, CallbackInfoReturnable<ItemStack> cir) {
+    private void sbt$assemble(@Nullable Container container, @Nullable RegistryAccess access, CallbackInfoReturnable<ItemStack> cir) {
         Item item = SBTIngredientManager.getReplacement(cir.getReturnValue());
         if (item != null) {
             ItemStack itemStack = container.getItem(1);

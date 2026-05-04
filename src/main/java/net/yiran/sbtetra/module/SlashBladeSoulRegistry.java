@@ -48,7 +48,7 @@ public class SlashBladeSoulRegistry {
     public static void addVariantData(ResourceLocation SAName) {
         VariantData test = new VariantData();
         test.key = "sa/" + SAName;
-        SAModuleRegister.dataHashMap.getOrDefault(SAName,SAModuleRegister.defaultModuleData).apply(test);
+        SAModuleRegister.dataHashMap.getOrDefault(SAName, SAModuleRegister.defaultModuleData).apply(test);
         test.glyph.textureLocation = new ResourceLocation("slashbladetetra:textures/gui/texture.png");
         test.glyph.textureX = 64;
         VARIANT_DATA.add(test);
@@ -58,7 +58,7 @@ public class SlashBladeSoulRegistry {
         UniqueOutcomeDefinition test = new UniqueOutcomeDefinition();
 
         CompoundTag tag = new CompoundTag();
-        tag.putString("SpecialAttackType",  SAName);
+        tag.putString("SpecialAttackType", SAName);
         test.material = (OutcomeMaterial) IOutcomeMaterial.create()
                 .setCount(4)
                 //.addItemStack(stack)
@@ -78,7 +78,7 @@ public class SlashBladeSoulRegistry {
     }
 
     public static void registerModule(ResourceLocation identifier, ModuleData data) {
-        ((IModuleRegistry)ModuleRegistry.instance).registerModule(
+        ((IModuleRegistry) ModuleRegistry.instance).registerModule(
                 identifier,
                 new SlashBladeSoulModule(identifier, data)
         );
@@ -116,6 +116,7 @@ public class SlashBladeSoulRegistry {
         SCHEMATIC.outcomes = OUTCOME_DEFINITION.toArray(new OutcomeDefinition[0]);
 
         SchematicRegistry.instance.registerSchematic(new SoulExtractionSchematic());
+        SchematicRegistry.instance.registerSchematic(new EnchantedSoulExtractionSchematic());
     }
 
 }

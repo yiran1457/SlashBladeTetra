@@ -101,12 +101,18 @@ public class SlashBladeModularItem extends ItemSlashBlade implements ISlashBlade
         return stack;
     }
 
-    /*
+    @Override
+    public int getDamage(ItemStack stack) {
+        super.getDamage(stack);
+        return stack.getOrCreateTagElement("bladeState").getInt("Damage");
+    }
+
+/*
     @Override
     public int getMaxDamage(ItemStack stack) {
         return sbt$getMaxDamage(stack);
-    }*/
-
+    }
+*/
     @Override
     public <T extends LivingEntity> int damageItem(ItemStack stack, int amount, T entity, Consumer<T> onBroken) {
         ModularItemDamageEvent event = new ModularItemDamageEvent(entity, stack, amount);
