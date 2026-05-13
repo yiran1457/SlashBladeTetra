@@ -12,6 +12,8 @@ import net.minecraft.world.item.ItemStack;
 import net.yiran.sbtetra.api.SAModuleRegister;
 import net.yiran.sbtetra.core.IModuleRegistry;
 import net.yiran.sbtetra.core.IOutcomeMaterial;
+import net.yiran.sbtetra.module.schematic.EnchantedSoulExtractionSchematic;
+import net.yiran.sbtetra.module.schematic.SoulExtractionSchematic;
 import se.mickelus.tetra.module.ModuleRegistry;
 import se.mickelus.tetra.module.SchematicRegistry;
 import se.mickelus.tetra.module.data.ModuleData;

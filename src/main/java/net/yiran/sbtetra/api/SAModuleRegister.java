@@ -22,16 +22,6 @@ public class SAModuleRegister {
                 new AttributeModifier(UUID.nameUUIDFromBytes(new byte[]{127, 1, 64, 11, 45, 14}), "Reach amplifer", 3, AttributeModifier.Operation.ADDITION)
         );
         defaultModuleData.addRefineEffectLevel(16);
-/*
-        dataHashMap.put(
-                new ResourceLocation("slashblade:judgement_cut"),
-                new ModuleData()
-                        .addRefineEffectLevel(100)
-                        .addAttributeModifier(
-                                ForgeMod.ENTITY_REACH.get(),
-                                new AttributeModifier(UUID.nameUUIDFromBytes(new byte[]{127, 1, 64, 11, 45, 14}), "Reach amplifer", 3, AttributeModifier.Operation.MULTIPLY_TOTAL)
-                        )
-        );*/
     }
 
     public static class ModuleData {

@@ -31,7 +31,7 @@
   "tetra/schematic/slashblade/shared/hone/soul_infusion_2.slot1": "注魂材料",
   "tetra/schematic/slashblade/shared/hone/soul_infusion_2.description": "使用§e耀魂碎片§r进行注魂",
 
-  "tetra/schematic/slashblade/shared/hone/soul_infusion_3.name": "注魂 II",
+  "tetra/schematic/slashblade/shared/hone/soul_infusion_3.name": "注魂 III",
   "tetra/schematic/slashblade/shared/hone/soul_infusion_3.slot1": "注魂材料",
   "tetra/schematic/slashblade/shared/hone/soul_infusion_3.description": "使用§e耀魂铁锭§r进行注魂",
 
@@ -93,8 +93,9 @@
   "tetra/schematic/unciallo.name": "UnCiallo",
   "tetra/schematic/unciallo.description": "将「 Ciallo 」SE从你的拔刀移除",
   "tetra/schematic/soulextraction.name": "普·萃魂",
-  "tetra/schematic/soulextraction.description": "将耀魂值转换成破碎耀魂，一次最多§e%s§r个，每个耀魂消耗§e%s§r耀魂值",
+  "tetra/schematic/soulextraction.slot": "破限材料",
+  "tetra/schematic/soulextraction.description": "将耀魂值转换成破碎耀魂，一次最多§e%s§r个，每个耀魂消耗§e%s§r耀魂值\n\n\n可选 : 消耗§e特殊材料§r，取消单次转换的§e上限§r\n产出 : [ 普通: §e%s§r | 破限 : §e%s§r ]",
   "tetra/schematic/enchantedsoulextraction.name": "魔·萃魂",
-  "tetra/schematic/enchantedsoulextraction.description": "将杀敌数转换成附魔耀魂，一次最多§e%s§r个，每个耀魂消耗§e%s§r杀敌数\n杀敌数不会减少至1,000以下"
-
+  "tetra/schematic/enchantedsoulextraction.slot": "破限材料",
+  "tetra/schematic/enchantedsoulextraction.description": "将杀敌数转换成附魔耀魂，一次最多§e%s§r个，每个耀魂消耗§e%s§r杀敌数\n杀敌数不会减少至§e1,000§r以下\n\n可选 : 消耗§e特殊材料§r，取消单次转换的§e上限§r\n产出 : [ 普通: §e%s§r | 破限 : §e%s§r ]"
 }

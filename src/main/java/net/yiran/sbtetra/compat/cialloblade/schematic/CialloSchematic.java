@@ -1,13 +1,11 @@
-package net.yiran.sbtetra.module;
+package net.yiran.sbtetra.compat.cialloblade.schematic;
 
 import mods.flammpfeil.slashblade.capability.slashblade.ISlashBladeState;
-import mods.flammpfeil.slashblade.init.SBItems;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.ToolAction;
-import net.yiran.sbtetra.Config;
 import net.yiran.sbtetra.item.SlashBladeModularItem;
 import org.jetbrains.annotations.Nullable;
 import se.mickelus.tetra.TetraToolActions;
@@ -20,16 +18,17 @@ import java.util.Collections;
 import java.util.Map;
 
 import static mods.flammpfeil.slashblade.item.ItemSlashBlade.BLADESTATE;
+import static net.yiran.sbtetra.compat.cialloblade.CialloHandler.CIALLO_SE;
 
 @SuppressWarnings("all")
-public class SoulExtractionSchematic implements UpgradeSchematic {
+public class CialloSchematic implements UpgradeSchematic {
     public GlyphData glyph;
     public String key;
     public SchematicType schematicType = SchematicType.other;
 
-    public SoulExtractionSchematic() {
+    public CialloSchematic() {
         this.glyph = new GlyphData(new ResourceLocation("slashbladetetra:textures/gui/texture.png"), 64, 0);
-        this.key = "soulextraction";
+        this.key = "ciallo";
     }
 
     @Override
@@ -49,7 +48,7 @@ public class SoulExtractionSchematic implements UpgradeSchematic {
 
     @Override
     public String getDescription(@Nullable ItemStack itemStack) {
-        return I18n.get("tetra/schematic/" + key + ".description", Config.MaxSoulDrop.get(), Config.SoulDropNeeded.get());
+        return I18n.get("tetra/schematic/" + key + ".description");
     }
 
 
@@ -88,7 +87,7 @@ public class SoulExtractionSchematic implements UpgradeSchematic {
         if (slot == null || !slot.equals("slashblade/soul")) return false;
         ISlashBladeState state = targetStack.getCapability(BLADESTATE).orElse(null);
         if (state == null) return false;
-        if (state.getProudSoulCount() < Config.SoulDropNeeded.get()) return false;
+        if (state.hasSpecialEffect(CIALLO_SE)) return false;
         return true;
     }
 
@@ -104,27 +103,12 @@ public class SoulExtractionSchematic implements UpgradeSchematic {
     }
 
     @Override
-    public boolean isHoning() {
-        return true;
-    }
-
-    @Override
     public ItemStack applyUpgrade(ItemStack itemStack, ItemStack[] itemStacks, boolean b, String soul, Player player) {
         //原理图应用逻辑，返回结果物品
         ItemStack newStack = itemStack.copy();
-        if (b)
-            newStack.getCapability(BLADESTATE).ifPresent((bladeState) -> {
-                int soulCount = bladeState.getProudSoulCount();
-                int count = Math.min(Config.MaxSoulDrop.get(), soulCount / Config.SoulDropNeeded.get());
-                ItemStack soulStack = new ItemStack(SBItems.proudsoul_tiny.asItem());
-                soulStack.setCount(count);
-                if (!player.getInventory().add(soulStack)) {
-                    player.drop(soulStack, false);
-                }
-                bladeState.setProudSoulCount(soulCount - Config.SoulDropNeeded.get() * count);
-
-
-            });
+        newStack.getCapability(BLADESTATE).ifPresent((bladeState) -> {
+            bladeState.addSpecialEffect(CIALLO_SE);
+        });
         return newStack;
     }
 

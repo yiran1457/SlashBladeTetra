@@ -100,13 +100,13 @@ public class SlashBladeModularItem extends ItemSlashBlade implements ISlashBlade
         ISlashBladeTetra.putDefaultModule(stack);
         return stack;
     }
-
+/*
     @Override
     public int getDamage(ItemStack stack) {
         super.getDamage(stack);
         return stack.getOrCreateTagElement("bladeState").getInt("Damage");
     }
-
+*/
 /*
     @Override
     public int getMaxDamage(ItemStack stack) {

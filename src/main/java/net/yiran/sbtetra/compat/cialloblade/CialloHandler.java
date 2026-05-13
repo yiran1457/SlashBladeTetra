@@ -3,6 +3,8 @@ package net.yiran.sbtetra.compat.cialloblade;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fml.ModList;
 import net.yiran.sbtetra.Config;
+import net.yiran.sbtetra.compat.cialloblade.schematic.CialloSchematic;
+import net.yiran.sbtetra.compat.cialloblade.schematic.UnCialloSchematic;
 import se.mickelus.tetra.module.SchematicRegistry;
 
 public class CialloHandler {

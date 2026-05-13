@@ -1,15 +1,18 @@
-package net.yiran.sbtetra.compat.cialloblade;
+package net.yiran.sbtetra.module.schematic;
 
-import mods.flammpfeil.slashblade.capability.slashblade.ISlashBladeState;
 import net.minecraft.client.resources.language.I18n;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.ToolAction;
-import net.yiran.sbtetra.item.SlashBladeModularItem;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.yiran.sbtetra.item.ISlashBladeTetra;
 import org.jetbrains.annotations.Nullable;
 import se.mickelus.tetra.TetraToolActions;
+import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.data.GlyphData;
+import se.mickelus.tetra.module.schematic.CraftingContext;
 import se.mickelus.tetra.module.schematic.OutcomePreview;
 import se.mickelus.tetra.module.schematic.SchematicType;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
@@ -17,18 +20,21 @@ import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 import java.util.Collections;
 import java.util.Map;
 
-import static mods.flammpfeil.slashblade.item.ItemSlashBlade.BLADESTATE;
-import static net.yiran.sbtetra.compat.cialloblade.CialloHandler.CIALLO_SE;
-
-@SuppressWarnings("all")
-public class UnCialloSchematic implements UpgradeSchematic {
+public abstract class BaseSoulSchematic implements UpgradeSchematic {
     public GlyphData glyph;
     public String key;
     public SchematicType schematicType = SchematicType.other;
+    public TagKey<Item> unLimitMaterial;
 
-    public UnCialloSchematic() {
-        this.glyph = new GlyphData(new ResourceLocation("slashbladetetra:textures/gui/texture.png"), 64, 0);
-        this.key = "unciallo";
+    public BaseSoulSchematic(GlyphData glyph, String key, TagKey<Item> unLimitMaterial) {
+        this.glyph = glyph;
+        this.key = key;
+        this.unLimitMaterial = unLimitMaterial;
+    }
+
+    @Override
+    public ItemStack[] getSlotPlaceholders(ItemStack itemStack, int index) {
+        return ForgeRegistries.ITEMS.tags().getTag(unLimitMaterial).stream().map(Item::getDefaultInstance).toArray(ItemStack[]::new);
     }
 
     @Override
@@ -46,48 +52,46 @@ public class UnCialloSchematic implements UpgradeSchematic {
         return new String[]{"Tetra?"};
     }
 
+    public abstract Object[] getDescriptionExtraValues(@Nullable ItemStack itemStack);
+
     @Override
     public String getDescription(@Nullable ItemStack itemStack) {
-        return I18n.get("tetra/schematic/" + key + ".description");
+        return I18n.get("tetra/schematic/" + key + ".description", getDescriptionExtraValues(itemStack));
     }
 
     @Override
     public int getNumMaterialSlots() {
-        return 0;
+        return 1;
     }
 
     @Override
     public String getSlotName(ItemStack itemStack, int index) {
-        return "";
+        return I18n.get("tetra/schematic/" + key + ".slot");
     }
 
     @Override
-    public int getRequiredQuantity(ItemStack itemStack, int index, ItemStack materialStack) {
-        return 0;
+    public int getRequiredQuantity(ItemStack itemStack, int i, ItemStack materialStack) {
+        return 1;
     }
 
     @Override
-    public boolean acceptsMaterial(ItemStack itemStack, String itemSlot, int index, ItemStack materialStack) {
-        return false;
+    public boolean acceptsMaterial(ItemStack itemStack, String s, int i, ItemStack materialStack) {
+        return materialStack.is(unLimitMaterial);
     }
 
     @Override
-    public boolean isMaterialsValid(ItemStack itemStack, String itemSlot, ItemStack[] materials) {
+    public boolean isMaterialsValid(ItemStack itemStack, String s, ItemStack[] materials) {
         return false;
     }
 
     @Override
     public boolean isRelevant(ItemStack itemStack) {
-        return itemStack.getItem() instanceof SlashBladeModularItem;
+        return itemStack.getItem() instanceof ISlashBladeTetra;
     }
 
     @Override
-    public boolean isApplicableForSlot(String slot, ItemStack targetStack) {
-        if (slot == null || !slot.equals("slashblade/soul")) return false;
-        ISlashBladeState state = targetStack.getCapability(BLADESTATE).orElse(null);
-        if (state == null) return false;
-        if (!state.hasSpecialEffect(CIALLO_SE)) return false;
-        return true;
+    public boolean matchesRequirements(CraftingContext context) {
+        return IModularItem.isHoneable(context.targetStack);
     }
 
     @Override
@@ -98,22 +102,17 @@ public class UnCialloSchematic implements UpgradeSchematic {
     @Override
     public boolean isIntegrityViolation(Player player, ItemStack itemStack, ItemStack[] materials, String slot) {
         return true;
-
     }
 
     @Override
-    public ItemStack applyUpgrade(ItemStack itemStack, ItemStack[] itemStacks, boolean b, String soul, Player player) {
-        //原理图应用逻辑，返回结果物品
-        ItemStack newStack = itemStack.copy();
-        newStack.getCapability(BLADESTATE).ifPresent((bladeState) -> {
-            bladeState.removeSpecialEffect(CIALLO_SE);
-        });
-        return newStack;
+    public boolean isHoning() {
+        return true;
     }
 
     @Override
     public boolean checkTools(ItemStack targetStack, ItemStack[] materials, Map<ToolAction, Integer> availableTools) {
-        return this.getRequiredToolLevels(targetStack, materials).entrySet().stream().allMatch((entry) -> (Integer) availableTools.getOrDefault(entry.getKey(), 0) >= (Integer) entry.getValue());
+        return this.getRequiredToolLevels(targetStack, materials).entrySet().stream()
+                .allMatch((entry) -> availableTools.getOrDefault(entry.getKey(), 0) >= entry.getValue());
     }
 
     @Override

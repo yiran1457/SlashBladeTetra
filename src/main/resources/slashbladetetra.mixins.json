@@ -14,8 +14,7 @@
   ],
   "client": [
     "GuiModuleListMixin",
-    "ItemModuleMixin",
-    "WorkbenchScreenMixin"
+    "ItemModuleMixin"
   ],
   "injectors": {
     "defaultRequire": 1

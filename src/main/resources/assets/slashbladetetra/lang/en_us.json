@@ -93,10 +93,11 @@
   "tetra/schematic/ciallo.description": "Adds the 'Ciallo' sound effect to your SlashBlade",
   "tetra/schematic/unciallo.name": "UnCiallo",
   "tetra/schematic/unciallo.description": "Removes the 'Ciallo' sound effect from your SlashBlade",
-  "tetra/schematic/soulextraction.name": "Soul Extraction",
-  "tetra/schematic/soulextraction.description": "Converts soul essence into Broken Radiant Soul. Up to 16 at a time, each consuming 500 soul essence points.",
+
   "tetra/schematic/soulextraction.name": "Basic Soul Extraction",
-  "tetra/schematic/soulextraction.description": "Convert ProudSoul into ProudSoul Tiny, up to §e%s§r at a time, each consuming §e%s§r ProudSoul",
+  "tetra/schematic/soulextraction.slot": "Limit-Break Material",
+  "tetra/schematic/soulextraction.description": "Converts Radiant Soul points into Broken Radiant Soul. Up to §e%s§r at a time, each consuming §e%s§r Radiant Soul points.\n\n\nOptional: Consume §eSpecial Materials§r to remove the §elimit§r per conversion.\nOutput: [ Normal: §e%s§r | Limit-Break: §e%s§r ]",
   "tetra/schematic/enchantedsoulextraction.name": "Enchanted Soul Extraction",
-  "tetra/schematic/enchantedsoulextraction.description": "Convert kill count into Enchanted ProudSoul, up to §e%s§r at a time, each consuming §e%s§r kill count\nKill count will not drop below 1,000"
+  "tetra/schematic/enchantedsoulextraction.slot": "Limit-Break Material",
+  "tetra/schematic/enchantedsoulextraction.description": "Converts Kill Count into Enchanted Radiant Soul. Up to §e%s§r at a time, each consuming §e%s§r Kill Count.\nKill Count will not drop below §e1,000§r.\n\nOptional: Consume §eSpecial Materials§r to remove the §elimit§r per conversion.\nOutput: [ Normal: §e%s§r | Limit-Break: §e%s§r ]"
 }

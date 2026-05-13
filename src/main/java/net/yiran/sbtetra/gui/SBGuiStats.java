@@ -24,7 +24,8 @@ public class SBGuiStats {
     public static GuiStatBar PROUD_SOUL_COUNT;
     public static GuiStatBar REFINE_COUNT;
     public static GuiStatBar SBT_DURABILITY;
-    static{
+
+    static {
         BARS = new ArrayList<>();
         REFINE = new GuiStatBar(0, 0, StatsHelper.barLength,
                 "tetra.stats.RefineStrengthening", 0, 200, false, levelGetter, LabelGetterBasic.singleDecimalLabel,
@@ -32,25 +33,25 @@ public class SBGuiStats {
         );
         BARS.add(REFINE);
 
-        KILL_COUNT = new GuiStatBar(0,0, StatsHelper.barLength,
-                "tetra.stats.KillCount",0,1000,false, ToolTipGetterSBCap.KILL_COUNT, LabelGetterBasic.integerLabel,
-                new ToolTipGetterSBCap("KillCount",ToolTipGetterSBCap.KILL_COUNT)
-                );
+        KILL_COUNT = new GuiStatBar(0, 0, StatsHelper.barLength,
+                "tetra.stats.KillCount", 0, 1000, false, ToolTipGetterSBCap.KILL_COUNT, LabelGetterBasic.integerLabel,
+                new ToolTipGetterSBCap("KillCount", ToolTipGetterSBCap.KILL_COUNT)
+        );
         BARS.add(KILL_COUNT);
 
-        PROUD_SOUL_COUNT = new GuiStatBar(0,0, StatsHelper.barLength,
-                "tetra.stats.ProudSoulCount",0,100000,false, ToolTipGetterSBCap.PROUD_SOUL_COUNT, LabelGetterBasic.integerLabel,
-                new ToolTipGetterSBCap("ProudSoulCount",ToolTipGetterSBCap.PROUD_SOUL_COUNT)
+        PROUD_SOUL_COUNT = new GuiStatBar(0, 0, StatsHelper.barLength,
+                "tetra.stats.ProudSoulCount", 0, 100000, false, ToolTipGetterSBCap.PROUD_SOUL_COUNT, LabelGetterBasic.integerLabel,
+                new ToolTipGetterSBCap("ProudSoulCount", ToolTipGetterSBCap.PROUD_SOUL_COUNT)
         );
         BARS.add(PROUD_SOUL_COUNT);
 
-        REFINE_COUNT = new GuiStatBar(0,0, StatsHelper.barLength,
-                "tetra.stats.RefineCount",0,500,false, ToolTipGetterSBCap.REFINE_COUNT, LabelGetterBasic.integerLabel,
-                new ToolTipGetterSBCap("RefineCount",ToolTipGetterSBCap.REFINE_COUNT)
+        REFINE_COUNT = new GuiStatBar(0, 0, StatsHelper.barLength,
+                "tetra.stats.RefineCount", 0, 500, false, ToolTipGetterSBCap.REFINE_COUNT, LabelGetterBasic.integerLabel,
+                new ToolTipGetterSBCap("RefineCount", ToolTipGetterSBCap.REFINE_COUNT)
         );
         BARS.add(REFINE_COUNT);
 
-        SBT_DURABILITY=new GuiStatBar(0, 0, StatsHelper.barLength,
+        SBT_DURABILITY = new GuiStatBar(0, 0, StatsHelper.barLength,
                 "tetra.stats.sbtdurability", 0, 2400, false, SBTStatGetterDurability.instance, LabelGetterBasic.integerLabel, new TooltipGetterInteger("tetra.stats.sbtdurability.tooltip", SBTStatGetterDurability.instance));
         BARS.add(SBT_DURABILITY);
     }
