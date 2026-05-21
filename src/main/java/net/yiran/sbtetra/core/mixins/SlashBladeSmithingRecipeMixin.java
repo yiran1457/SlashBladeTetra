@@ -39,7 +39,7 @@ public abstract class SlashBladeSmithingRecipeMixin implements SmithingRecipe {
             if (SBTIngredientManager.getItems().contains(itemStack.getItem())) {
 
                 var result = new ItemStack(item);
-                result.setTag(itemStack.getOrCreateTag());
+                result.setTag(itemStack.getOrCreateTag().copy());
                 ISlashBladeState resultState = result.getCapability(ItemSlashBlade.BLADESTATE).orElseThrow(NullPointerException::new);
 
                 var stack = cir.getReturnValue();

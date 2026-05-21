@@ -8,7 +8,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.yiran.sbtetra.Config;
 import net.yiran.sbtetra.craft.SBTIngredientManager;
-import net.yiran.sbtetra.item.SlashBladeModularItem;
+import net.yiran.sbtetra.item.ISlashBladeTetra;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;
@@ -54,8 +54,8 @@ public class SlashBladeIngredientMixin extends Ingredient {
         }
         this.values = itemSet.stream()
                 .map((item) -> {
-                    if (item instanceof SlashBladeModularItem) {
-                        ItemStack stack = ((SlashBladeModularItem) item).getDefaultStack();
+                    if (item instanceof ISlashBladeTetra) {
+                        ItemStack stack = ((ISlashBladeTetra) item).getDefaultStack();
                         request.initItemStack(stack);
                         return new Ingredient.ItemValue(stack);
                     }
@@ -67,11 +67,4 @@ public class SlashBladeIngredientMixin extends Ingredient {
         this.items = Collections.unmodifiableSet(itemSet);
 
     }
-/*
-    @Inject(method = "test(Lnet/minecraft/world/item/ItemStack;)Z", at = @At(value = "INVOKE", target = "Ljava/util/Set;contains(Ljava/lang/Object;)Z"), cancellable = true)
-    private void test(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
-        if (stack.getItem() instanceof SlashBladeModularItem) {
-            cir.setReturnValue(request.test(stack));
-        }
-    }*/
 }

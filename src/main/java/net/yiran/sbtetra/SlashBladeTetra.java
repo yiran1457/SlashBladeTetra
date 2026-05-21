@@ -93,7 +93,6 @@ public class SlashBladeTetra {
     public static ItemStack replacementHook(ItemStack itemStack, ItemStack replaceItemStack) {
         if (!(replaceItemStack.getItem() instanceof SlashBladeModularItem slashBladeModularItem))
             return replaceItemStack;
-        var z = SBTIngredientManager.getReplacement(replaceItemStack);
         ItemStack result = new ItemStack(SBTIngredientManager.getReplacement(itemStack));
         result.setTag(replaceItemStack.getOrCreateTag());
         result.getTag().put("bladeState", itemStack.getTag().getCompound("bladeState").copy());
