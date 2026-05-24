@@ -128,32 +128,23 @@ repositories {
 dependencies {
     implementation 'org.jetbrains:annotations:24.0.1'
     modCompileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:0.2.0-rc.2"))
-    modImplementation("io.github.llamalad7:mixinextras-forge:0.2.0-rc.2") /*{
-        jarJar.ranged(it, "[0.2.0-rc.2,)")
-    }*/
+    modImplementation("io.github.llamalad7:mixinextras-forge:0.2.0-rc.2")
+
     modImplementation("curse.maven:jei-238222:6600311")
     modImplementation("curse.maven:mutil-351914:6418901")
     modImplementation("curse.maven:tetra-289712:6418957")
     modCompileOnly("curse.maven:extraholopage-1301292:7021781")
-    //modImplementation("blank:ExtraHoloPage-6.9.0:1.0.0")
 
-    //modImplementation("blank:architectury-9.2.14:forge")
-
-    //modImplementation("blank:jei-1.20.1:forge-15.20.0.106")
-    //modImplementation("blank:emi-1.1.20+1.20.1:forge")
     modRuntimeOnly("blank:IBEEditor-1.20:2.2.8-forge")
     modRuntimeOnly("blank:ModernUI-Forge:1.20.1-3.11.1.6-universal")
 
-    //modImplementation("blank:rhino-forge:2001.2.3-build.10")
-    //modImplementation("blank:kubejs-forge:2001.6.5-build.16")
 
-
-    //1.8.57
-    //modImplementation("curse.maven:slashblade-resharped-1022428:7131890")
     //1.8.60
     modImplementation("curse.maven:slashblade-resharped-1022428:7194599")
-    //modImplementation("curse.maven:slashblade-resharped-1022428:6982173")
-    //modImplementation("blank:SlashBladeResharped-1.20.1:1.2.35")
+
+    modImplementation("curse.maven:placebo-283644:6274231")
+    modImplementation("curse.maven:tetramodify-core-1542556:8103590")
+    modImplementation("curse.maven:tetraextend-enchant-1545513:8111628")
 
     modImplementation("curse.maven:mysterious-mountain-lib-368098:6955193")
     modImplementation("curse.maven:slashblade-hf-blade-1299888:6917439")

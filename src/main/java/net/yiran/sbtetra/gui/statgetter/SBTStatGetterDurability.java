@@ -8,12 +8,14 @@ import se.mickelus.tetra.gui.stats.getter.IStatGetter;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.ItemModuleMajor;
 
+import java.util.Optional;
+
 public class SBTStatGetterDurability implements IStatGetter {
     public static SBTStatGetterDurability instance = new SBTStatGetterDurability();
 
     public double getSBTDurability(ItemStack stack) {
         return CastOptional.cast(stack.getItem(), ISlashBladeTetra.class)
-                .map(item -> item.sbt$getMaxDamage(stack))
+                .map(item ->Optional.of(item.getPropertiesCached(stack)).map((properties) -> properties.durability * properties.durabilityMultiplier).map(Math::round).orElse(0))
                 .orElseGet(stack::getMaxDamage);
     }
 
@@ -38,7 +40,7 @@ public class SBTStatGetterDurability implements IStatGetter {
 
     public boolean shouldShow(Player player, ItemStack currentStack, ItemStack previewStack) {
         if (currentStack.getItem() instanceof ISlashBladeTetra || previewStack.getItem() instanceof ISlashBladeTetra) {
-            return IStatGetter.super.shouldShow(player, currentStack, previewStack);
+            return true;
         }
         return false;
     }

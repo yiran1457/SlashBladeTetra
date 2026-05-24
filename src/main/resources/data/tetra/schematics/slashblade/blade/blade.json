@@ -21,6 +21,14 @@
             "countFactor" :5.4,
             "moduleKey": "slashblade/blade/blade",
             "moduleVariant": "blade/"
+        },
+        {
+            "material": {
+                "items": [ "slashblade:proudsoul_tiny" ],
+                "count": 16
+            },
+            "moduleKey": "slashblade/blade/blade",
+            "moduleVariant": "blade/unnamed"
         }
     ]
 }

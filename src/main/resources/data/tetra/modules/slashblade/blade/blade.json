@@ -4,7 +4,8 @@
     "slashblade/blade"
   ],
   "improvements": [
-    "tetra:slashblade/shared/"
+    "tetra:slashblade/shared/",
+    "tetra:shared/"
   ],
   "variants": [
     {
