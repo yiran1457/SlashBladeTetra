@@ -51,10 +51,10 @@ public class EnchantedSoulExtractionSchematic extends BaseSoulSchematic {
                 int need = Config.EnchantedSoulDropNeeded.get();
                 int count;
                 if (itemStacks[0].is(TAG)) {
-                    count = (bladeState.getProudSoulCount() - 1000) / need;
+                    count = (bladeState.getKillCount() - 1000) / need;
                     itemStacks[0].shrink(1);
                 } else {
-                    count = Math.min((bladeState.getProudSoulCount() - 1000) / need, Config.MaxEnchantedSoulDrop.get());
+                    count = Math.min((bladeState.getKillCount() - 1000) / need, Config.MaxEnchantedSoulDrop.get());
                 }
 
                 List<Enchantment> enchantments = ForgeRegistries.ENCHANTMENTS.getValues().stream()
@@ -73,7 +73,7 @@ public class EnchantedSoulExtractionSchematic extends BaseSoulSchematic {
                         }
 
                     }
-                    bladeState.setKillCount(bladeState.getProudSoulCount() - need);
+                    bladeState.setKillCount(bladeState.getKillCount() - need);
                 }
             });
         return newStack;
