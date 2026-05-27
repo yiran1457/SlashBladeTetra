@@ -23,6 +23,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.yiran.sbtetra.compat.CompatHandler;
 import net.yiran.sbtetra.craft.SBTIngredientManager;
+import net.yiran.sbtetra.item.ISlashBladeTetra;
 import net.yiran.sbtetra.item.SlashBladeModularItem;
 import net.yiran.sbtetra.module.SlashBladeModule;
 import net.yiran.sbtetra.module.SlashBladeSoulRegistry;
@@ -91,7 +92,7 @@ public class SlashBladeTetra {
     }
 
     public static ItemStack replacementHook(ItemStack itemStack, ItemStack replaceItemStack) {
-        if (!(replaceItemStack.getItem() instanceof SlashBladeModularItem slashBladeModularItem))
+        if (!(replaceItemStack.getItem() instanceof ISlashBladeTetra slashBladeModularItem))
             return replaceItemStack;
         ItemStack result = new ItemStack(SBTIngredientManager.getReplacement(itemStack));
         result.setTag(replaceItemStack.getOrCreateTag());
@@ -99,7 +100,7 @@ public class SlashBladeTetra {
         if (itemStack.capNBT != null)
             result.getCapability(BLADESTATE).map(s -> {
                 s.deserializeNBT(itemStack.capNBT.copy().getCompound("Parent"));
-                s.setMaxDamage(Optional.of(slashBladeModularItem.getPropertiesCached(itemStack)).map((properties) -> properties.durability * properties.durabilityMultiplier).map(Math::round).orElse(0));
+                s.setMaxDamage(Optional.of(slashBladeModularItem.getPropertiesCached(replaceItemStack)).map((properties) -> properties.durability * properties.durabilityMultiplier).map(Math::round).orElseGet(() -> s.getMaxDamage()));
                 return s;
             });
         return result;

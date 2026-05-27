@@ -10,7 +10,7 @@
   "materialRevealSlot": 0,
   "hone": true,
   "rarity": "hone",
-  "displayType": "major",
+  "displayType": "improvement",
   "glyph": {
     "textureX": 112,
     "textureY": 240
