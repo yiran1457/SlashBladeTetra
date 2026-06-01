@@ -1,4 +1,4 @@
-package net.yiran.sbtetra.core.mixins;
+package net.yiran.sbtetra.core.mixins.tetra;
 
 import net.minecraft.resources.ResourceLocation;
 import net.yiran.sbtetra.core.IModuleRegistry;

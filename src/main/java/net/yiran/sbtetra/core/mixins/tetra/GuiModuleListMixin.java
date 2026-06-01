@@ -1,4 +1,4 @@
-package net.yiran.sbtetra.core.mixins;
+package net.yiran.sbtetra.core.mixins.tetra;
 
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Final;

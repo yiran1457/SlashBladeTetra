@@ -11,9 +11,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.yiran.sbtetra.api.SAModuleRegister;
 import net.yiran.sbtetra.core.IModuleRegistry;
 import net.yiran.sbtetra.core.IOutcomeMaterial;
-import net.yiran.sbtetra.module.schematic.EnchantedSoulExtractionSchematic;
-import net.yiran.sbtetra.module.schematic.SoulExtractionSchematic;
-import net.yiran.sbtetra.module.schematic.TintingSchematic;
 import se.mickelus.tetra.module.ModuleRegistry;
 import se.mickelus.tetra.module.SchematicRegistry;
 import se.mickelus.tetra.module.data.ModuleData;
@@ -86,12 +83,8 @@ public class SlashBladeSoulRegistry {
     }
 
     public static void registerSchematic(SchematicDefinition schematic) throws InvalidSchematicException {
-        ConfigSchematic schematic1 =
-                new ConfigSchematic(schematic);
-
-        SchematicRegistry.instance.registerSchematic(
-                schematic1
-        );
+        ConfigSchematic schematic1 = new ConfigSchematic(schematic);
+        SchematicRegistry.instance.registerSchematic(schematic1);
     }
 
     public static void init() {
@@ -112,9 +105,6 @@ public class SlashBladeSoulRegistry {
 
         SCHEMATIC.outcomes = OUTCOME_DEFINITION.toArray(new OutcomeDefinition[0]);
 
-        SchematicRegistry.instance.registerSchematic(new SoulExtractionSchematic());
-        SchematicRegistry.instance.registerSchematic(new EnchantedSoulExtractionSchematic());
-        SchematicRegistry.instance.registerSchematic(new TintingSchematic());
     }
 
 }

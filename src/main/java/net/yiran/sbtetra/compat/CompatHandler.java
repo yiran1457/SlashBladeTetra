@@ -9,9 +9,9 @@ public class CompatHandler {
     public static void init(){
     }
     public static void setup(FMLCommonSetupEvent event) {
-        CialloHandler.setup();
+        event.enqueueWork(CialloHandler::setup);
     }
     public static void clientSetup(FMLClientSetupEvent event) {
-        ExtraHoloPageHandler.clientSetup();
+        event.enqueueWork(ExtraHoloPageHandler::clientSetup);
     }
 }

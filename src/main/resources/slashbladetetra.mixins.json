@@ -5,16 +5,20 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "slashbladetetra.refmap.json",
   "mixins": [
-    "ModuleRegistryMixin",
-    "OutcomeMaterialMixin",
-    "SlashBladeIngredientMixin",
-    "SlashBladeShapedRecipeMixin",
-    "SlashBladeSmithingRecipeMixin",
-    "StatGetterDurabilityMixin"
+    "jei.InternalRecipeManagerPluginMixin",
+    "jei.RecipeSlotMixin",
+    "recipe.SlashBladeIngredientMixin",
+    "recipe.SlashBladeShapedRecipeMixin",
+    "recipe.SlashBladeSmithingRecipeMixin",
+    "tetra.ModuleRegistryMixin",
+    "tetra.OutcomeMaterialMixin",
+    "tetra.SchematicRegistryMixin",
+    "tetra.StatGetterDurabilityMixin"
   ],
   "client": [
-    "GuiModuleListMixin",
-    "ItemModuleMixin"
+    "test.SlashEffectRendererMixin",
+    "tetra.GuiModuleListMixin",
+    "tetra.ItemModuleMixin"
   ],
   "injectors": {
     "defaultRequire": 1

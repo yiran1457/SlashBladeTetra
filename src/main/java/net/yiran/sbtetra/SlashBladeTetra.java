@@ -21,12 +21,16 @@ import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+import net.yiran.sbtetra.api.SchematicRegisterManager;
 import net.yiran.sbtetra.compat.CompatHandler;
 import net.yiran.sbtetra.craft.SBTIngredientManager;
 import net.yiran.sbtetra.item.ISlashBladeTetra;
 import net.yiran.sbtetra.item.SlashBladeModularItem;
 import net.yiran.sbtetra.module.SlashBladeModule;
 import net.yiran.sbtetra.module.SlashBladeSoulRegistry;
+import net.yiran.sbtetra.module.schematic.EnchantedSoulExtractionSchematic;
+import net.yiran.sbtetra.module.schematic.SoulExtractionSchematic;
+import net.yiran.sbtetra.module.schematic.TintingSchematic;
 import se.mickelus.tetra.aspect.ItemAspect;
 import se.mickelus.tetra.aspect.TetraEnchantmentHelper;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
@@ -64,6 +68,10 @@ public class SlashBladeTetra {
             clientInit(modEventBus);
         }
         MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGHEST, SlashBladeTetra::onBladeStandAttack);
+
+        SchematicRegisterManager.registerStaticSchematic(SoulExtractionSchematic::new);
+        SchematicRegisterManager.registerStaticSchematic(EnchantedSoulExtractionSchematic::new);
+        SchematicRegisterManager.registerStaticSchematic(TintingSchematic::new);
     }
 
     public static void clientInit(IEventBus bus) {
@@ -80,19 +88,18 @@ public class SlashBladeTetra {
 
     public static void commonInit(IEventBus bus) {
         bus.addListener(CompatHandler::setup);
-
+        bus.addListener(SchematicRegisterManager::onCommonSetup);
         bus.addListener(SlashBladeTetra::onCommonSetup);
     }
 
     public static void onCommonSetup(FMLCommonSetupEvent event) {
-
-        TetraEnchantmentHelper.registerMapping(ItemAspect.get("slashblade"), new TetraEnchantmentHelper.EnchantmentRules("additions/slashblade", "exclusions/slashblade", EnchantmentCategory.WEAPON, EnchantmentCategory.BREAKABLE));
-        ModuleRegistry moduleRegistry = ModuleRegistry.instance;
-        moduleRegistry.registerModuleType(new ResourceLocation("slashbladetetra", "blade"), SlashBladeModule::new);
-        ItemUpgradeRegistry.instance.registerReplacementHook(SlashBladeTetra::replacementHook);
-
-        SlashBladeSoulRegistry.init();
-
+        event.enqueueWork(() -> {
+            TetraEnchantmentHelper.registerMapping(ItemAspect.get("slashblade"), new TetraEnchantmentHelper.EnchantmentRules("additions/slashblade", "exclusions/slashblade", EnchantmentCategory.WEAPON, EnchantmentCategory.BREAKABLE));
+            ModuleRegistry moduleRegistry = ModuleRegistry.instance;
+            moduleRegistry.registerModuleType(new ResourceLocation("slashbladetetra", "blade"), SlashBladeModule::new);
+            ItemUpgradeRegistry.instance.registerReplacementHook(SlashBladeTetra::replacementHook);
+            SlashBladeSoulRegistry.init();
+        });
     }
 
     public static ItemStack replacementHook(ItemStack itemStack, ItemStack replaceItemStack) {

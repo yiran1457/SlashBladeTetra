@@ -1,4 +1,4 @@
-package net.yiran.sbtetra.core.mixins;
+package net.yiran.sbtetra.core.mixins.tetra;
 
 import com.google.common.collect.Lists;
 import net.minecraft.advancements.critereon.ItemPredicate;
