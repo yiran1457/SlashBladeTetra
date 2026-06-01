@@ -4,6 +4,7 @@
     "slashblade/scabbard"
   ],
   "improvements": [
+    "tetra:slashblade/scabbard/",
     "tetra:slashblade/shared/",
     "tetra:shared/"
   ],

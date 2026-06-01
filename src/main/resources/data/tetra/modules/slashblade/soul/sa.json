@@ -4,6 +4,7 @@
     "slashblade/soul"
   ],
   "improvements": [
+    "tetra:slashblade/soul/",
     "tetra:slashblade/shared/"
   ],
   "variants": [

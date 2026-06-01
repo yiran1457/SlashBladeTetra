@@ -1,0 +1,23 @@
+{
+  "replace": true,
+  "slots": [
+    "slashblade/tsuba"
+  ],
+  "materialSlotCount": 1,
+  "displayType": "improvement",
+  "glyph": {
+    "textureX": 95,
+    "textureY": 32
+  },
+  "outcomes": [
+    {
+      "materials": [
+        "tetra:socket/"
+      ],
+      "experienceFactor": 1,
+      "improvements": {
+        "slashblade/socket/": 0
+      }
+    }
+  ]
+}

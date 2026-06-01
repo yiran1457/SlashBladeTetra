@@ -4,6 +4,7 @@
     "slashblade/tsuba"
   ],
   "improvements": [
+    "tetra:slashblade/tsuba/",
     "tetra:slashblade/shared/",
     "tetra:shared/"
   ],

@@ -4,6 +4,7 @@
     "slashblade/handle"
   ],
   "improvements": [
+    "tetra:slashblade/handle/",
     "tetra:slashblade/shared/",
     "tetra:shared/"
   ],
