@@ -18,6 +18,7 @@
   ],
   "client": [
     "test.SlashEffectRendererMixin",
+    "test.SummonedSwordRendererMixin",
     "tetra.GuiModuleListMixin",
     "tetra.ItemModuleMixin"
   ],
