@@ -48,8 +48,12 @@ public class SlashBladeTetra {
     public SlashBladeTetra() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         ModLoadingContext.get().registerConfig(
-                ModConfig.Type.COMMON,
-                Config.SPEC
+                ModConfig.Type.SERVER,
+                Config.Server.SPEC
+        );
+        ModLoadingContext.get().registerConfig(
+                ModConfig.Type.CLIENT,
+                Config.Client.SPEC
         );
 
         ITEMS.register(modEventBus);

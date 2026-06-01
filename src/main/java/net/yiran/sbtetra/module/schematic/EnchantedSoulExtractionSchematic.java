@@ -38,7 +38,7 @@ public class EnchantedSoulExtractionSchematic extends BaseSoulSchematic {
         if (slot == null || !slot.equals("slashblade/soul")) return false;
         ISlashBladeState state = targetStack.getCapability(BLADESTATE).orElse(null);
         if (state == null) return false;
-        if (state.getKillCount() - 1000 < Config.EnchantedSoulDropNeeded.get()) return false;
+        if (state.getKillCount() - 1000 < Config.Server.EnchantedSoulDropNeeded.get()) return false;
         return true;
     }
 
@@ -48,13 +48,13 @@ public class EnchantedSoulExtractionSchematic extends BaseSoulSchematic {
         ItemStack newStack = itemStack.copy();
         if (b)
             newStack.getCapability(BLADESTATE).ifPresent((bladeState) -> {
-                int need = Config.EnchantedSoulDropNeeded.get();
+                int need = Config.Server.EnchantedSoulDropNeeded.get();
                 int count;
                 if (itemStacks[0].is(TAG)) {
                     count = (bladeState.getKillCount() - 1000) / need;
                     itemStacks[0].shrink(1);
                 } else {
-                    count = Math.min((bladeState.getKillCount() - 1000) / need, Config.MaxEnchantedSoulDrop.get());
+                    count = Math.min((bladeState.getKillCount() - 1000) / need, Config.Server.MaxEnchantedSoulDrop.get());
                 }
 
                 List<Enchantment> enchantments = ForgeRegistries.ENCHANTMENTS.getValues().stream()
@@ -81,8 +81,8 @@ public class EnchantedSoulExtractionSchematic extends BaseSoulSchematic {
 
     @Override
     public Object[] getDescriptionExtraValues(@Nullable ItemStack itemStack) {
-        int max = Config.MaxEnchantedSoulDrop.get();
-        int need = Config.EnchantedSoulDropNeeded.get();
+        int max = Config.Server.MaxEnchantedSoulDrop.get();
+        int need = Config.Server.EnchantedSoulDropNeeded.get();
         if (itemStack != null) {
             var cap = itemStack.getCapability(BLADESTATE).orElse(null);
             if (cap != null) {

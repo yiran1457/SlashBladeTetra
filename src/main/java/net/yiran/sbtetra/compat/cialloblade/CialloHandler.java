@@ -11,7 +11,7 @@ public class CialloHandler {
     public static ResourceLocation CIALLO_SE = new ResourceLocation("cialloblade","ciallo");
     public static void setup() {
         if (!ModList.get().isLoaded("cialloblade")) return;
-        if(Config.EnableCiallo.get()) {
+        if(Config.Server.EnableCiallo.get()) {
             SchematicRegistry.instance.registerSchematic(new CialloSchematic());
             SchematicRegistry.instance.registerSchematic(new UnCialloSchematic());
         }

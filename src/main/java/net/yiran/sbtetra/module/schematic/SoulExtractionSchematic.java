@@ -32,7 +32,7 @@ public class SoulExtractionSchematic extends BaseSoulSchematic {
         if (slot == null || !slot.equals("slashblade/soul")) return false;
         ISlashBladeState state = targetStack.getCapability(BLADESTATE).orElse(null);
         if (state == null) return false;
-        if (state.getProudSoulCount() < Config.SoulDropNeeded.get()) return false;
+        if (state.getProudSoulCount() < Config.Server.SoulDropNeeded.get()) return false;
         return true;
     }
 
@@ -42,13 +42,13 @@ public class SoulExtractionSchematic extends BaseSoulSchematic {
         ItemStack newStack = itemStack.copy();
         if (b)
             newStack.getCapability(BLADESTATE).ifPresent((bladeState) -> {
-                int need = Config.SoulDropNeeded.get();
+                int need = Config.Server.SoulDropNeeded.get();
                 int count;
                 if (itemStacks[0].is(TAG)) {
                     count = bladeState.getProudSoulCount() / need;
                     itemStacks[0].shrink(1);
                 } else {
-                    count = Math.min(Config.MaxSoulDrop.get(), bladeState.getProudSoulCount() / need);
+                    count = Math.min(Config.Server.MaxSoulDrop.get(), bladeState.getProudSoulCount() / need);
                 }
 
                 while (count > 0) {
@@ -77,8 +77,8 @@ public class SoulExtractionSchematic extends BaseSoulSchematic {
 
     @Override
     public Object[] getDescriptionExtraValues(@Nullable ItemStack itemStack) {
-        int max = Config.MaxSoulDrop.get();
-        int need = Config.SoulDropNeeded.get();
+        int max = Config.Server.MaxSoulDrop.get();
+        int need = Config.Server.SoulDropNeeded.get();
         if (itemStack != null) {
             var cap = itemStack.getCapability(BLADESTATE).orElse(null);
             if (cap != null) {
