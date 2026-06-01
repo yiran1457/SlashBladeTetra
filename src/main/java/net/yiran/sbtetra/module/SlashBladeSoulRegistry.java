@@ -1,19 +1,19 @@
 package net.yiran.sbtetra.module;
 
-import mods.flammpfeil.slashblade.init.SBItems;
 import mods.flammpfeil.slashblade.registry.SlashArtsRegistry;
+import mods.flammpfeil.slashblade.registry.SlashBladeItems;
 import net.minecraft.advancements.critereon.EnchantmentPredicate;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.advancements.critereon.MinMaxBounds;
 import net.minecraft.advancements.critereon.NbtPredicate;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.ItemStack;
 import net.yiran.sbtetra.api.SAModuleRegister;
 import net.yiran.sbtetra.core.IModuleRegistry;
 import net.yiran.sbtetra.core.IOutcomeMaterial;
 import net.yiran.sbtetra.module.schematic.EnchantedSoulExtractionSchematic;
 import net.yiran.sbtetra.module.schematic.SoulExtractionSchematic;
+import net.yiran.sbtetra.module.schematic.TintingSchematic;
 import se.mickelus.tetra.module.ModuleRegistry;
 import se.mickelus.tetra.module.SchematicRegistry;
 import se.mickelus.tetra.module.data.ModuleData;
@@ -56,17 +56,16 @@ public class SlashBladeSoulRegistry {
         VARIANT_DATA.add(test);
     }
 
-    public static void addOutcomeDefinition(String SAName, ItemStack stack) {
+    public static void addOutcomeDefinition(String SAName) {
         UniqueOutcomeDefinition test = new UniqueOutcomeDefinition();
 
         CompoundTag tag = new CompoundTag();
         tag.putString("SpecialAttackType", SAName);
         test.material = (OutcomeMaterial) IOutcomeMaterial.create()
                 .setCount(4)
-                //.addItemStack(stack)
                 .setItemPredicate(new ItemPredicate(
                         null,
-                        Set.of(SBItems.proudsoul_sphere),
+                        Set.of(SlashBladeItems.PROUDSOUL_SPHERE.get()),
                         MinMaxBounds.Ints.ANY,
                         MinMaxBounds.Ints.ANY,
                         EnchantmentPredicate.NONE,
@@ -101,11 +100,7 @@ public class SlashBladeSoulRegistry {
             ResourceLocation key = SlashArtsRegistry.REGISTRY.get().getKey(slashArts);
             if (!slashArts.equals(SlashArtsRegistry.NONE.get()) && key != null) {
                 addVariantData(key);
-                ItemStack sphere = new ItemStack(SBItems.proudsoul_sphere);
-                CompoundTag tag = new CompoundTag();
-                tag.putString("SpecialAttackType", key.toString());
-                sphere.setTag(tag);
-                addOutcomeDefinition(key.toString(), sphere);
+                addOutcomeDefinition(key.toString());
             }
         });
 
@@ -119,6 +114,7 @@ public class SlashBladeSoulRegistry {
 
         SchematicRegistry.instance.registerSchematic(new SoulExtractionSchematic());
         SchematicRegistry.instance.registerSchematic(new EnchantedSoulExtractionSchematic());
+        SchematicRegistry.instance.registerSchematic(new TintingSchematic());
     }
 
 }

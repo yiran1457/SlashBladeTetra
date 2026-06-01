@@ -6,7 +6,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.ToolAction;
-import net.yiran.sbtetra.item.SlashBladeModularItem;
+import net.yiran.sbtetra.item.ISlashBladeTetra;
 import org.jetbrains.annotations.Nullable;
 import se.mickelus.tetra.TetraToolActions;
 import se.mickelus.tetra.module.data.GlyphData;
@@ -78,7 +78,7 @@ public class UnCialloSchematic implements UpgradeSchematic {
 
     @Override
     public boolean isRelevant(ItemStack itemStack) {
-        return itemStack.getItem() instanceof SlashBladeModularItem;
+        return itemStack.getItem() instanceof ISlashBladeTetra;
     }
 
     @Override

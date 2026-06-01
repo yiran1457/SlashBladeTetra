@@ -17,16 +17,10 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.yiran.sbtetra.craft.SBTIngredientManager;
 import net.yiran.sbtetra.gui.SBGuiStats;
 import net.yiran.sbtetra.item.ISlashBladeTetra;
-import net.yiran.sbtetra.item.SlashBladeModularItem;
-import org.joml.Quaternionf;
 import se.mickelus.tetra.TetraToolActions;
 import se.mickelus.tetra.client.ToolActionIconStore;
-import se.mickelus.tetra.items.modular.IModularItem;
-
-import java.util.Optional;
 
 import static mods.flammpfeil.slashblade.client.ClientHandler.bakeBlade;
-import static net.yiran.sbtetra.SlashBladeTetra.MODLUAR;
 
 public class SlashBladeClientHandler {
     public static void init(IEventBus bus) {
@@ -50,20 +44,6 @@ public class SlashBladeClientHandler {
         pose.translate(xOffset + 11, yOffset + 11, 153);
         pose.scale(0.4f, 0.4f, 1);
 
-        /*
-        pose.translate(xOffset + 9, yOffset + 15, 500);
-        pose.scale(0.5f, 0.5f, 1);
-        pose.mulPose(new Quaternionf().rotateZ((float) (-Math.PI/4)));
-        */
-        /*
-        pose.translate(xOffset + 9-6, yOffset + 15-6, 151);
-        pose.scale(0.5f, 0.5f, 1);
-        pose.mulPose(new Quaternionf().rotateZ((float) (-Math.PI/4)));
-        */
-        /*
-        pose.translate(xOffset +4.3, yOffset + 3, 151);
-        pose.scale(0.4f, 0.4f, 1);
-        */
         var glyphData = ToolActionIconStore.instance.getIcon(TetraToolActions.hammer);
         guiGraphics.blit(glyphData.textureLocation, 0, 0, glyphData.textureX, glyphData.textureY, 16, 16);
         pose.popPose();
