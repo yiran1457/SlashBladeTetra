@@ -1,0 +1,28 @@
+{
+    "replace": true,
+    "slots": [
+        "slashblade/blade"
+    ],
+    "materialSlotCount": 1,
+    "displayType": "major",
+    "glyph": {
+        "textureX": 16,
+        "textureY": 0,
+        "textureLocation": "slashbladetetra:textures/gui/texture.png"
+    },
+    "outcomes": [
+        {
+            "materials": [
+                "tetra:metal/",
+                "tetra:wood/",
+                "tetra:bone/",
+                "tetra:gem/",
+                "tetra:stone/"
+            ],
+            "countOffset" :-1,
+            "countFactor" :5.4,
+            "moduleKey": "slashblade/blade/soul_blade",
+            "moduleVariant": "soul_blade/"
+        }
+    ]
+}
