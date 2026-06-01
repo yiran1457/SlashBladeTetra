@@ -1,4 +1,4 @@
-package net.yiran.sbtetra.core.mixins;
+package net.yiran.sbtetra.core.mixins.recipe;
 
 import mods.flammpfeil.slashblade.capability.slashblade.ISlashBladeState;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
@@ -7,6 +7,7 @@ import net.minecraft.core.RegistryAccess;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.SmithingRecipe;
 import net.yiran.sbtetra.craft.SBTIngredientManager;
 import org.jetbrains.annotations.Nullable;
@@ -18,7 +19,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @SuppressWarnings("all")
 @Mixin(SlashBladeSmithingRecipe.class)
-public abstract class SlashBladeSmithingRecipeMixin implements SmithingRecipe {
+public abstract class SlashBladeSmithingRecipeMixin implements SmithingRecipe, Recipe<Container> {
 
     @Shadow(remap = false)
     protected abstract void updateEnchantment(ItemStack result, ItemStack ingredient);

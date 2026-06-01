@@ -1,24 +1,20 @@
-package net.yiran.sbtetra.core.mixins;
+package net.yiran.sbtetra.core.mixins.recipe;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import mods.flammpfeil.slashblade.recipe.RequestDefinition;
 import mods.flammpfeil.slashblade.recipe.SlashBladeIngredient;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.yiran.sbtetra.Config;
 import net.yiran.sbtetra.craft.SBTIngredientManager;
-import net.yiran.sbtetra.item.ISlashBladeTetra;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -37,6 +33,15 @@ public class SlashBladeIngredientMixin extends Ingredient {
         super(p_43907_);
     }
 
+    @WrapOperation(method = "test(Lnet/minecraft/world/item/ItemStack;)Z", at = @At(value = "INVOKE", target = "Ljava/util/Set;contains(Ljava/lang/Object;)Z"))
+    private boolean ttt(Set<Item> instance, Object o, Operation<Boolean> original) {
+
+        if (Config.Server.CantWrapperItems.get().contains(ForgeRegistries.ITEMS.getKey((Item) o).toString())) {
+            return original.call(instance,o);
+        }
+        return original.call(instance,o)||SBTIngredientManager.getItems().contains(o);
+    }
+/*
     @Inject(method = "<init>", remap = false, at = @At("RETURN"))
     private void init(Set<Item> items, RequestDefinition request, CallbackInfo ci) {
         Set<Item> itemSet = new HashSet<>(items);
@@ -66,5 +71,5 @@ public class SlashBladeIngredientMixin extends Ingredient {
                 .toArray(Value[]::new);
         this.items = Collections.unmodifiableSet(itemSet);
 
-    }
+    }*/
 }

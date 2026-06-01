@@ -1,4 +1,4 @@
-package net.yiran.sbtetra.core.mixins;
+package net.yiran.sbtetra.core.mixins.recipe;
 
 import mods.flammpfeil.slashblade.capability.slashblade.ISlashBladeState;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
@@ -29,7 +29,7 @@ public abstract class SlashBladeShapedRecipeMixin {
                     .findFirst()
                     .map(itemStack -> {
                         var result = new ItemStack(item);
-                        result.setTag(itemStack.getOrCreateTag());
+                        result.setTag(itemStack.getOrCreateTag().copy());
                         ISlashBladeState resultState = result.getCapability(ItemSlashBlade.BLADESTATE).orElseThrow(NullPointerException::new);
 
                         var stack = cir.getReturnValue();
