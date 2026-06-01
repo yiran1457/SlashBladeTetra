@@ -13,7 +13,7 @@ import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
 import java.util.Map;
 
-@Mixin(SchematicRegistry.class)
+@Mixin(value = SchematicRegistry.class,remap = false)
 public class SchematicRegistryMixin {
     @Shadow
     private Map<ResourceLocation, UpgradeSchematic> schematicMap;

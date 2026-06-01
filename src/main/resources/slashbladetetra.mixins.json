@@ -10,6 +10,7 @@
     "recipe.SlashBladeIngredientMixin",
     "recipe.SlashBladeShapedRecipeMixin",
     "recipe.SlashBladeSmithingRecipeMixin",
+    "slashblade.EntityAbstractSummonedSwordMixin",
     "tetra.ModuleRegistryMixin",
     "tetra.OutcomeMaterialMixin",
     "tetra.SchematicRegistryMixin",
