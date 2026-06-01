@@ -4,6 +4,7 @@ import mods.flammpfeil.slashblade.capability.slashblade.ISlashBladeState;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.util.LazyOptional;
+import net.yiran.sbtetra.item.ISlashBladeTetra;
 import se.mickelus.tetra.gui.stats.getter.IStatGetter;
 
 import java.util.function.Function;
@@ -11,14 +12,16 @@ import java.util.function.Function;
 import static mods.flammpfeil.slashblade.item.ItemSlashBlade.BLADESTATE;
 
 public class StatGetterSBCap implements IStatGetter {
-    public Function<ISlashBladeState,Double> getter;
-    public StatGetterSBCap(Function<ISlashBladeState,Double> getter) {
+    public Function<ISlashBladeState, Double> getter;
+
+    public StatGetterSBCap(Function<ISlashBladeState, Double> getter) {
         this.getter = getter;
     }
+
     @Override
     public double getValue(Player player, ItemStack itemStack) {
         LazyOptional<ISlashBladeState> state = itemStack.getCapability(BLADESTATE);
-        if(state.isPresent()) {
+        if (state.isPresent()) {
             ISlashBladeState state2 = state.orElseThrow(NullPointerException::new);
             return getter.apply(state2);
         }
@@ -33,5 +36,12 @@ public class StatGetterSBCap implements IStatGetter {
     @Override
     public double getValue(Player player, ItemStack itemStack, String s, String s1) {
         return 0;
+    }
+
+    @Override
+    public boolean shouldShow(Player player, ItemStack currentStack, ItemStack previewStack) {
+        if (currentStack.getItem() instanceof ISlashBladeTetra && previewStack.getItem() instanceof ISlashBladeTetra)
+            return IStatGetter.super.shouldShow(player, currentStack, previewStack);
+        return false;
     }
 }

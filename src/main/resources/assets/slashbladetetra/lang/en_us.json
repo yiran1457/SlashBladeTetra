@@ -19,6 +19,9 @@
   "tetra.stats.sbtdurability": "Durability",
   "tetra.stats.sbtdurability.tooltip": "This item has §e%s§r durability",
   "tetra.stats.sbtdurability.tooltip_extended": "§7Items typically take 1 or 2 durability damage when used, when the durability reaches 0 the item breaks and it has to be repaired in a workbench before it can be used again",
+  "tetra.stats.SoulBladeMapping": "Soul Blade Mapping",
+  "tetra.stats.SoulBladeMapping.tooltip": "When your Phantom Sword deals damage, damage is increased by §e%s§r",
+  "tetra.stats.SoulBladeMapping.tooltip_extended": "Increases damage by §e%s§r\\n ├ Phantom Sword Fixed Bonus: §e%s§r\\n └ Refine Amplification Bonus: §e%s§r = §e%s§r x §e%s§r",
 
 
   "tetra.improvement.soul_infusion.name": "Soul Infusion",
@@ -48,6 +51,22 @@
   "tetra/schematic/slashblade/shared/hone/soul_infusion_6.slot1": "Infusion Material",
   "tetra/schematic/slashblade/shared/hone/soul_infusion_6.description": "Infuse using §eProud Trapezohedron Souls§r\nHighest infusion level achievable",
 
+  "tetra.improvement.slashblade/socket.name": "Socket [ %s ]",
+  "tetra.improvement.slashblade/socket.description": "Embed materials to provide additional bonuses.",
+  "tetra/schematic/slashblade/tsuba/socket.name": "Socket",
+  "tetra/schematic/slashblade/tsuba/socket.slot1": "Socket Material",
+  "tetra/schematic/slashblade/tsuba/socket.description": "Embed materials into the Tsuba",
+
+  "tetra.improvement.handle/wrap.name": "%s Wrap",
+  "tetra.improvement.handle/wrap.description": "Slightly increases damage and speed, reduces negative effects of the handle.",
+  "tetra/schematic/slashblade/handle/wrap.name": "Wrap",
+  "tetra/schematic/slashblade/handle/wrap.slot1": "Material",
+  "tetra/schematic/slashblade/handle/wrap.description": "Craft a wrap using the provided material to缠绕 the handle. Slightly increases damage and speed, reduces negative effects of the handle.",
+
+  "tetra/schematic/tinting.name": "Tinting",
+  "tetra/schematic/tinting.slot": "Dye",
+  "tetra/schematic/tinting.description": "Use 1/2/3 dyes to modify the color of the blade glow",
+
   "tetra.module.slashblade/handle/handle.material_name": "%s Handle",
   "tetra.module.slashblade/handle/handle.description": "Default handle for SlashBladeTetra",
   "tetra/schematic/slashblade/handle/handle.name": "Basic Handle",
@@ -60,6 +79,13 @@
   "tetra/schematic/slashblade/blade/blade.name": "Basic Blade",
   "tetra/schematic/slashblade/blade/blade.description": "Craft a blade using materials",
   "tetra/schematic/slashblade/blade/blade.slot1": "Blade Material",
+
+  "tetra.module.slashblade/blade/soul_blade.material_name": "%s Soul Blade",
+  "tetra.module.slashblade/blade/soul_blade.description": "Default blade for SlashBladeTetra",
+  "tetra.module.slashblade/blade/soul_blade.prefix": "Nameless 「 %s 」",
+  "tetra/schematic/slashblade/blade/soul_blade.name": "Soul Blade",
+  "tetra/schematic/slashblade/blade/soul_blade.description": "Craft a blade using materials",
+  "tetra/schematic/slashblade/blade/soul_blade.slot1": "Blade Material",
 
   "tetra.module.slashblade/blade/brittle_blade.material_name": "Brittle Blade",
   "tetra.module.slashblade/blade/brittle_blade.description": "Default blade for SlashBladeTetra",

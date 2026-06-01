@@ -19,6 +19,9 @@
   "tetra.stats.sbtdurability": "耐久度",
   "tetra.stats.sbtdurability.tooltip": "该拔刀有§e%s§r最大耐久度",
   "tetra.stats.sbtdurability.tooltip_extended": "§7器具在使用时通常会损失1或2点耐久度，剩余耐久度被试图降低到比1低的值时，器具就会损坏，必须在加工台修复后才能再次使用",
+  "tetra.stats.SoulBladeMapping": "剑魂映射",
+  "tetra.stats.SoulBladeMapping.tooltip": "当你的幻影剑造成伤害时，伤害将增加§e%s§r",
+  "tetra.stats.SoulBladeMapping.tooltip_extended": "增加 §e%s§r 的伤害\\n ├ 幻影剑固定增伤: §e%s§r\\n └ 刀魂增幅加成值: §e%s§r = §e%s§r x §e%s§r",
 
   "tetra.improvement.soul_infusion.name": "注魂",
   "tetra.improvement.soul_infusion.description": "向部件注入耀魂的力量，获取更高的极限",
@@ -47,6 +50,22 @@
   "tetra/schematic/slashblade/shared/hone/soul_infusion_6.slot1": "注魂材料",
   "tetra/schematic/slashblade/shared/hone/soul_infusion_6.description": "使用§e耀偏方三八面魂§r进行注魂\n这是最高等级的注魂",
 
+  "tetra.improvement.slashblade/socket.name": "镶嵌 [ %s ]",
+  "tetra.improvement.slashblade/socket.description": "嵌入材料，提供额外加成。",
+  "tetra/schematic/slashblade/tsuba/socket.name": "镶嵌",
+  "tetra/schematic/slashblade/tsuba/socket.slot1": "镶嵌材料",
+  "tetra/schematic/slashblade/tsuba/socket.description": "在刀镡之上嵌入材料",
+
+  "tetra.improvement.handle/wrap.name": "%s  裹柄",
+  "tetra.improvement.handle/wrap.description": "稍微增加伤害和速度，减少剑柄的负面效果。",
+  "tetra/schematic/slashblade/handle/wrap.name": "裹柄",
+  "tetra/schematic/slashblade/handle/wrap.slot1": "材料",
+  "tetra/schematic/slashblade/handle/wrap.description": "用提供的材料制作裹柄缠绕剑柄。稍微增加伤害和速度，减少剑柄的负面效果。",
+
+  "tetra/schematic/tinting.name": "染色",
+  "tetra/schematic/tinting.slot": "染料",
+  "tetra/schematic/tinting.description": "使用1/2/3个染料修改刀光的颜色",
+
   "tetra.module.slashblade/handle/handle.material_name": "%s 刀柄",
   "tetra.module.slashblade/handle/handle.description": "SlashBladeTetra的预设刀柄",
   "tetra/schematic/slashblade/handle/handle.name": "基础刀柄",
@@ -59,6 +78,13 @@
   "tetra/schematic/slashblade/blade/blade.name": "基础刀条",
   "tetra/schematic/slashblade/blade/blade.description": "使用材料制作刀条",
   "tetra/schematic/slashblade/blade/blade.slot1": "刀条材料",
+
+  "tetra.module.slashblade/blade/soul_blade.material_name": "%s 噬魂刀条",
+  "tetra.module.slashblade/blade/soul_blade.description": "SlashBladeTetra的预设刀条",
+  "tetra.module.slashblade/blade/soul_blade.prefix": "无铭 「 %s 」",
+  "tetra/schematic/slashblade/blade/soul_blade.name": "噬魂刀条",
+  "tetra/schematic/slashblade/blade/soul_blade.description": "使用材料制作刀条",
+  "tetra/schematic/slashblade/blade/soul_blade.slot1": "刀条材料",
 
   "tetra.module.slashblade/blade/brittle_blade.material_name": "%s 易碎刀条",
   "tetra.module.slashblade/blade/brittle_blade.description": "SlashBladeTetra的预设刀条",
@@ -80,7 +106,7 @@
   "tetra/schematic/slashblade/scabbard/scabbard.slot1": "刀鞘材料",
 
   "tetra.module.sa": "刀魂「 %s 」",
-  "tetra.module.slashblade/soul/sa.description": "SlashBladeTetra的预设刀魂\n妖化的拔刀剑提供的额外槽位",
+  "tetra.module.slashblade/soul/sa.description": "SlashBladeTetra的预设刀魂\n妖化的拔刀剑提供的额外槽位\n使用带有§eSA§r的§e耀魂宝珠§r作为材料",
   "tetra/schematic/slashblade/soul/sa.name": "基础刀魂",
   "tetra/schematic/slashblade/soul/sa.description": "使用材料注入刀魂",
   "tetra/schematic/slashblade/soul/sa.slot1": "附魂材料",
