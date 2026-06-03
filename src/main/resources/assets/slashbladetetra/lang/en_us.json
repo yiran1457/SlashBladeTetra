@@ -21,8 +21,7 @@
   "tetra.stats.sbtdurability.tooltip_extended": "§7Items typically take 1 or 2 durability damage when used, when the durability reaches 0 the item breaks and it has to be repaired in a workbench before it can be used again",
   "tetra.stats.SoulBladeMapping": "Soul Blade Mapping",
   "tetra.stats.SoulBladeMapping.tooltip": "When your Phantom Sword deals damage, damage is increased by §e%s§r",
-  "tetra.stats.SoulBladeMapping.tooltip_extended": "Increases damage by §e%s§r\\n ├ Phantom Sword Fixed Bonus: §e%s§r\\n └ Refine Amplification Bonus: §e%s§r = §e%s§r x §e%s§r",
-
+  "tetra.stats.SoulBladeMapping.tooltip_extended": "Final Damage Bonus §e%s§r\\n ├ Base Bonus §e%s§r\\n │ ├ Phantom Sword Fixed Bonus: §e%s§r\\n │ └ Refine Amplification Bonus: §e%s§r = §e%s§r x §e%s§r\\n └ Refining Influence: §ex%s§r  ( Rule: %s )",
 
   "tetra.improvement.soul_infusion.name": "Soul Infusion",
   "tetra.improvement.soul_infusion.description": "Infuse parts with Proud Souls to unlock greater potential",

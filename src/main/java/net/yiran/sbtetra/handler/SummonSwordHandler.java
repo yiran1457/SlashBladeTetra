@@ -2,6 +2,7 @@ package net.yiran.sbtetra.handler;
 
 import mods.flammpfeil.slashblade.entity.EntityAbstractSummonedSword;
 import net.minecraft.world.entity.LivingEntity;
+import net.yiran.sbtetra.gui.statgetter.StatGetterRefineFactor;
 import net.yiran.sbtetra.item.ISlashBladeTetra;
 
 import static net.yiran.sbtetra.itemeffect.SBItemEffects.MAPPING;
@@ -19,14 +20,19 @@ public class SummonSwordHandler {
         if (!(summonedSword.getOwner() instanceof LivingEntity livingEntity)) return amount;
         var stack = livingEntity.getMainHandItem();
         if (!(stack.getItem() instanceof ISlashBladeTetra modular)) return amount;
+        double arg = 0;
         var lvl = modular.getEffectLevel(stack, MAPPING);
         if (lvl > 0) {
-            amount += lvl;
+            arg += lvl;
         }
         var eff = modular.getEffectEfficiency(stack, MAPPING);
         if (eff > 0) {
-            amount += summonedSword.getDamage() + modular.getEffectLevel(stack, REFINE) * eff;
+            arg += summonedSword.getDamage() + modular.getEffectLevel(stack, REFINE) * eff;
         }
-        return amount;
+        if (arg > 0) {
+            arg *= StatGetterRefineFactor.instance.getValue(null, stack);
+        }
+        return amount + arg;
     }
+
 }

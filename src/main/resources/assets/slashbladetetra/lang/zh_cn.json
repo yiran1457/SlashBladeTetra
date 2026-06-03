@@ -21,7 +21,7 @@
   "tetra.stats.sbtdurability.tooltip_extended": "§7器具在使用时通常会损失1或2点耐久度，剩余耐久度被试图降低到比1低的值时，器具就会损坏，必须在加工台修复后才能再次使用",
   "tetra.stats.SoulBladeMapping": "剑魂映射",
   "tetra.stats.SoulBladeMapping.tooltip": "当你的幻影剑造成伤害时，伤害将增加§e%s§r",
-  "tetra.stats.SoulBladeMapping.tooltip_extended": "增加 §e%s§r 的伤害\\n ├ 幻影剑固定增伤: §e%s§r\\n └ 刀魂增幅加成值: §e%s§r = §e%s§r x §e%s§r",
+  "tetra.stats.SoulBladeMapping.tooltip_extended": "最终增伤 §e%s§r\\n ├ 基础增伤 §e%s§r\\n │ ├ 幻影剑固定增伤: §e%s§r\\n │ └ 刀魂增幅加成值: §e%s§r = §e%s§r x §e%s§r\\n └ 锻造影响值: §ex%s§r  ( 规则: %s )",
 
   "tetra.improvement.soul_infusion.name": "注魂",
   "tetra.improvement.soul_infusion.description": "向部件注入耀魂的力量，获取更高的极限",
