@@ -7,6 +7,7 @@ import mods.flammpfeil.slashblade.event.SlashBladeEvent;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import mods.flammpfeil.slashblade.item.SwordType;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -21,6 +22,7 @@ import net.minecraftforge.common.extensions.IForgeItem;
 import net.minecraftforge.common.util.LazyOptional;
 import net.yiran.sbtetra.item.api.ModuleSlotManager;
 import net.yiran.sbtetra.itemeffect.SBItemEffects;
+import org.jetbrains.annotations.NotNull;
 import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.effect.ItemEffectHandler;
@@ -36,7 +38,7 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
-public interface ISlashBladeTetra extends IModularItem , IForgeItem {
+public interface ISlashBladeTetra extends IModularItem, IForgeItem {
 
     @Override
     default String[] getMajorModuleKeys(ItemStack itemStack) {
@@ -58,8 +60,8 @@ public interface ISlashBladeTetra extends IModularItem , IForgeItem {
         if (ConfigHandler.moduleProgression.get()) {
             this.tickHoningProgression(entity, itemStack, multiplier);
 
-            for(ItemModuleMajor module : this.getMajorModules(itemStack)) {
-                if(module==null) continue;
+            for (ItemModuleMajor module : this.getMajorModules(itemStack)) {
+                if (module == null) continue;
                 module.tickProgression(entity, itemStack, multiplier);
             }
 
@@ -112,7 +114,7 @@ public interface ISlashBladeTetra extends IModularItem , IForgeItem {
     }
 
     @Override
-    default  Multimap<Attribute, AttributeModifier> getModuleAttributes(ItemStack itemStack) {
+    default Multimap<Attribute, AttributeModifier> getModuleAttributes(ItemStack itemStack) {
         return this.getAllModules(itemStack)
                 .stream()
                 .map((module) -> {
@@ -139,6 +141,12 @@ public interface ISlashBladeTetra extends IModularItem , IForgeItem {
             state.setMaxDamage(sbt$getMaxDamage(itemStack));
         });
         IModularItem.super.assemble(itemStack, world, severity);
+    }
+
+    default void sbt$inventoryTick(@NotNull ItemStack stack, @NotNull Level worldIn, @NotNull Entity entityIn, int itemSlot, boolean isSelected) {
+        if (entityIn.tickCount % 40 == 0) {
+            ModuleSlotManager.tryAddSoul(stack, true);
+        }
     }
 
     @Override

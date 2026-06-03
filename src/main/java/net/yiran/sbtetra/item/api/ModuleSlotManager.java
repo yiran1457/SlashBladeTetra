@@ -1,8 +1,6 @@
 package net.yiran.sbtetra.item.api;
 
 import it.unimi.dsi.fastutil.ints.IntArrayList;
-import it.unimi.dsi.fastutil.ints.IntList;
-import it.unimi.dsi.fastutil.ints.IntLists;
 import mods.flammpfeil.slashblade.item.SwordType;
 import net.minecraft.world.item.ItemStack;
 import se.mickelus.tetra.gui.GuiModuleOffsets;
@@ -12,7 +10,7 @@ import java.util.List;
 
 public class ModuleSlotManager {
     public static String[] DEF_SLOTS = new String[]{"slashblade/handle", "slashblade/blade", "slashblade/tsuba", "slashblade/scabbard"};
-
+    public static String SOUL_KEY = "soul_slot";
 
     public static String[] getMajorModuleKeys(ItemStack itemStack) {
         List<String> list = new ArrayList<>(List.of(DEF_SLOTS));
@@ -31,7 +29,7 @@ public class ModuleSlotManager {
         list.add(19);
         list.add(4);
         list.add(-2);
-        if(hasSoul(itemStack)){
+        if (hasSoul(itemStack)) {
             list.add(50);
             list.add(12);
         }
@@ -41,11 +39,16 @@ public class ModuleSlotManager {
     public static String[] getMinorModuleKeys(ItemStack itemStack) {
         return new String[]{};
     }
+
     public static boolean hasSoul(ItemStack itemStack) {
-        try {
-            return SwordType.from(itemStack).containsAll(List.of(SwordType.BEWITCHED, SwordType.FIERCEREDGE));
-        } catch (Exception e) {
-            return false;
+        return itemStack.getOrCreateTag().getBoolean(SOUL_KEY);
+    }
+
+    public static void tryAddSoul(ItemStack itemStack, boolean delete) {
+        if (SwordType.from(itemStack).containsAll(List.of(SwordType.BEWITCHED, SwordType.FIERCEREDGE))) {
+            itemStack.getOrCreateTag().putBoolean(SOUL_KEY, true);
+        } else if (delete) {
+            itemStack.getOrCreateTag().putBoolean(SOUL_KEY, false);
         }
     }
 }

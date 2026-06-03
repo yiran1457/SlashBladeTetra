@@ -5,6 +5,7 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.collect.Multimap;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -15,6 +16,7 @@ import net.minecraft.world.item.Tiers;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.MinecraftForge;
+import org.jetbrains.annotations.NotNull;
 import se.mickelus.tetra.data.DataManager;
 import se.mickelus.tetra.event.ModularItemDamageEvent;
 import se.mickelus.tetra.module.SchematicRegistry;
@@ -100,19 +102,13 @@ public class SlashBladeModularItem extends ItemSlashBlade implements ISlashBlade
         ISlashBladeTetra.putDefaultModule(stack);
         return stack;
     }
-/*
+
     @Override
-    public int getDamage(ItemStack stack) {
-        super.getDamage(stack);
-        return stack.getOrCreateTagElement("bladeState").getInt("Damage");
+    public void inventoryTick(@NotNull ItemStack stack, @NotNull Level worldIn, @NotNull Entity entityIn, int itemSlot, boolean isSelected) {
+        super.inventoryTick(stack, worldIn, entityIn, itemSlot, isSelected);
+        sbt$inventoryTick(stack, worldIn, entityIn, itemSlot, isSelected);
     }
-*/
-/*
-    @Override
-    public int getMaxDamage(ItemStack stack) {
-        return sbt$getMaxDamage(stack);
-    }
-*/
+
     @Override
     public <T extends LivingEntity> int damageItem(ItemStack stack, int amount, T entity, Consumer<T> onBroken) {
         ModularItemDamageEvent event = new ModularItemDamageEvent(entity, stack, amount);

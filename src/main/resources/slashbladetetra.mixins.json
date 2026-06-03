@@ -7,6 +7,7 @@
   "mixins": [
     "jei.InternalRecipeManagerPluginMixin",
     "jei.RecipeSlotMixin",
+    "minecraft.ItemStackMixin",
     "recipe.SlashBladeIngredientMixin",
     "recipe.SlashBladeShapedRecipeMixin",
     "recipe.SlashBladeSmithingRecipeMixin",
@@ -19,7 +20,6 @@
   "client": [
     "test.SlashEffectRendererMixin",
     "test.SummonedSwordRendererMixin",
-    "tetra.GuiModuleListMixin",
     "tetra.ItemModuleMixin"
   ],
   "injectors": {
