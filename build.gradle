@@ -128,7 +128,7 @@ repositories {
 dependencies {
     implementation 'org.jetbrains:annotations:24.0.1'
     modCompileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:0.2.0-rc.2"))
-   jarJar(modImplementation("io.github.llamalad7:mixinextras-forge:0.2.0-rc.2"))
+    jarJar(modImplementation("io.github.llamalad7:mixinextras-forge:0.2.0-rc.2"))
 
     modImplementation("curse.maven:jei-238222:6600311")
     modImplementation("curse.maven:mutil-351914:6418901")

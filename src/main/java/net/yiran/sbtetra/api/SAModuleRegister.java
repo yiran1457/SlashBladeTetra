@@ -17,11 +17,11 @@ public class SAModuleRegister {
     public static ModuleData defaultModuleData = new ModuleData();
 
     static {
-        defaultModuleData.attributes.put(
-                ForgeMod.ENTITY_REACH.get(),
-                new AttributeModifier(UUID.nameUUIDFromBytes(new byte[]{127, 1, 64, 11, 45, 14}), "Reach amplifer", 3, AttributeModifier.Operation.ADDITION)
-        );
-        defaultModuleData.addRefineEffectLevel(16);
+        defaultModuleData.addRefineEffectLevel(16)
+                .addAttributeModifier(
+                        ForgeMod.ENTITY_REACH.get(),
+                        new AttributeModifier(UUID.nameUUIDFromBytes(new byte[]{127, 1, 64, 11, 45, 14}), "Reach amplifer", 3, AttributeModifier.Operation.ADDITION)
+                );
     }
 
     public static class ModuleData {

@@ -8,6 +8,7 @@ import net.minecraft.advancements.critereon.MinMaxBounds;
 import net.minecraft.advancements.critereon.NbtPredicate;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 import net.yiran.sbtetra.api.SAModuleRegister;
 import net.yiran.sbtetra.core.IModuleRegistry;
 import net.yiran.sbtetra.core.IOutcomeMaterial;
@@ -55,10 +56,13 @@ public class SlashBladeSoulRegistry {
 
     public static void addOutcomeDefinition(String SAName) {
         UniqueOutcomeDefinition test = new UniqueOutcomeDefinition();
+        ItemStack stack =SlashBladeItems.PROUDSOUL_SPHERE.get().getDefaultInstance();
 
         CompoundTag tag = new CompoundTag();
         tag.putString("SpecialAttackType", SAName);
+        stack.setTag(tag);
         test.material = (OutcomeMaterial) IOutcomeMaterial.create()
+                .addItemStack(stack)
                 .setCount(4)
                 .setItemPredicate(new ItemPredicate(
                         null,

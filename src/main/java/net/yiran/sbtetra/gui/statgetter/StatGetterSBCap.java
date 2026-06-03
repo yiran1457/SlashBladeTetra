@@ -40,7 +40,7 @@ public class StatGetterSBCap implements IStatGetter {
 
     @Override
     public boolean shouldShow(Player player, ItemStack currentStack, ItemStack previewStack) {
-        if (currentStack.getItem() instanceof ISlashBladeTetra && previewStack.getItem() instanceof ISlashBladeTetra)
+        if (currentStack.getItem() instanceof ISlashBladeTetra && (previewStack.isEmpty() || previewStack.getItem() instanceof ISlashBladeTetra))
             return IStatGetter.super.shouldShow(player, currentStack, previewStack);
         return false;
     }
