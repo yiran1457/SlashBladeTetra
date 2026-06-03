@@ -40,38 +40,27 @@ public class SoulExtractionSchematic extends BaseSoulSchematic {
     public ItemStack applyUpgrade(ItemStack itemStack, ItemStack[] itemStacks, boolean b, String soul, Player player) {
         //原理图应用逻辑，返回结果物品
         ItemStack newStack = itemStack.copy();
-        if (b)
-            newStack.getCapability(BLADESTATE).ifPresent((bladeState) -> {
-                int need = Config.Server.SoulDropNeeded.get();
-                int count;
-                if (itemStacks[0].is(TAG)) {
-                    count = bladeState.getProudSoulCount() / need;
-                    itemStacks[0].shrink(1);
-                } else {
-                    count = Math.min(Config.Server.MaxSoulDrop.get(), bladeState.getProudSoulCount() / need);
-                }
+        newStack.getCapability(BLADESTATE).ifPresent((bladeState) -> {
+            int need = Config.Server.SoulDropNeeded.get();
+            int count;
+            if (itemStacks[0].is(TAG)) {
+                count = bladeState.getProudSoulCount() / need;
+                itemStacks[0].shrink(1);
+            } else {
+                count = Math.min(Config.Server.MaxSoulDrop.get(), bladeState.getProudSoulCount() / need);
+            }
 
-                while (count > 0) {
-                    if (count > 64) {
-                        ItemStack soulStack = new ItemStack(SBItems.proudsoul_tiny.asItem());
-                        soulStack.setCount(64);
-                        if (!player.getInventory().add(soulStack)) {
-                            player.drop(soulStack, false);
-                        }
-                        bladeState.setProudSoulCount(bladeState.getProudSoulCount() - need * 64);
-                        count -= 64;
-                    } else {
-                        ItemStack soulStack = new ItemStack(SBItems.proudsoul_tiny.asItem());
-                        soulStack.setCount(count);
-                        if (!player.getInventory().add(soulStack)) {
-                            player.drop(soulStack, false);
-                        }
-                        bladeState.setProudSoulCount(bladeState.getProudSoulCount() - need * count);
-                        count = 0;
-                    }
-                }
+            bladeState.setProudSoulCount(bladeState.getProudSoulCount() - need * count);
+            if (b) {
 
-            });
+                ItemStack soulStack = new ItemStack(SBItems.proudsoul_tiny.asItem());
+                soulStack.setCount(count);
+                while (player.getInventory().add(soulStack)) {
+                }
+                player.drop(soulStack, false);
+            }
+
+        });
         return newStack;
     }
 

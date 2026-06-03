@@ -1,5 +1,6 @@
 package net.yiran.sbtetra.module.schematic;
 
+import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import mods.flammpfeil.slashblade.SlashBladeConfig;
 import mods.flammpfeil.slashblade.capability.slashblade.ISlashBladeState;
 import mods.flammpfeil.slashblade.registry.SlashBladeItems;
@@ -46,36 +47,43 @@ public class EnchantedSoulExtractionSchematic extends BaseSoulSchematic {
     public ItemStack applyUpgrade(ItemStack itemStack, ItemStack[] itemStacks, boolean b, String soul, Player player) {
         //原理图应用逻辑，返回结果物品
         ItemStack newStack = itemStack.copy();
-        if (b)
-            newStack.getCapability(BLADESTATE).ifPresent((bladeState) -> {
-                int need = Config.Server.EnchantedSoulDropNeeded.get();
-                int count;
-                if (itemStacks[0].is(TAG)) {
-                    count = (bladeState.getKillCount() - 1000) / need;
-                    itemStacks[0].shrink(1);
-                } else {
-                    count = Math.min((bladeState.getKillCount() - 1000) / need, Config.Server.MaxEnchantedSoulDrop.get());
-                }
+        newStack.getCapability(BLADESTATE).ifPresent((bladeState) -> {
+            int need = Config.Server.EnchantedSoulDropNeeded.get();
+            int count;
+            if (itemStacks[0].is(TAG)) {
+                count = (bladeState.getKillCount() - 1000) / need;
+                itemStacks[0].shrink(1);
+            } else {
+                count = Math.min((bladeState.getKillCount() - 1000) / need, Config.Server.MaxEnchantedSoulDrop.get());
+            }
 
+            if (b) {
                 List<Enchantment> enchantments = ForgeRegistries.ENCHANTMENTS.getValues().stream()
                         .filter(newStack::canApplyAtEnchantingTable)
                         .filter(enchantment -> !SlashBladeConfig.NON_DROPPABLE_ENCHANTMENT.get()
                                 .contains(Objects.requireNonNull(ForgeRegistries.ENCHANTMENTS.getKey(enchantment)).toString()))
                         .toList();
+                Object2IntOpenHashMap<Enchantment> enchantmentMap = new Object2IntOpenHashMap<>();
                 for (int i = 0; i < count; i += 1) {
-                    ItemStack enchanted_soul = new ItemStack(SlashBladeItems.PROUDSOUL_TINY.get());
                     Enchantment enchant = enchantments.get(player.getRandom().nextInt(0, enchantments.size()));
                     if (enchant != null) {
-
-                        enchanted_soul.enchant(enchant, 1);
-                        if (!player.getInventory().add(enchanted_soul)) {
-                            player.drop(enchanted_soul, false);
-                        }
+                        enchantmentMap.addTo(enchant, 1);
+                    }
+                }
+                enchantmentMap.forEach((enchantment, integer) -> {
+                    ItemStack enchanted_soul = new ItemStack(SlashBladeItems.PROUDSOUL_TINY.get());
+                    enchanted_soul.enchant(enchantment, 1);
+                    enchanted_soul.setCount(count);
+                    while (player.getInventory().add(enchanted_soul)){
 
                     }
-                    bladeState.setKillCount(bladeState.getKillCount() - need);
-                }
-            });
+                    player.drop(enchanted_soul, false);
+
+                });
+            }
+
+            bladeState.setKillCount(bladeState.getKillCount() - need * count);
+        });
         return newStack;
     }
 
