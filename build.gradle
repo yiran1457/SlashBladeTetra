@@ -2,7 +2,8 @@ plugins {
     id 'idea'
     id 'java-library'
     id 'maven-publish'
-    id 'net.neoforged.moddev.legacyforge' version '2.0.139'
+    id 'net.neoforged.moddev.legacyforge' version '2.0.141'
+    id("net.minecraftforge.accesstransformers") version "5.0.3"
 }
 
 tasks.named('wrapper', Wrapper).configure {
@@ -127,12 +128,18 @@ repositories {
 
 dependencies {
     implementation 'org.jetbrains:annotations:24.0.1'
-    modCompileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:0.2.0-rc.2"))
-    jarJar(modImplementation("io.github.llamalad7:mixinextras-forge:0.2.0-rc.2"))
+    modCompileOnly("io.github.llamalad7:mixinextras-common:0.2.0-rc.2")
+    annotationProcessor("io.github.llamalad7:mixinextras-common:0.2.0-rc.2")
+    modImplementation("io.github.llamalad7:mixinextras-forge:0.2.0-rc.2")
+    jarJar("io.github.llamalad7:mixinextras-forge:0.2.0-rc.2")
 
     modImplementation("curse.maven:jei-238222:6600311")
     modImplementation("curse.maven:mutil-351914:6418901")
-    modImplementation("curse.maven:tetra-289712:6418957")
+    modImplementation("curse.maven:tetra-289712:6418957") {
+        accessTransformers.configure(it) {
+            config = project.file('src/main/resources/META-INF/accesstransformer.cfg')
+        }
+    }
     modCompileOnly("curse.maven:extraholopage-1301292:7021781")
 
     modRuntimeOnly("blank:IBEEditor-1.20:2.2.8-forge")
