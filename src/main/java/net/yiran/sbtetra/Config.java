@@ -1,7 +1,6 @@
 package net.yiran.sbtetra;
 
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.yiran.sbtetra.gui.statgetter.StatGetterRefineFactor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +14,8 @@ public class Config {
         public static final ForgeConfigSpec.ConfigValue<Integer> MaxSoulDrop;
         public static final ForgeConfigSpec.ConfigValue<Integer> SoulDropNeeded;
         public static final ForgeConfigSpec.ConfigValue<Boolean> EnableCiallo;
-        public static final ForgeConfigSpec.ConfigValue<StatGetterRefineFactor.Rule> SOUL_BLADE_MAPPING_RULE;
+        public static final ForgeConfigSpec.ConfigValue<String> SOUL_BLADE_MAPPING_RULE;
+        public static final ForgeConfigSpec.ConfigValue<String> REFINE_ATTACK_RULE;
         private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
 
         static {
@@ -38,10 +38,22 @@ public class Config {
                     .comment("是否添加ciallo的两个原理图（联动）")
                     .define("enableCiallo", true);
             BUILDER.comment("设定 剑魂映射 中 锻造影响值 的公式");
-            for (StatGetterRefineFactor.Rule value : StatGetterRefineFactor.Rule.values()) {
-                BUILDER.comment("  " + value.name() + " : " + value.desc);
-            }
-            SOUL_BLADE_MAPPING_RULE = BUILDER.defineEnum("soulBladeMappingRule", StatGetterRefineFactor.Rule.COMMON);
+            SOUL_BLADE_MAPPING_RULE = BUILDER
+                    .comment(
+                            "设置拔刀剑锻造数到剑魂映射倍率的计算公式。",
+                            "可用参数：refine（拔刀剑锻造数）。公式返回值将作为倍率使用。",
+                            "默认公式：(18 * refine + 100) / (9 * refine + 1000)"
+                    )
+                    .define("soulBladeMappingRule", "(18 * refine + 100) / (9 * refine + 1000)");
+            REFINE_ATTACK_RULE = BUILDER
+                    .comment(
+                            "设置拔刀剑锻造数对普通攻击额外伤害的计算公式。",
+                            "公式返回的值会作为额外攻击伤害；可用参数：",
+                            "refine：拔刀剑锻造数；isFiercerEdge：是否为锋利剑刃（1 或 0）；",
+                            "baseDamage：参与公式计算的基础额外伤害。默认公式：",
+                            "baseDamage * (1 - 1 / (1 + (isFiercerEdge ? 0.1 : 0.05) * refine))"
+                    )
+                    .define("refineAttackRule", "baseDamage * (1 - 1 / (1 + (isFiercerEdge ? 0.1 : 0.05) * refine))");
             BUILDER.pop();
             SPEC = BUILDER.build();
         }

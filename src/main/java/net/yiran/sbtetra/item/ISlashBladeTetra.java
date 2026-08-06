@@ -20,6 +20,7 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.extensions.IForgeItem;
 import net.minecraftforge.common.util.LazyOptional;
+import net.yiran.sbtetra.api.Expressions;
 import net.yiran.sbtetra.item.api.ModuleSlotManager;
 import net.yiran.sbtetra.itemeffect.SBItemEffects;
 import org.jetbrains.annotations.NotNull;
@@ -186,7 +187,7 @@ public interface ISlashBladeTetra extends IModularItem, IForgeItem {
                 SculkTaintEffect.perform((ServerLevel) target.level(), target.blockPosition(), skulkTaintLevel, this.getEffectEfficiency(itemStack, ItemEffect.sculkTaint));
             }
 
-            this.applyNegativeUsageEffects(attacker, itemStack, (double) 1.0F);
+            this.applyNegativeUsageEffects(attacker, itemStack, 1.0F);
         }
     }
 
@@ -196,18 +197,21 @@ public interface ISlashBladeTetra extends IModularItem, IForgeItem {
 
     default Multimap<Attribute, AttributeModifier> sbt$getAttributeModifiers(EquipmentSlot slot, ItemStack itemStack) {
         Multimap<Attribute, AttributeModifier> result = ArrayListMultimap.create();
-        if (this.isBroken(itemStack)) {
-        } else if (slot == EquipmentSlot.MAINHAND) {
+        if (!this.isBroken(itemStack) && slot == EquipmentSlot.MAINHAND) {
+            //添加tetra的属性修饰符
             Multimap<Attribute, AttributeModifier> Tetra = this.getAttributeModifiersCached(itemStack);
             result.putAll(Tetra);
             LazyOptional<ISlashBladeState> state = itemStack.getCapability(ItemSlashBlade.BLADESTATE);
             state.ifPresent((s) -> {
                 EnumSet<SwordType> swordType = SwordType.from(itemStack);
                 float baseAttackModifier = getEffectLevel(itemStack, SBItemEffects.REFINE);
-                int refine = s.getRefine();
-                float refineFactor = swordType.contains(SwordType.FIERCEREDGE) ? 0.1F : 0.05F;
-                float attackAmplifier = (1.0F - 1.0F / (1.0F + refineFactor * (float) refine)) * baseAttackModifier;
-                SlashBladeEvent.UpdateAttackEvent event = new SlashBladeEvent.UpdateAttackEvent(itemStack, s, attackAmplifier);
+                SlashBladeEvent.UpdateAttackEvent event = new SlashBladeEvent.UpdateAttackEvent(itemStack, s, Expressions.bladeAttack.getExpression().evaluate(
+                        s.getRefine(),
+                        swordType.contains(SwordType.FIERCEREDGE) ? 1 : 0,
+                        baseAttackModifier
+                )
+                );
+
                 MinecraftForge.EVENT_BUS.post(event);
                 AttributeModifier attack = new AttributeModifier(UUID.nameUUIDFromBytes(new byte[]{127, 0, 0, 11, 45, 14}), "Weapon modifier", event.getNewDamage(), AttributeModifier.Operation.ADDITION);
                 result.put(Attributes.ATTACK_DAMAGE, attack);
@@ -223,5 +227,6 @@ public interface ISlashBladeTetra extends IModularItem, IForgeItem {
         IModularItem.putModuleInSlot(itemStack, "slashblade/tsuba", "slashblade/tsuba/tsuba", "tsuba/unnamed");
         IModularItem.putModuleInSlot(itemStack, "slashblade/scabbard", "slashblade/scabbard/scabbard", "scabbard/unnamed");
     }
+
 
 }

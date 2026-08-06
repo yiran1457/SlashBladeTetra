@@ -45,7 +45,7 @@ public class TooltipGetterSoulBladeMapping implements ITooltipGetter {
                 String.format("%.1f%%", getter3.getValue(player, itemStack)*100),
                 String.format("%.2f", getter2.getValue(player, itemStack)),
                 String.format("%.1f%%", getter6.getValue(player, itemStack) * 100),
-                Config.Server.SOUL_BLADE_MAPPING_RULE.get().name()
+                Config.Server.SOUL_BLADE_MAPPING_RULE.get()
         );
     }
 }

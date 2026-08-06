@@ -1,11 +1,9 @@
 package net.yiran.sbtetra.gui.statgetter;
 
-import it.unimi.dsi.fastutil.doubles.Double2DoubleFunction;
-import it.unimi.dsi.fastutil.ints.Int2DoubleArrayMap;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.yiran.sbtetra.Config;
+import net.yiran.sbtetra.api.Expressions;
 import net.yiran.sbtetra.item.ISlashBladeTetra;
 import se.mickelus.tetra.gui.stats.getter.IStatGetter;
 
@@ -17,7 +15,7 @@ public class StatGetterRefineFactor implements IStatGetter {
         var state = stack.getCapability(ItemSlashBlade.BLADESTATE);
         if (!state.isPresent()) return 0;
         var refine = state.orElseThrow(RuntimeException::new).getRefine();
-        return Config.Server.SOUL_BLADE_MAPPING_RULE.get().apply(refine);
+        return Expressions.soulBladeMapping.getExpression().evaluate(refine);
     }
 
     @Override
@@ -42,42 +40,4 @@ public class StatGetterRefineFactor implements IStatGetter {
         return false;
     }
 
-    public enum Rule {
-        COMMON(
-                refine -> (18 * refine + 100) / (9 * refine + 1000),
-                "refine -> (18 * refine + 100) / (9 * refine + 1000)"
-        ),
-        NONE(
-                refine -> 1,
-                "refine -> 1"
-        ),
-        LOGARITHM(
-                refine -> Math.log((refine + 50) / 50),
-                "refine -> Math.log((refine + 50) / 50)"
-        ),
-        BT(
-                refine -> 0.1 + refine / 25,
-                "refine -> 0.1 + refine / 25"
-        );
-
-        public final Double2DoubleFunction factor;
-        public final String desc;
-        public final Int2DoubleArrayMap cache = new Int2DoubleArrayMap();
-
-
-        Rule(Double2DoubleFunction factor, String desc) {
-            this.factor = factor;
-            this.desc = desc;
-        }
-
-        public double apply(int refine) {
-            if (cache.containsKey(refine)) {
-                return cache.get(refine);
-            } else {
-                var value = factor.get(refine);
-                cache.put(refine, value);
-                return value;
-            }
-        }
-    }
 }

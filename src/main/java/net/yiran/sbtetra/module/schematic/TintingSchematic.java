@@ -140,6 +140,7 @@ public class TintingSchematic implements UpgradeSchematic {
                     if (stack.isEmpty())
                         continue;
                     color.add(ColorMap.get(stack.getItem()));
+                    stack.shrink(1);
                 }
                 bladeState.setEffectColor(new Color(mixRgb(color)));
             });

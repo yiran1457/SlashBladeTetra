@@ -121,6 +121,7 @@ repositories {
     maven {
         url 'https://cursemaven.com'
     }
+    maven { url 'https://www.jitpack.io' }
     flatDir {
         dir 'libs'
     }
@@ -154,6 +155,7 @@ dependencies {
     modImplementation("curse.maven:mysterious-mountain-lib-368098:6955193")
     modImplementation("curse.maven:slashblade-hf-blade-1299888:6917439")
     modImplementation("curse.maven:the-last-smith-306385:6982449")
+    jarJar implementation("com.github.yiran1457:YiRanExpressionLib:1.0.0-universal:universal")
 }
 
 // Uncomment the lines below if you wish to configure mixin. The mixin file should be named modid.mixins.json.
