@@ -6,7 +6,6 @@
   "tetra.slot.slashblade/scabbard": "Scabbard",
   "tetra.slot.slashblade/soul": "Soul",
   "tetra.material.unnamed.prefix": "unnamed",
-
   "tetra.stats.RefineStrengthening": "Refine Amplification",
   "tetra.stats.RefineStrengthening.tooltip": "SlashBlade refining grants up to §e%s§r damage",
   "tetra.stats.RefineStrengthening.tooltip_extended": "§e%s§r from tetra.\\nBase value: §e%s§r.",
@@ -22,107 +21,94 @@
   "tetra.stats.SoulBladeMapping": "Soul Blade Mapping",
   "tetra.stats.SoulBladeMapping.tooltip": "When your Phantom Sword deals damage, damage is increased by §e%s§r",
   "tetra.stats.SoulBladeMapping.tooltip_extended": "Final Damage Bonus §e%s§r\\n ├ Base Bonus §e%s§r\\n │ ├ Phantom Sword Fixed Bonus: §e%s§r\\n │ └ Refine Amplification Bonus: §e%s§r = §e%s§r x §e%s§r\\n └ Refining Influence: §ex%s§r  ( Rule: %s )",
-
   "tetra.improvement.soul_infusion.name": "Soul Infusion",
   "tetra.improvement.soul_infusion.description": "Infuse parts with Proud Souls to unlock greater potential",
-
   "tetra/schematic/slashblade/shared/hone/soul_infusion_1.name": "Soul Infusion I",
   "tetra/schematic/slashblade/shared/hone/soul_infusion_1.slot1": "Infusion Material",
   "tetra/schematic/slashblade/shared/hone/soul_infusion_1.description": "Infuse using §eBroken Proud Souls§r",
-
   "tetra/schematic/slashblade/shared/hone/soul_infusion_2.name": "Soul Infusion II",
   "tetra/schematic/slashblade/shared/hone/soul_infusion_2.slot1": "Infusion Material",
   "tetra/schematic/slashblade/shared/hone/soul_infusion_2.description": "Infuse using §eProud Soul Fragments§r",
-
   "tetra/schematic/slashblade/shared/hone/soul_infusion_3.name": "Soul Infusion III",
   "tetra/schematic/slashblade/shared/hone/soul_infusion_3.slot1": "Infusion Material",
   "tetra/schematic/slashblade/shared/hone/soul_infusion_3.description": "Infuse using §eProud Soul Ingots§r",
-
   "tetra/schematic/slashblade/shared/hone/soul_infusion_4.name": "Soul Infusion IV",
   "tetra/schematic/slashblade/shared/hone/soul_infusion_4.slot1": "Infusion Material",
   "tetra/schematic/slashblade/shared/hone/soul_infusion_4.description": "Infuse using §eProud Soul Pearls§r",
-
   "tetra/schematic/slashblade/shared/hone/soul_infusion_5.name": "Soul Infusion V",
   "tetra/schematic/slashblade/shared/hone/soul_infusion_5.slot1": "Infusion Material",
   "tetra/schematic/slashblade/shared/hone/soul_infusion_5.description": "Infuse using §eProud Soul Crystals§r",
-
   "tetra/schematic/slashblade/shared/hone/soul_infusion_6.name": "Soul Infusion VI",
   "tetra/schematic/slashblade/shared/hone/soul_infusion_6.slot1": "Infusion Material",
   "tetra/schematic/slashblade/shared/hone/soul_infusion_6.description": "Infuse using §eProud Trapezohedron Souls§r\nHighest infusion level achievable",
-
   "tetra.improvement.slashblade/socket.name": "Socket [ %s ]",
   "tetra.improvement.slashblade/socket.description": "Embed materials to provide additional bonuses.",
   "tetra/schematic/slashblade/tsuba/socket.name": "Socket",
   "tetra/schematic/slashblade/tsuba/socket.slot1": "Socket Material",
   "tetra/schematic/slashblade/tsuba/socket.description": "Embed materials into the Tsuba",
-
   "tetra.improvement.handle/wrap.name": "%s Wrap",
   "tetra.improvement.handle/wrap.description": "Slightly increases damage and speed, reduces negative effects of the handle.",
   "tetra/schematic/slashblade/handle/wrap.name": "Wrap",
   "tetra/schematic/slashblade/handle/wrap.slot1": "Material",
   "tetra/schematic/slashblade/handle/wrap.description": "Craft a wrap using the provided material to缠绕 the handle. Slightly increases damage and speed, reduces negative effects of the handle.",
-
   "tetra/schematic/tinting.name": "Tinting",
   "tetra/schematic/tinting.slot": "Dye",
   "tetra/schematic/tinting.description": "Use 1/2/3 dyes to modify the color of the blade glow",
-
   "tetra.module.slashblade/handle/handle.material_name": "%s Handle",
   "tetra.module.slashblade/handle/handle.description": "Default handle for SlashBladeTetra",
   "tetra/schematic/slashblade/handle/handle.name": "Basic Handle",
   "tetra/schematic/slashblade/handle/handle.description": "Craft a handle using materials",
   "tetra/schematic/slashblade/handle/handle.slot1": "Handle Material",
-
   "tetra.module.slashblade/blade/blade.material_name": "%s Blade",
   "tetra.module.slashblade/blade/blade.description": "Default blade for SlashBladeTetra",
   "tetra.module.slashblade/blade/blade.prefix": "Nameless 「 %s 」",
   "tetra/schematic/slashblade/blade/blade.name": "Basic Blade",
   "tetra/schematic/slashblade/blade/blade.description": "Craft a blade using materials",
   "tetra/schematic/slashblade/blade/blade.slot1": "Blade Material",
-
   "tetra.module.slashblade/blade/soul_blade.material_name": "%s Soul Blade",
   "tetra.module.slashblade/blade/soul_blade.description": "Default blade for SlashBladeTetra",
   "tetra.module.slashblade/blade/soul_blade.prefix": "Nameless 「 %s 」",
   "tetra/schematic/slashblade/blade/soul_blade.name": "Soul Blade",
   "tetra/schematic/slashblade/blade/soul_blade.description": "Craft a blade using materials",
   "tetra/schematic/slashblade/blade/soul_blade.slot1": "Blade Material",
-
   "tetra.module.slashblade/blade/brittle_blade.material_name": "Brittle Blade",
   "tetra.module.slashblade/blade/brittle_blade.description": "Default blade for SlashBladeTetra",
   "tetra.module.slashblade/blade/brittle_blade.prefix": "Nameless 「%s」",
   "tetra/schematic/slashblade/blade/brittle_blade.name": "Brittle Blade",
   "tetra/schematic/slashblade/blade/brittle_blade.description": "Craft a blade using brittle materials. Limits further potential.",
   "tetra/schematic/slashblade/blade/brittle_blade.slot1": "Blade Material",
-
   "tetra.module.slashblade/tsuba/tsuba.material_name": "%s Tsuba",
   "tetra.module.slashblade/tsuba/tsuba.description": "Default tsuba for SlashBladeTetra",
   "tetra/schematic/slashblade/tsuba/tsuba.name": "Basic Tsuba",
   "tetra/schematic/slashblade/tsuba/tsuba.description": "Craft a tsuba using materials",
   "tetra/schematic/slashblade/tsuba/tsuba.slot1": "Tsuba Material",
-
   "tetra.module.slashblade/scabbard/scabbard.material_name": "%s Scabbard",
   "tetra.module.slashblade/scabbard/scabbard.description": "Default scabbard for SlashBladeTetra",
   "tetra/schematic/slashblade/scabbard/scabbard.name": "Basic Scabbard",
   "tetra/schematic/slashblade/scabbard/scabbard.description": "Craft a scabbard using materials",
   "tetra/schematic/slashblade/scabbard/scabbard.slot1": "Scabbard Material",
-
   "tetra.module.sa": "Blade Soul「 %s 」",
   "tetra.module.slashblade/soul/sa.description": "Default soul for SlashBladeTetra\nAdditional slot provided by awakened SlashBlades",
   "tetra/schematic/slashblade/soul/sa.name": "Basic Blade Soul",
   "tetra/schematic/slashblade/soul/sa.description": "Infuse materials to awaken blade soul",
   "tetra/schematic/slashblade/soul/sa.slot1": "Soul Material",
-
   "sbtetra.stats.limit_damage": "(SlashBlade) Limit Damage",
   "sbtetra.stats.refine": "(SlashBlade) Refine Damage",
-
   "tetra/schematic/ciallo.name": "Ciallo",
   "tetra/schematic/ciallo.description": "Adds the 'Ciallo' sound effect to your SlashBlade",
   "tetra/schematic/unciallo.name": "UnCiallo",
   "tetra/schematic/unciallo.description": "Removes the 'Ciallo' sound effect from your SlashBlade",
-
   "tetra/schematic/soulextraction.name": "Basic Soul Extraction",
   "tetra/schematic/soulextraction.slot": "Limit-Break Material",
   "tetra/schematic/soulextraction.description": "Converts Radiant Soul points into Broken Radiant Soul. Up to §e%s§r at a time, each consuming §e%s§r Radiant Soul points.\n\n\nOptional: Consume §eSpecial Materials§r to remove the §elimit§r per conversion.\nOutput: [ Normal: §e%s§r | Limit-Break: §e%s§r ]",
   "tetra/schematic/enchantedsoulextraction.name": "Enchanted Soul Extraction",
   "tetra/schematic/enchantedsoulextraction.slot": "Limit-Break Material",
-  "tetra/schematic/enchantedsoulextraction.description": "Converts Kill Count into Enchanted Radiant Soul. Up to §e%s§r at a time, each consuming §e%s§r Kill Count.\nKill Count will not drop below §e1,000§r.\n\nOptional: Consume §eSpecial Materials§r to remove the §elimit§r per conversion.\nOutput: [ Normal: §e%s§r | Limit-Break: §e%s§r ]"
+  "tetra/schematic/enchantedsoulextraction.description": "Converts Kill Count into Enchanted Radiant Soul. Up to §e%s§r at a time, each consuming §e%s§r Kill Count.\nKill Count will not drop below §e1,000§r.\n\nOptional: Consume §eSpecial Materials§r to remove the §elimit§r per conversion.\nOutput: [ Normal: §e%s§r | Limit-Break: §e%s§r ]",
+  "item.slashbladetetra.modular_exchange": "SlashBlade Module Transfer Crystal",
+  "item.slashbladetetra.modular_exchange.tooltip": "Stores and transfers modular SlashBlade data",
+  "item.slashbladetetra.modular_exchange.empty": "No module data stored",
+  "item.slashbladetetra.modular_exchange.stats": "Stored modules: %s | Improvements: %s | Enchantments: %s",
+  "item.slashbladetetra.modular_exchange.tooltip_usage": "Craft with a modular SlashBlade to store or swap its module data.",
+  "item.slashbladetetra.modular_exchange.soul_enabled": "Blade Soul Module",
+  "item.slashbladetetra.modular_exchange.repair_count": "Repair count: %s"
 }

@@ -74,6 +74,7 @@ public class SlashBladeClientHandler {
                 ItemStack itemStack = new ItemStack(item);
                 ISlashBladeTetra.putDefaultModule(itemStack);
                 event.accept(itemStack);
+                event.accept(SlashBladeTetra.MODULAR_EXCHANGE);
             }
         }
     }

@@ -6,7 +6,6 @@
   "tetra.slot.slashblade/scabbard": "刀鞘",
   "tetra.slot.slashblade/soul": "刀魂",
   "tetra.material.unnamed.prefix": "无名",
-
   "tetra.stats.RefineStrengthening": "刀魂增幅",
   "tetra.stats.RefineStrengthening.tooltip": "拔刀锻造提供的伤害上限为§e%s§r点 ",
   "tetra.stats.RefineStrengthening.tooltip_extended": "从tetra获取§e%s§r。\\n拔刀基础值§e%s§r。",
@@ -22,98 +21,79 @@
   "tetra.stats.SoulBladeMapping": "剑魂映射",
   "tetra.stats.SoulBladeMapping.tooltip": "当你的幻影剑造成伤害时，伤害将增加§e%s§r",
   "tetra.stats.SoulBladeMapping.tooltip_extended": "最终增伤 §e%s§r\\n ├ 基础增伤 §e%s§r\\n │ ├ 幻影剑固定增伤: §e%s§r\\n │ └ 刀魂增幅加成值: §e%s§r = §e%s§r x §e%s§r\\n └ 锻造影响值: §ex%s§r  ( 规则: %s )",
-
   "tetra.improvement.soul_infusion.name": "注魂",
   "tetra.improvement.soul_infusion.description": "向部件注入耀魂的力量，获取更高的极限",
-
   "tetra/schematic/slashblade/shared/hone/soul_infusion_1.name": "注魂 I",
   "tetra/schematic/slashblade/shared/hone/soul_infusion_1.slot1": "注魂材料",
   "tetra/schematic/slashblade/shared/hone/soul_infusion_1.description": "使用§e破碎的耀魂§r进行注魂",
-
   "tetra/schematic/slashblade/shared/hone/soul_infusion_2.name": "注魂 II",
   "tetra/schematic/slashblade/shared/hone/soul_infusion_2.slot1": "注魂材料",
   "tetra/schematic/slashblade/shared/hone/soul_infusion_2.description": "使用§e耀魂碎片§r进行注魂",
-
   "tetra/schematic/slashblade/shared/hone/soul_infusion_3.name": "注魂 III",
   "tetra/schematic/slashblade/shared/hone/soul_infusion_3.slot1": "注魂材料",
   "tetra/schematic/slashblade/shared/hone/soul_infusion_3.description": "使用§e耀魂铁锭§r进行注魂",
-
   "tetra/schematic/slashblade/shared/hone/soul_infusion_4.name": "注魂 IV",
   "tetra/schematic/slashblade/shared/hone/soul_infusion_4.slot1": "注魂材料",
   "tetra/schematic/slashblade/shared/hone/soul_infusion_4.description": "使用§e耀魂宝珠§r进行注魂",
-
   "tetra/schematic/slashblade/shared/hone/soul_infusion_5.name": "注魂 V",
   "tetra/schematic/slashblade/shared/hone/soul_infusion_5.slot1": "注魂材料",
   "tetra/schematic/slashblade/shared/hone/soul_infusion_5.description": "使用§e耀魂结晶§r进行注魂",
-
   "tetra/schematic/slashblade/shared/hone/soul_infusion_6.name": "注魂 VI",
   "tetra/schematic/slashblade/shared/hone/soul_infusion_6.slot1": "注魂材料",
   "tetra/schematic/slashblade/shared/hone/soul_infusion_6.description": "使用§e耀偏方三八面魂§r进行注魂\n这是最高等级的注魂",
-
   "tetra.improvement.slashblade/socket.name": "镶嵌 [ %s ]",
   "tetra.improvement.slashblade/socket.description": "嵌入材料，提供额外加成。",
   "tetra/schematic/slashblade/tsuba/socket.name": "镶嵌",
   "tetra/schematic/slashblade/tsuba/socket.slot1": "镶嵌材料",
   "tetra/schematic/slashblade/tsuba/socket.description": "在刀镡之上嵌入材料",
-
   "tetra.improvement.handle/wrap.name": "%s  裹柄",
   "tetra.improvement.handle/wrap.description": "稍微增加伤害和速度，减少剑柄的负面效果。",
   "tetra/schematic/slashblade/handle/wrap.name": "裹柄",
   "tetra/schematic/slashblade/handle/wrap.slot1": "材料",
   "tetra/schematic/slashblade/handle/wrap.description": "用提供的材料制作裹柄缠绕剑柄。稍微增加伤害和速度，减少剑柄的负面效果。",
-
   "tetra/schematic/tinting.name": "染色",
   "tetra/schematic/tinting.slot": "染料",
   "tetra/schematic/tinting.description": "使用1/2/3个染料修改刀光的颜色",
-
   "tetra.module.slashblade/handle/handle.material_name": "%s 刀柄",
   "tetra.module.slashblade/handle/handle.description": "SlashBladeTetra的预设刀柄",
   "tetra/schematic/slashblade/handle/handle.name": "基础刀柄",
   "tetra/schematic/slashblade/handle/handle.description": "使用材料制作刀柄",
   "tetra/schematic/slashblade/handle/handle.slot1": "刀柄材料",
-
   "tetra.module.slashblade/blade/blade.material_name": "%s 刀条",
   "tetra.module.slashblade/blade/blade.description": "SlashBladeTetra的预设刀条",
   "tetra.module.slashblade/blade/blade.prefix": "无铭 「 %s 」",
   "tetra/schematic/slashblade/blade/blade.name": "基础刀条",
   "tetra/schematic/slashblade/blade/blade.description": "使用材料制作刀条",
   "tetra/schematic/slashblade/blade/blade.slot1": "刀条材料",
-
   "tetra.module.slashblade/blade/soul_blade.material_name": "%s 噬魂刀条",
   "tetra.module.slashblade/blade/soul_blade.description": "SlashBladeTetra的预设刀条",
   "tetra.module.slashblade/blade/soul_blade.prefix": "无铭 「 %s 」",
   "tetra/schematic/slashblade/blade/soul_blade.name": "噬魂刀条",
   "tetra/schematic/slashblade/blade/soul_blade.description": "使用材料制作刀条",
   "tetra/schematic/slashblade/blade/soul_blade.slot1": "刀条材料",
-
   "tetra.module.slashblade/blade/brittle_blade.material_name": "%s 易碎刀条",
   "tetra.module.slashblade/blade/brittle_blade.description": "SlashBladeTetra的预设刀条",
   "tetra.module.slashblade/blade/brittle_blade.prefix": "无铭 「 %s 」",
   "tetra/schematic/slashblade/blade/brittle_blade.name": "易碎刀条",
   "tetra/schematic/slashblade/blade/brittle_blade.description": "使用脆性材料制作刀条，失去进一步的可能",
   "tetra/schematic/slashblade/blade/brittle_blade.slot1": "刀条材料",
-
   "tetra.module.slashblade/tsuba/tsuba.material_name": "%s 刀镡",
   "tetra.module.slashblade/tsuba/tsuba.description": "SlashBladeTetra的预设刀镡",
   "tetra/schematic/slashblade/tsuba/tsuba.name": "基础刀镡",
   "tetra/schematic/slashblade/tsuba/tsuba.description": "使用材料制作刀镡",
   "tetra/schematic/slashblade/tsuba/tsuba.slot1": "刀镡材料",
-
   "tetra.module.slashblade/scabbard/scabbard.material_name": "%s 刀鞘",
   "tetra.module.slashblade/scabbard/scabbard.description": "SlashBladeTetra的预设刀鞘",
   "tetra/schematic/slashblade/scabbard/scabbard.name": "基础刀鞘",
   "tetra/schematic/slashblade/scabbard/scabbard.description": "使用材料制作刀鞘",
   "tetra/schematic/slashblade/scabbard/scabbard.slot1": "刀鞘材料",
-
   "tetra.module.sa": "刀魂「 %s 」",
   "tetra.module.slashblade/soul/sa.description": "SlashBladeTetra的预设刀魂\n妖化的拔刀剑提供的额外槽位\n使用带有§eSA§r的§e耀魂宝珠§r作为材料",
   "tetra/schematic/slashblade/soul/sa.name": "基础刀魂",
   "tetra/schematic/slashblade/soul/sa.description": "使用材料注入刀魂",
   "tetra/schematic/slashblade/soul/sa.slot1": "附魂材料",
-
   "sbtetra.stats.limit_damage": "(拔刀)极限伤害",
   "sbtetra.stats.refine": "(拔刀)锻造伤害",
-
   "tetra/schematic/ciallo.name": "Ciallo",
   "tetra/schematic/ciallo.description": "将「 Ciallo 」SE加入你的拔刀",
   "tetra/schematic/unciallo.name": "UnCiallo",
@@ -123,5 +103,12 @@
   "tetra/schematic/soulextraction.description": "将耀魂值转换成破碎耀魂，一次最多§e%s§r个，每个耀魂消耗§e%s§r耀魂值\n\n\n可选 : 消耗§e特殊材料§r，取消单次转换的§e上限§r\n产出 : [ 普通: §e%s§r | 破限 : §e%s§r ]",
   "tetra/schematic/enchantedsoulextraction.name": "魔·萃魂",
   "tetra/schematic/enchantedsoulextraction.slot": "破限材料",
-  "tetra/schematic/enchantedsoulextraction.description": "将杀敌数转换成附魔耀魂，一次最多§e%s§r个，每个耀魂消耗§e%s§r杀敌数\n杀敌数不会减少至§e1,000§r以下\n\n可选 : 消耗§e特殊材料§r，取消单次转换的§e上限§r\n产出 : [ 普通: §e%s§r | 破限 : §e%s§r ]"
+  "tetra/schematic/enchantedsoulextraction.description": "将杀敌数转换成附魔耀魂，一次最多§e%s§r个，每个耀魂消耗§e%s§r杀敌数\n杀敌数不会减少至§e1,000§r以下\n\n可选 : 消耗§e特殊材料§r，取消单次转换的§e上限§r\n产出 : [ 普通: §e%s§r | 破限 : §e%s§r ]",
+  "item.slashbladetetra.modular_exchange": "拔刀模块转移结晶",
+  "item.slashbladetetra.modular_exchange.tooltip": "用于封存和转移模块化拔刀的数据",
+  "item.slashbladetetra.modular_exchange.empty": "尚未封存模块数据",
+  "item.slashbladetetra.modular_exchange.stats": "已封存 %s 个模块，%s 项改进，%s 个附魔",
+  "item.slashbladetetra.modular_exchange.tooltip_usage": "与模块化拔刀在工作台合成：空结晶封存数据，已封存结晶与目标拔刀交换数据",
+  "item.slashbladetetra.modular_exchange.soul_enabled": "刀魂模块",
+  "item.slashbladetetra.modular_exchange.repair_count": "修理次数：%s"
 }

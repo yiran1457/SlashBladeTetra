@@ -25,12 +25,14 @@ import net.yiran.sbtetra.api.SchematicRegisterManager;
 import net.yiran.sbtetra.compat.CompatHandler;
 import net.yiran.sbtetra.craft.SBTIngredientManager;
 import net.yiran.sbtetra.item.ISlashBladeTetra;
+import net.yiran.sbtetra.item.ModularExchangeItem;
 import net.yiran.sbtetra.item.SlashBladeModularItem;
 import net.yiran.sbtetra.module.SlashBladeModule;
 import net.yiran.sbtetra.module.SlashBladeSoulRegistry;
 import net.yiran.sbtetra.module.schematic.EnchantedSoulExtractionSchematic;
 import net.yiran.sbtetra.module.schematic.SoulExtractionSchematic;
 import net.yiran.sbtetra.module.schematic.TintingSchematic;
+import net.yiran.sbtetra.recipe.SBTRecipeSerializers;
 import se.mickelus.tetra.aspect.ItemAspect;
 import se.mickelus.tetra.aspect.TetraEnchantmentHelper;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
@@ -47,6 +49,7 @@ public class SlashBladeTetra {
 
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
     public static final RegistryObject<Item> MODLUAR = ITEMS.register("slashblade", SlashBladeModularItem::new);
+    public static final RegistryObject<Item> MODULAR_EXCHANGE = ITEMS.register("modular_exchange", ModularExchangeItem::new);
     public static final TagKey<Item> REPLACEMENT = ItemTags.create(new ResourceLocation(MODID, "replacement"));
 
     public SlashBladeTetra() {
@@ -61,6 +64,7 @@ public class SlashBladeTetra {
         );
 
         ITEMS.register(modEventBus);
+        SBTRecipeSerializers.register(modEventBus);
         SBTIngredientManager.register(MODLUAR);
         CompatHandler.init();
         commonInit(modEventBus);
