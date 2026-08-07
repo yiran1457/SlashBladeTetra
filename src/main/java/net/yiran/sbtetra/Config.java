@@ -16,6 +16,12 @@ public class Config {
         public static final ForgeConfigSpec.ConfigValue<Boolean> EnableCiallo;
         public static final ForgeConfigSpec.ConfigValue<String> SOUL_BLADE_MAPPING_RULE;
         public static final ForgeConfigSpec.ConfigValue<String> REFINE_ATTACK_RULE;
+        public static final ForgeConfigSpec.ConfigValue<Boolean> ModularExchangeTransferTetraData;
+        public static final ForgeConfigSpec.ConfigValue<Boolean> ModularExchangeTransferEnchantments;
+        public static final ForgeConfigSpec.ConfigValue<Boolean> ModularExchangeTransferProudSoul;
+        public static final ForgeConfigSpec.ConfigValue<Boolean> ModularExchangeTransferKillCount;
+        public static final ForgeConfigSpec.ConfigValue<Boolean> ModularExchangeTransferRefine;
+        public static final ForgeConfigSpec.ConfigValue<List<String>> ModularExchangeAdditionalNbtKeys;
         private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
 
         static {
@@ -37,9 +43,12 @@ public class Config {
             EnableCiallo = BUILDER
                     .comment("是否添加ciallo的两个原理图（联动）")
                     .define("enableCiallo", true);
-            BUILDER.comment("设定 剑魂映射 中 锻造影响值 的公式");
+            BUILDER.pop();
+
+            BUILDER.push("Expressions");
             SOUL_BLADE_MAPPING_RULE = BUILDER
                     .comment(
+                            "设定 剑魂映射 中 锻造影响值 的公式",
                             "设置拔刀剑锻造数到剑魂映射倍率的计算公式。",
                             "可用参数：refine（拔刀剑锻造数）。公式返回值将作为倍率使用。",
                             "默认公式：(18 * refine + 100) / (9 * refine + 1000)"
@@ -54,6 +63,33 @@ public class Config {
                             "baseDamage * (1 - 1 / (1 + (isFiercerEdge ? 0.1 : 0.05) * refine))"
                     )
                     .define("refineAttackRule", "baseDamage * (1 - 1 / (1 + (isFiercerEdge ? 0.1 : 0.05) * refine))");
+            BUILDER.pop();
+
+            BUILDER.push("ModularExchange");
+            ModularExchangeTransferTetraData = BUILDER
+                    .comment(
+                            "是否转移模块交换水晶中的 Tetra 模组数据。",
+                            "这是默认启用的唯一转移类别。"
+                    )
+                    .define("transferTetraData", true);
+            ModularExchangeTransferEnchantments = BUILDER
+                    .comment("是否转移原版/Tetra 附魔。")
+                    .define("transferEnchantments", false);
+            ModularExchangeTransferProudSoul = BUILDER
+                    .comment("是否转移拔刀剑的耀魂数量。")
+                    .define("transferProudSoul", false);
+            ModularExchangeTransferKillCount = BUILDER
+                    .comment("是否转移拔刀剑的击杀数。")
+                    .define("transferKillCount", false);
+            ModularExchangeTransferRefine = BUILDER
+                    .comment("是否转移拔刀剑的锻造数。")
+                    .define("transferRefine", false);
+            ModularExchangeAdditionalNbtKeys = BUILDER
+                    .comment(
+                            "要转移的顶层 NBT 键。",
+                            "交换物品的 TransferSettings NBT 可以覆盖或扩展此列表。"
+                    )
+                    .define("additionalNbtKeys", new ArrayList<>());
             BUILDER.pop();
             SPEC = BUILDER.build();
         }

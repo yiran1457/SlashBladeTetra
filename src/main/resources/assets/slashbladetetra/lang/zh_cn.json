@@ -110,5 +110,17 @@
   "item.slashbladetetra.modular_exchange.stats": "已封存 %s 个模块，%s 项改进，%s 个附魔",
   "item.slashbladetetra.modular_exchange.tooltip_usage": "与模块化拔刀在工作台合成：空结晶封存数据，已封存结晶与目标拔刀交换数据",
   "item.slashbladetetra.modular_exchange.soul_enabled": "刀魂模块",
-  "item.slashbladetetra.modular_exchange.repair_count": "修理次数：%s"
+  "item.slashbladetetra.modular_exchange.repair_count": "修理次数：%s",
+  "item.slashbladetetra.modular_exchange.transfer_data": "可转移数据：",
+  "item.slashbladetetra.modular_exchange.transfer_tetra": "Tetra 模块",
+  "item.slashbladetetra.modular_exchange.transfer_enchantments": "附魔",
+  "item.slashbladetetra.modular_exchange.transfer_proud_soul": "耀魂数",
+  "item.slashbladetetra.modular_exchange.transfer_kill_count": "击杀数",
+  "item.slashbladetetra.modular_exchange.transfer_refine": "锻造数",
+  "item.slashbladetetra.modular_exchange.transfer_none": "无",
+  "item.slashbladetetra.modular_exchange.transfer_additional": "额外 NBT：%s",
+  "item.slashbladetetra.modular_exchange.proud_soul": "耀魂数：%s",
+  "item.slashbladetetra.modular_exchange.kill_count": "击杀数：%s",
+  "item.slashbladetetra.modular_exchange.refine_count": "锻造数：%s",
+  "item.slashbladetetra.modular_exchange.enchantment_count": "已存附魔：%s"
 }

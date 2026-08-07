@@ -110,5 +110,17 @@
   "item.slashbladetetra.modular_exchange.stats": "Stored modules: %s | Improvements: %s | Enchantments: %s",
   "item.slashbladetetra.modular_exchange.tooltip_usage": "Craft with a modular SlashBlade to store or swap its module data.",
   "item.slashbladetetra.modular_exchange.soul_enabled": "Blade Soul Module",
-  "item.slashbladetetra.modular_exchange.repair_count": "Repair count: %s"
+  "item.slashbladetetra.modular_exchange.repair_count": "Repair count: %s",
+  "item.slashbladetetra.modular_exchange.transfer_data": "Transfer data:",
+  "item.slashbladetetra.modular_exchange.transfer_tetra": "Tetra modules",
+  "item.slashbladetetra.modular_exchange.transfer_enchantments": "Enchantments",
+  "item.slashbladetetra.modular_exchange.transfer_proud_soul": "Proud Souls",
+  "item.slashbladetetra.modular_exchange.transfer_kill_count": "Kill count",
+  "item.slashbladetetra.modular_exchange.transfer_refine": "Refinement count",
+  "item.slashbladetetra.modular_exchange.transfer_none": "None",
+  "item.slashbladetetra.modular_exchange.transfer_additional": "Additional NBT: %s",
+  "item.slashbladetetra.modular_exchange.proud_soul": "Proud Souls: %s",
+  "item.slashbladetetra.modular_exchange.kill_count": "Kill count: %s",
+  "item.slashbladetetra.modular_exchange.refine_count": "Refinement count: %s",
+  "item.slashbladetetra.modular_exchange.enchantment_count": "Enchantments stored: %s"
 }
