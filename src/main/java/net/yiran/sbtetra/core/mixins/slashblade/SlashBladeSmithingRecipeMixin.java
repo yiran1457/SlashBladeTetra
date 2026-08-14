@@ -1,4 +1,4 @@
-package net.yiran.sbtetra.core.mixins.recipe;
+package net.yiran.sbtetra.core.mixins.slashblade;
 
 import mods.flammpfeil.slashblade.capability.slashblade.ISlashBladeState;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;

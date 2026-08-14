@@ -1,5 +1,8 @@
 package net.yiran.sbtetra.item;
 
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectLinkedOpenHashSet;
+import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import mods.flammpfeil.slashblade.capability.slashblade.ISlashBladeState;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import net.minecraft.ChatFormatting;
@@ -27,7 +30,13 @@ import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.data.ImprovementData;
 import se.mickelus.tetra.module.data.TweakData;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Locale;
+import java.util.Set;
+import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 public class ModularExchangeItem extends Item {
@@ -35,11 +44,17 @@ public class ModularExchangeItem extends Item {
     public static final String HAS_DATA_KEY = "HasModuleData";
     public static final String HONE_LIMIT_KEY = "honing_limit";
 
-    /** Per-crystal override compound. Example: {TransferSettings:{enchantments:true,proudSoul:true}}. */
+    /**
+     * 单晶覆盖配置复合标签。示例：{TransferSettings:{enchantments:true,proudSoul:true}}。
+     */
     public static final String TRANSFER_SETTINGS_KEY = "TransferSettings";
-    /** Snapshot of the policy used while the payload was stored. */
+    /**
+     * 存储数据时所用策略的快照。
+     */
     public static final String TRANSFER_POLICY_KEY = "TransferPolicy";
-    /** Selected SlashBlade capability values stored alongside the Tetra payload. */
+    /**
+     * 与 Tetra 数据一同存储的所选 SlashBlade 能力值。
+     */
     public static final String BLADE_STATE_DATA_KEY = "BladeStateData";
 
     public static final String TRANSFER_TETRA_KEY = "tetra";
@@ -53,6 +68,11 @@ public class ModularExchangeItem extends Item {
     private static final String KILL_COUNT_NBT_KEY = "killCount";
     private static final String REFINE_NBT_KEY = "RepairCounter";
     private static final String REFINE_DATA_KEY = "refine";
+    private static final String ENCHANTMENTS_KEY = "Enchantments";
+    private static final String STORED_ENCHANTMENTS_KEY = "StoredEnchantments";
+    private static final String ENCHANTMENT_MAPPING_KEY = "EnchantmentMapping";
+    private static final String SOUL_SLOT_KEY = "soul_slot";
+    private static final String MATERIAL_SUFFIX = "_material";
 
     private static final String[] KNOWN_SLOTS = {
             "slashblade/handle",
@@ -61,27 +81,27 @@ public class ModularExchangeItem extends Item {
             "slashblade/scabbard",
             "slashblade/soul"
     };
-    private static final Set<String> KNOWN_SLOT_SET = new HashSet<>(Arrays.asList(KNOWN_SLOTS));
+    private static final Set<String> KNOWN_SLOT_SET = new ObjectOpenHashSet<>(KNOWN_SLOTS);
 
-    /* Tetra data that is not tied to one module slot. Enchantment data is handled separately. */
-    private static final Set<String> TETRA_GLOBAL_KEYS = new LinkedHashSet<>(Arrays.asList(
-            "soul_slot",
+    /* 与具体模块槽无关的 Tetra 数据。附魔数据单独处理。 */
+    private static final Set<String> TETRA_GLOBAL_KEYS = new ObjectLinkedOpenHashSet<>(new String[]{
+            SOUL_SLOT_KEY,
             IModularItem.repairCountKey,
             IModularItem.cooledStrengthKey,
             IModularItem.honeProgressKey,
             IModularItem.honeAvailableKey,
             IModularItem.honeCountKey,
-            HONE_LIMIT_KEY
-    ));
-    private static final Set<String> ENCHANTMENT_KEYS = new LinkedHashSet<>(Arrays.asList(
-            "Enchantments",
-            "StoredEnchantments",
-            "EnchantmentMapping"
-    ));
-    private static final Set<String> RESERVED_DATA_KEYS = new HashSet<>(Arrays.asList(
+            HONE_LIMIT_KEY}
+    );
+    private static final Set<String> ENCHANTMENT_KEYS = new ObjectLinkedOpenHashSet<>(new String[]{
+            ENCHANTMENTS_KEY,
+            STORED_ENCHANTMENTS_KEY,
+            ENCHANTMENT_MAPPING_KEY}
+    );
+    private static final Set<String> RESERVED_DATA_KEYS = new ObjectOpenHashSet<>(new String[]{
             TRANSFER_POLICY_KEY,
-            BLADE_STATE_DATA_KEY
-    ));
+            BLADE_STATE_DATA_KEY}
+    );
 
     private static final String PREFIX_MAJOR = "\u00bb ";
     private static final String PREFIX_MINOR = " * ";
@@ -138,7 +158,7 @@ public class ModularExchangeItem extends Item {
         }
         captureAdditionalData(source, moduleData, settings);
 
-        // The policy is part of the snapshot so later config changes do not alter an already stored crystal.
+        // 策略属于快照的一部分，因此之后的配置变更不会改变已存储的水晶。
         moduleData.put(TRANSFER_POLICY_KEY, settings.toTag());
 
         CompoundTag tag = exchange.getOrCreateTag();
@@ -148,12 +168,12 @@ public class ModularExchangeItem extends Item {
 
     private static void captureTetraData(@Nullable CompoundTag source, CompoundTag moduleData,
                                          ISlashBladeTetra modularBlade, ItemStack blade) {
-        Set<String> copiedKeys = new HashSet<>();
         if (source != null) {
+            Set<String> copiedKeys = new ObjectOpenHashSet<>();
             Stream.concat(
-                    Arrays.stream(safeKeys(modularBlade.getMajorModuleKeys(blade))),
-                    Arrays.stream(safeKeys(modularBlade.getMinorModuleKeys(blade)))
-            ).filter(key -> key != null && !key.isEmpty())
+                            Arrays.stream(safeKeys(modularBlade.getMajorModuleKeys(blade))),
+                            Arrays.stream(safeKeys(modularBlade.getMinorModuleKeys(blade)))
+                    ).filter(key -> key != null && !key.isEmpty())
                     .distinct()
                     .forEach(slot -> copySlotData(source, moduleData, modularBlade, blade, slot, copiedKeys));
 
@@ -170,7 +190,7 @@ public class ModularExchangeItem extends Item {
             }
         }
 
-        // This is display-only; Tetra recalculates the actual limit from item properties on application.
+        // 仅供显示；应用时 Tetra 会根据物品属性重新计算实际上限。
         moduleData.putInt(HONE_LIMIT_KEY, modularBlade.getHoningLimit(blade));
         if (source != null && source.contains(IModularItem.honeProgressKey, Tag.TAG_ANY_NUMERIC)) {
             moduleData.putInt(IModularItem.honeProgressKey, source.getInt(IModularItem.honeProgressKey));
@@ -193,13 +213,13 @@ public class ModularExchangeItem extends Item {
         moduleData.putString(slot, moduleKey);
         copiedKeys.add(slot);
 
-        String variantKey = moduleKey + "_material";
+        String variantKey = moduleKey + MATERIAL_SUFFIX;
         if (source.contains(variantKey)) {
             copyTag(source, moduleData, variantKey);
             copiedKeys.add(variantKey);
         }
 
-        String settleProgressKey = slot + "/settle_progress";
+        String settleProgressKey = settleProgressKey(slot);
         if (source.contains(settleProgressKey)) {
             copyTag(source, moduleData, settleProgressKey);
             copiedKeys.add(settleProgressKey);
@@ -226,13 +246,28 @@ public class ModularExchangeItem extends Item {
             }
         }
 
-        String prefix = slot + ":";
-        for (String key : source.getAllKeys()) {
-            if ((key.startsWith(prefix) || key.equals(settleProgressKey)) && !copiedKeys.contains(key)) {
+        for (String key : collectSlotKeys(source, slot)) {
+            if (!copiedKeys.contains(key)) {
                 copyTag(source, moduleData, key);
                 copiedKeys.add(key);
             }
         }
+    }
+
+    private static String settleProgressKey(String slot) {
+        return slot + "/settle_progress";
+    }
+
+    private static Set<String> collectSlotKeys(CompoundTag tag, String slot) {
+        Set<String> keys = new ObjectOpenHashSet<>();
+        String prefix = slot + ":";
+        String settleProgressKey = settleProgressKey(slot);
+        for (String key : tag.getAllKeys()) {
+            if (key.startsWith(prefix) || key.equals(settleProgressKey)) {
+                keys.add(key);
+            }
+        }
+        return keys;
     }
 
     private static void captureEnchantmentData(@Nullable CompoundTag source, ItemStack blade, CompoundTag moduleData) {
@@ -242,10 +277,10 @@ public class ModularExchangeItem extends Item {
             }
         }
 
-        // ItemStack exposes the live vanilla enchantment list, which is more reliable than a stale root tag.
+        // ItemStack 暴露的是实时原版附魔列表，比过期的根标签更可靠。
         ListTag enchantments = blade.getEnchantmentTags();
         if (!enchantments.isEmpty()) {
-            moduleData.put("Enchantments", enchantments.copy());
+            moduleData.put(ENCHANTMENTS_KEY, enchantments.copy());
         }
     }
 
@@ -369,7 +404,7 @@ public class ModularExchangeItem extends Item {
 
     private static void copyStoredTetraData(CompoundTag source, CompoundTag target) {
         for (String key : source.getAllKeys()) {
-            // The hone limit is only used by the crystal tooltip; Tetra calculates it from modules.
+            // 研磨上限仅用于水晶工具提示；Tetra 会根据模块计算它。
             if (!HONE_LIMIT_KEY.equals(key) && isTetraPayloadKey(source, key)) {
                 copyTag(source, target, key);
             }
@@ -414,7 +449,7 @@ public class ModularExchangeItem extends Item {
     private static void clearTetraData(ItemStack blade, ISlashBladeTetra modularBlade) {
         CompoundTag tag = blade.getOrCreateTag();
 
-        Set<String> slots = new HashSet<>();
+        Set<String> slots = new ObjectOpenHashSet<>();
         slots.addAll(Arrays.asList(safeKeys(modularBlade.getMajorModuleKeys(blade))));
         slots.addAll(Arrays.asList(safeKeys(modularBlade.getMinorModuleKeys(blade))));
         slots.addAll(KNOWN_SLOT_SET);
@@ -424,7 +459,7 @@ public class ModularExchangeItem extends Item {
                 continue;
             }
             ItemModule module = modularBlade.getModuleFromSlot(blade, slot);
-            String materialKey = tag.contains(slot, Tag.TAG_STRING) ? tag.getString(slot) + "_material" : null;
+            String materialKey = tag.contains(slot, Tag.TAG_STRING) ? tag.getString(slot) + MATERIAL_SUFFIX : null;
 
             if (module != null) {
                 module.removeModule(blade, false);
@@ -432,13 +467,7 @@ public class ModularExchangeItem extends Item {
                 tag.remove(slot);
             }
 
-            String prefix = slot + ":";
-            Set<String> removable = new HashSet<>();
-            for (String key : tag.getAllKeys()) {
-                if (key.startsWith(prefix) || key.equals(slot + "/settle_progress")) {
-                    removable.add(key);
-                }
-            }
+            Set<String> removable = collectSlotKeys(tag, slot);
             if (materialKey != null) {
                 removable.add(materialKey);
             }
@@ -480,7 +509,7 @@ public class ModularExchangeItem extends Item {
             return data.getCompound(BLADE_STATE_TAG_KEY);
         }
 
-        // Accept simple legacy/custom snapshots that stored these values at the payload root.
+        // 兼容把上述值直接存在载荷根部的旧版/自定义快照。
         CompoundTag result = new CompoundTag();
         copyTag(data, result, PROUD_SOUL_NBT_KEY);
         copyTag(data, result, KILL_COUNT_NBT_KEY);
@@ -517,13 +546,15 @@ public class ModularExchangeItem extends Item {
             }
             changed = true;
         }
-        if (settings.refine && hasRefineValue(data)) {
-            int value = getRefineValue(data);
-            targetState.putInt(REFINE_NBT_KEY, value);
-            if (state != null) {
-                state.setRefine(value);
+        if (settings.refine) {
+            Integer value = getRefineValue(data);
+            if (value != null) {
+                targetState.putInt(REFINE_NBT_KEY, value);
+                if (state != null) {
+                    state.setRefine(value);
+                }
+                changed = true;
             }
-            changed = true;
         }
 
         if (changed) {
@@ -560,28 +591,18 @@ public class ModularExchangeItem extends Item {
         }
     }
 
-    private static boolean hasRefineValue(CompoundTag data) {
-        return data.contains(REFINE_DATA_KEY, Tag.TAG_ANY_NUMERIC)
-                || data.contains(REFINE_NBT_KEY, Tag.TAG_ANY_NUMERIC);
-    }
-
     @Nullable
     private static Integer getRefineValue(CompoundTag data) {
         if (data.contains(REFINE_DATA_KEY, Tag.TAG_ANY_NUMERIC)) {
             return data.getInt(REFINE_DATA_KEY);
         }
-        return getNumericValue(data, REFINE_NBT_KEY);
+        return data.contains(REFINE_NBT_KEY, Tag.TAG_ANY_NUMERIC) ? data.getInt(REFINE_NBT_KEY) : null;
     }
 
     private static void putRefineValue(CompoundTag data, int value) {
-        // Keep the human-readable key and SlashBlade's serialized key for compatibility with external NBT tools.
+        // 同时保留人类可读的键和 SlashBlade 序列化用的键，以兼容外部 NBT 工具。
         data.putInt(REFINE_DATA_KEY, value);
         data.putInt(REFINE_NBT_KEY, value);
-    }
-
-    @Nullable
-    private static Integer getNumericValue(CompoundTag data, String key) {
-        return data.contains(key, Tag.TAG_ANY_NUMERIC) ? data.getInt(key) : null;
     }
 
     private static void copyTag(@Nullable CompoundTag source, CompoundTag target, String key) {
@@ -622,7 +643,7 @@ public class ModularExchangeItem extends Item {
 
     private static boolean isModuleRelatedKey(CompoundTag data, String key) {
         return key.contains(":")
-                || key.endsWith("_material")
+                || key.endsWith(MATERIAL_SUFFIX)
                 || key.endsWith("/settle_progress")
                 || isModuleSlotKey(data, key);
     }
@@ -630,7 +651,7 @@ public class ModularExchangeItem extends Item {
     private static boolean isModuleSlotKey(CompoundTag data, String key) {
         if (!data.contains(key, Tag.TAG_STRING) || RESERVED_DATA_KEYS.contains(key)
                 || TETRA_GLOBAL_KEYS.contains(key) || ENCHANTMENT_KEYS.contains(key)
-                || key.contains(":") || key.endsWith("_material") || key.endsWith("/settle_progress")) {
+                || key.contains(":") || key.endsWith(MATERIAL_SUFFIX) || key.endsWith("/settle_progress")) {
             return false;
         }
         String moduleKey = data.getString(key);
@@ -638,7 +659,7 @@ public class ModularExchangeItem extends Item {
     }
 
     private static boolean isShiftDown() {
-        // Same source as Tetra modular tooltips; only called from client-side appendHoverText.
+        // 与 Tetra 模块工具提示同源；仅在客户端 appendHoverText 中调用。
         return Screen.hasShiftDown();
     }
 
@@ -669,7 +690,7 @@ public class ModularExchangeItem extends Item {
                 return stripped == null || stripped.isEmpty() ? name : stripped;
             }
         } catch (Throwable ignored) {
-            // A missing optional module should not prevent the crystal tooltip from rendering.
+            // 缺失的可选模块不应阻止水晶工具提示渲染。
         }
         return improvementKey + (level > 0 ? " " + level : "");
     }
@@ -685,20 +706,20 @@ public class ModularExchangeItem extends Item {
                     return enchantment.getFullname(Math.max(level, 1));
                 }
             } catch (RuntimeException ignored) {
-                // Fall through to a literal id for malformed or unloaded enchantment ids.
+                // 对于格式错误或未加载的附魔 id，回退为字面文本。
             }
         }
         return Component.literal(id.isEmpty() ? "?" : id + " " + level).withStyle(ChatFormatting.GRAY);
     }
 
     private static void appendEnchantmentLines(CompoundTag data, List<Component> tooltip, String slot,
-                                                Set<String> displayedEnchantments) {
-        if (!data.contains("Enchantments", Tag.TAG_LIST)) {
+                                               Set<String> displayedEnchantments) {
+        if (!data.contains(ENCHANTMENTS_KEY, Tag.TAG_LIST)) {
             return;
         }
-        ListTag enchantments = data.getList("Enchantments", Tag.TAG_COMPOUND);
-        CompoundTag mapping = data.contains("EnchantmentMapping", Tag.TAG_COMPOUND)
-                ? data.getCompound("EnchantmentMapping")
+        ListTag enchantments = data.getList(ENCHANTMENTS_KEY, Tag.TAG_COMPOUND);
+        CompoundTag mapping = data.contains(ENCHANTMENT_MAPPING_KEY, Tag.TAG_COMPOUND)
+                ? data.getCompound(ENCHANTMENT_MAPPING_KEY)
                 : null;
         for (int i = 0; i < enchantments.size(); i++) {
             CompoundTag enchantment = enchantments.getCompound(i);
@@ -715,18 +736,18 @@ public class ModularExchangeItem extends Item {
 
     private static int getEnchantmentCount(CompoundTag data) {
         int count = 0;
-        if (data.contains("Enchantments", Tag.TAG_LIST)) {
-            count += data.getList("Enchantments", Tag.TAG_COMPOUND).size();
+        if (data.contains(ENCHANTMENTS_KEY, Tag.TAG_LIST)) {
+            count += data.getList(ENCHANTMENTS_KEY, Tag.TAG_COMPOUND).size();
         }
-        if (data.contains("StoredEnchantments", Tag.TAG_LIST)) {
-            count += data.getList("StoredEnchantments", Tag.TAG_COMPOUND).size();
+        if (data.contains(STORED_ENCHANTMENTS_KEY, Tag.TAG_LIST)) {
+            count += data.getList(STORED_ENCHANTMENTS_KEY, Tag.TAG_COMPOUND).size();
         }
         return count;
     }
 
     private static void appendTransferTooltip(TransferSettings settings, @Nullable CompoundTag data,
                                               List<Component> tooltip) {
-        List<Component> entries = new ArrayList<>();
+        List<Component> entries = new ObjectArrayList<>();
         CompoundTag stateData = data == null ? null : getStoredBladeStateData(data);
 
         if (settings.tetraData) {
@@ -736,32 +757,33 @@ public class ModularExchangeItem extends Item {
             entries.add(data == null
                     ? Component.translatable("item.slashbladetetra.modular_exchange.transfer_enchantments")
                     : Component.translatable(
-                            "item.slashbladetetra.modular_exchange.enchantment_count",
-                            getEnchantmentCount(data)
-                    ));
+                    "item.slashbladetetra.modular_exchange.enchantment_count",
+                    getEnchantmentCount(data)
+            ));
         }
         if (settings.proudSoul) {
             entries.add(stateData != null && stateData.contains(PROUD_SOUL_NBT_KEY, Tag.TAG_ANY_NUMERIC)
                     ? Component.translatable(
-                            "item.slashbladetetra.modular_exchange.proud_soul",
-                            stateData.getInt(PROUD_SOUL_NBT_KEY)
-                    )
+                    "item.slashbladetetra.modular_exchange.proud_soul",
+                    stateData.getInt(PROUD_SOUL_NBT_KEY)
+            )
                     : Component.translatable("item.slashbladetetra.modular_exchange.transfer_proud_soul"));
         }
         if (settings.killCount) {
             entries.add(stateData != null && stateData.contains(KILL_COUNT_NBT_KEY, Tag.TAG_ANY_NUMERIC)
                     ? Component.translatable(
-                            "item.slashbladetetra.modular_exchange.kill_count",
-                            stateData.getInt(KILL_COUNT_NBT_KEY)
-                    )
+                    "item.slashbladetetra.modular_exchange.kill_count",
+                    stateData.getInt(KILL_COUNT_NBT_KEY)
+            )
                     : Component.translatable("item.slashbladetetra.modular_exchange.transfer_kill_count"));
         }
         if (settings.refine) {
-            entries.add(stateData != null && hasRefineValue(stateData)
+            Integer refine = stateData != null ? getRefineValue(stateData) : null;
+            entries.add(refine != null
                     ? Component.translatable(
-                            "item.slashbladetetra.modular_exchange.refine_count",
-                            getRefineValue(stateData)
-                    )
+                    "item.slashbladetetra.modular_exchange.refine_count",
+                    refine
+            )
                     : Component.translatable("item.slashbladetetra.modular_exchange.transfer_refine"));
         }
 
@@ -787,14 +809,15 @@ public class ModularExchangeItem extends Item {
 
     private static void appendStoredDataTooltip(CompoundTag data, List<Component> tooltip, boolean expanded) {
         TransferSettings settings = TransferSettings.fromStoredData(data);
-        List<String> moduleSlots = new ArrayList<>();
+        List<String> moduleSlots = new ObjectArrayList<>();
+        Set<String> seenSlots = new ObjectOpenHashSet<>();
         for (String slot : KNOWN_SLOTS) {
-            if (isModuleSlotKey(data, slot)) {
+            if (isModuleSlotKey(data, slot) && seenSlots.add(slot)) {
                 moduleSlots.add(slot);
             }
         }
         for (String key : data.getAllKeys()) {
-            if (isModuleSlotKey(data, key) && !moduleSlots.contains(key)) {
+            if (isModuleSlotKey(data, key) && seenSlots.add(key)) {
                 moduleSlots.add(key);
             }
         }
@@ -822,15 +845,15 @@ public class ModularExchangeItem extends Item {
 
         tooltip.add(Tooltips.expand);
 
-        Set<String> displayedEnchantments = new HashSet<>();
+        Set<String> displayedEnchantments = new ObjectOpenHashSet<>();
         for (String slot : moduleSlots) {
             String moduleKey = data.getString(slot);
-            String materialKey = moduleKey + "_material";
+            String materialKey = moduleKey + MATERIAL_SUFFIX;
             String material = data.contains(materialKey, Tag.TAG_STRING) ? data.getString(materialKey) : null;
 
             tooltip.add(prefix(PREFIX_MAJOR, ChatFormatting.DARK_GRAY).append(moduleName(moduleKey, material)));
 
-            List<String> improvementKeys = new ArrayList<>();
+            List<String> improvementKeys = new ObjectArrayList<>();
             String slotPrefix = slot + ":";
             for (String key : data.getAllKeys()) {
                 if (key.startsWith(slotPrefix)) {
@@ -851,7 +874,7 @@ public class ModularExchangeItem extends Item {
             }
         }
 
-        if (data.contains("soul_slot") && data.getBoolean("soul_slot")) {
+        if (data.contains(SOUL_SLOT_KEY) && data.getBoolean(SOUL_SLOT_KEY)) {
             tooltip.add(prefix(PREFIX_MINOR, ChatFormatting.DARK_GRAY)
                     .append(Component.translatable("item.slashbladetetra.modular_exchange.soul_enabled")
                             .withStyle(ChatFormatting.GRAY)));
@@ -864,9 +887,9 @@ public class ModularExchangeItem extends Item {
                     ).withStyle(ChatFormatting.DARK_GRAY)));
         }
 
-        // Preserve old snapshots without a valid Tetra enchantment mapping.
-        if (settings.enchantments && data.contains("Enchantments", Tag.TAG_LIST)) {
-            ListTag enchantments = data.getList("Enchantments", Tag.TAG_COMPOUND);
+        // 兼容没有有效 Tetra 附魔映射的旧快照。
+        if (settings.enchantments && data.contains(ENCHANTMENTS_KEY, Tag.TAG_LIST)) {
+            ListTag enchantments = data.getList(ENCHANTMENTS_KEY, Tag.TAG_COMPOUND);
             for (int i = 0; i < enchantments.size(); i++) {
                 CompoundTag enchantment = enchantments.getCompound(i);
                 String id = enchantment.contains("id", Tag.TAG_STRING) ? enchantment.getString("id") : "";
@@ -914,7 +937,7 @@ public class ModularExchangeItem extends Item {
     }
 
     private static final class TransferSettings {
-        private final LinkedHashSet<String> additionalNbtKeys;
+        private final Set<String> additionalNbtKeys;
         private boolean tetraData;
         private boolean enchantments;
         private boolean proudSoul;
@@ -928,7 +951,7 @@ public class ModularExchangeItem extends Item {
             this.proudSoul = proudSoul;
             this.killCount = killCount;
             this.refine = refine;
-            this.additionalNbtKeys = new LinkedHashSet<>();
+            this.additionalNbtKeys = new ObjectLinkedOpenHashSet<>();
             for (String key : additionalNbtKeys) {
                 if (isSafeAdditionalKey(key)) {
                     this.additionalNbtKeys.add(key);
@@ -942,7 +965,7 @@ public class ModularExchangeItem extends Item {
             boolean proudSoul = false;
             boolean killCount = false;
             boolean refine = false;
-            List<String> additional = new ArrayList<>();
+            List<String> additional = new ObjectArrayList<>();
 
             try {
                 tetraData = Config.Server.ModularExchangeTransferTetraData.get();
@@ -952,7 +975,7 @@ public class ModularExchangeItem extends Item {
                 refine = Config.Server.ModularExchangeTransferRefine.get();
                 additional.addAll(Config.Server.ModularExchangeAdditionalNbtKeys.get());
             } catch (RuntimeException ignored) {
-                // Tooltips can be constructed before a remote server config has arrived; use documented defaults then.
+                // 远程服务器配置到达前就可能构造工具提示，此时使用文档中的默认值。
             }
             return new TransferSettings(tetraData, enchantments, proudSoul, killCount, refine, additional);
         }
@@ -969,7 +992,7 @@ public class ModularExchangeItem extends Item {
             if (root.contains("TransferData", Tag.TAG_COMPOUND)) {
                 result.applyOverrides(root.getCompound("TransferData"), true);
             }
-            // Direct root keys are convenient for commands and datapacks, while the compound avoids collisions.
+            // 根键便于命令和数据包使用，复合标签则避免键名冲突。
             result.applyOverrides(root, false);
             return result;
         }
@@ -979,7 +1002,7 @@ public class ModularExchangeItem extends Item {
                 return fromPolicy(data.getCompound(TRANSFER_POLICY_KEY));
             }
 
-            // Older crystals did not carry a policy. Infer categories from their payload for backward compatibility.
+            // 旧版水晶未携带策略，根据其载荷内容推断类别以向后兼容。
             boolean tetraData = hasTetraPayload(data);
             CompoundTag stateData = getStoredBladeStateData(data);
             return new TransferSettings(
@@ -987,7 +1010,7 @@ public class ModularExchangeItem extends Item {
                     hasEnchantmentPayload(data),
                     stateData.contains(PROUD_SOUL_NBT_KEY, Tag.TAG_ANY_NUMERIC),
                     stateData.contains(KILL_COUNT_NBT_KEY, Tag.TAG_ANY_NUMERIC),
-                    hasRefineValue(stateData),
+                    getRefineValue(stateData) != null,
                     List.of()
             );
         }
@@ -1032,7 +1055,7 @@ public class ModularExchangeItem extends Item {
                     continue;
                 }
                 ListTag list = tag.getList(key, Tag.TAG_STRING);
-                List<String> result = new ArrayList<>();
+                List<String> result = new ObjectArrayList<>();
                 for (int i = 0; i < list.size(); i++) {
                     result.add(list.getString(i));
                 }
@@ -1055,45 +1078,26 @@ public class ModularExchangeItem extends Item {
                 }
             }
 
-            Boolean value = readBoolean(tag, "transferTetraData", "TransferTetraData");
-            if (value == null && allowShortNames) {
-                value = readBoolean(tag, TRANSFER_TETRA_KEY);
-            }
-            if (value != null) {
-                tetraData = value;
-            }
-
-            value = readBoolean(tag, "transferEnchantments", "TransferEnchantments");
-            if (value == null && allowShortNames) {
-                value = readBoolean(tag, TRANSFER_ENCHANTMENTS_KEY, "enchantments");
-            }
-            if (value != null) {
-                enchantments = value;
-            }
-
-            value = readBoolean(tag, "transferProudSoul", "TransferProudSoul");
-            if (value == null && allowShortNames) {
-                value = readBoolean(tag, TRANSFER_PROUD_SOUL_KEY, "proud_soul");
-            }
-            if (value != null) {
-                proudSoul = value;
-            }
-
-            value = readBoolean(tag, "transferKillCount", "TransferKillCount");
-            if (value == null && allowShortNames) {
-                value = readBoolean(tag, TRANSFER_KILL_COUNT_KEY, "kill_count");
-            }
-            if (value != null) {
-                killCount = value;
-            }
-
-            value = readBoolean(tag, "transferRefine", "TransferRefine", "transferForge", "TransferForge");
-            if (value == null && allowShortNames) {
-                value = readBoolean(tag, TRANSFER_REFINE_KEY, "forge", "forging");
-            }
-            if (value != null) {
-                refine = value;
-            }
+            applyBooleanOverride(tag, allowShortNames,
+                    new String[]{"transferTetraData", "TransferTetraData"},
+                    new String[]{TRANSFER_TETRA_KEY},
+                    value -> tetraData = value);
+            applyBooleanOverride(tag, allowShortNames,
+                    new String[]{"transferEnchantments", "TransferEnchantments"},
+                    new String[]{TRANSFER_ENCHANTMENTS_KEY, "enchantments"},
+                    value -> enchantments = value);
+            applyBooleanOverride(tag, allowShortNames,
+                    new String[]{"transferProudSoul", "TransferProudSoul"},
+                    new String[]{TRANSFER_PROUD_SOUL_KEY, "proud_soul"},
+                    value -> proudSoul = value);
+            applyBooleanOverride(tag, allowShortNames,
+                    new String[]{"transferKillCount", "TransferKillCount"},
+                    new String[]{TRANSFER_KILL_COUNT_KEY, "kill_count"},
+                    value -> killCount = value);
+            applyBooleanOverride(tag, allowShortNames,
+                    new String[]{"transferRefine", "TransferRefine", "transferForge", "TransferForge"},
+                    new String[]{TRANSFER_REFINE_KEY, "forge", "forging"},
+                    value -> refine = value);
 
             List<String> additional = readStringList(tag,
                     "additionalNbtKeys", "AdditionalNbtKeys", "additionalKeys", "AdditionalKeys");
@@ -1103,6 +1107,18 @@ public class ModularExchangeItem extends Item {
                         additionalNbtKeys.add(key);
                     }
                 }
+            }
+        }
+
+        private void applyBooleanOverride(CompoundTag tag, boolean allowShortNames,
+                                          String[] longKeys, String[] shortKeys,
+                                          Consumer<Boolean> setter) {
+            Boolean value = readBoolean(tag, longKeys);
+            if (value == null && allowShortNames) {
+                value = readBoolean(tag, shortKeys);
+            }
+            if (value != null) {
+                setter.accept(value);
             }
         }
 

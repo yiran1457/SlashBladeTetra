@@ -1,4 +1,4 @@
-package net.yiran.sbtetra.core.mixins.recipe;
+package net.yiran.sbtetra.core.mixins.slashblade;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
@@ -41,35 +41,5 @@ public class SlashBladeIngredientMixin extends Ingredient {
         }
         return original.call(instance,o)||SBTIngredientManager.getItems().contains(o);
     }
-/*
-    @Inject(method = "<init>", remap = false, at = @At("RETURN"))
-    private void init(Set<Item> items, RequestDefinition request, CallbackInfo ci) {
-        Set<Item> itemSet = new HashSet<>(items);
-        boolean wrapper = false;
-        for (Item item : itemSet) {
-            if (Config.CantWrapperItems.get().contains(ForgeRegistries.ITEMS.getKey(item).toString())) {
-                continue;
-            }
-            itemSet.addAll(SBTIngredientManager.getItems());
-            wrapper = true;
-            break;
-        }
-        if (!wrapper) {
-            return;
-        }
-        this.values = itemSet.stream()
-                .map((item) -> {
-                    if (item instanceof ISlashBladeTetra) {
-                        ItemStack stack = ((ISlashBladeTetra) item).getDefaultStack();
-                        request.initItemStack(stack);
-                        return new Ingredient.ItemValue(stack);
-                    }
-                    ItemStack stack = new ItemStack(item);
-                    request.initItemStack(stack);
-                    return new Ingredient.ItemValue(stack);
-                })
-                .toArray(Value[]::new);
-        this.items = Collections.unmodifiableSet(itemSet);
 
-    }*/
 }

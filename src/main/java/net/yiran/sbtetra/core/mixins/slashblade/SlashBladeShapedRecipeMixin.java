@@ -1,4 +1,4 @@
-package net.yiran.sbtetra.core.mixins.recipe;
+package net.yiran.sbtetra.core.mixins.slashblade;
 
 import mods.flammpfeil.slashblade.capability.slashblade.ISlashBladeState;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
@@ -41,25 +41,6 @@ public abstract class SlashBladeShapedRecipeMixin {
                         return result;
                     })
                     .ifPresent(cir::setReturnValue);
-        }/*
-        if(cir.getReturnValue().is(SlashBladeTetra.REPLACEMENT)){
-            container.getItems()
-                    .stream()
-                    .filter(stack -> stack.is(SlashBladeTetra.MODLUAR.get()))
-                    .findFirst()
-                    .map(item -> {
-                        var result = item.copy();
-                        ISlashBladeState resultState = result.getCapability(ItemSlashBlade.BLADESTATE).orElseThrow(NullPointerException::new);
-
-                        var stack = cir.getReturnValue();
-
-                        ISlashBladeState ingredientState =stack.getCapability(ItemSlashBlade.BLADESTATE).orElseThrow(NullPointerException::new);
-                        resultState.deserializeNBT(ingredientState.serializeNBT());
-                        result.getOrCreateTag().put("bladeState", resultState.serializeNBT());
-                        this.updateEnchantment(result, stack);
-                        return result;
-                    })
-                    .ifPresent(cir::setReturnValue);
-        }*/
+        }
     }
 }

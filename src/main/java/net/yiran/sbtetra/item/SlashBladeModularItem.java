@@ -15,10 +15,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Tiers;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.MinecraftForge;
 import org.jetbrains.annotations.NotNull;
 import se.mickelus.tetra.data.DataManager;
-import se.mickelus.tetra.event.ModularItemDamageEvent;
 import se.mickelus.tetra.module.SchematicRegistry;
 import se.mickelus.tetra.module.data.EffectData;
 import se.mickelus.tetra.module.data.ItemProperties;
@@ -37,7 +35,6 @@ public class SlashBladeModularItem extends ItemSlashBlade implements ISlashBlade
     private final Cache<String, ToolData> toolCache;
     private final Cache<String, EffectData> effectCache;
     private final Cache<String, ItemProperties> propertyCache;
-    protected SynergyData[] synergies;
 
     public SlashBladeModularItem() {
         super(Tiers.IRON, 0, 0, new Properties().stacksTo(1));
@@ -45,7 +42,6 @@ public class SlashBladeModularItem extends ItemSlashBlade implements ISlashBlade
         this.toolCache = CacheBuilder.newBuilder().maximumSize(1000L).expireAfterWrite(5L, TimeUnit.MINUTES).build();
         this.effectCache = CacheBuilder.newBuilder().maximumSize(1000L).expireAfterWrite(5L, TimeUnit.MINUTES).build();
         this.propertyCache = CacheBuilder.newBuilder().maximumSize(1000L).expireAfterWrite(5L, TimeUnit.MINUTES).build();
-        this.synergies = new SynergyData[0];
         DataManager.instance.moduleData.onReload(this::clearCaches);
         SchematicRegistry.instance.registerSchematic(new RepairSchematic(this, "slashblade"));
     }
@@ -79,11 +75,6 @@ public class SlashBladeModularItem extends ItemSlashBlade implements ISlashBlade
     }
 
     @Override
-    public SynergyData[] getAllSynergyData(ItemStack itemStack) {
-        return synergies;
-    }
-
-    @Override
     public Component getName(ItemStack stack) {
         String id = this.getDescriptionId(stack);
         if (!id.endsWith("item.slashbladetetra.slashblade")) return Component.translatable(id);
@@ -93,14 +84,12 @@ public class SlashBladeModularItem extends ItemSlashBlade implements ISlashBlade
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> tooltip, TooltipFlag flag) {
         super.appendHoverText(stack, world, tooltip, flag);
-        tooltip.addAll(this.getTooltip(stack, world, flag));
+        sbt$appendTetraTooltip(stack, world, tooltip, flag);
     }
 
     @Override
     public ItemStack getDefaultInstance() {
-        var stack = new ItemStack(this);
-        ISlashBladeTetra.putDefaultModule(stack);
-        return stack;
+        return ISlashBladeTetra.sbt$createDefaultInstance(this);
     }
 
     @Override
@@ -111,9 +100,7 @@ public class SlashBladeModularItem extends ItemSlashBlade implements ISlashBlade
 
     @Override
     public <T extends LivingEntity> int damageItem(ItemStack stack, int amount, T entity, Consumer<T> onBroken) {
-        ModularItemDamageEvent event = new ModularItemDamageEvent(entity, stack, amount);
-        MinecraftForge.EVENT_BUS.post(event);
-        amount = event.getAmount();
+        amount = sbt$onDamageItem(stack, amount, entity);
         amount = super.damageItem(stack, amount, entity, onBroken);
         this.applyUsageEffects(entity, stack, amount);
         return amount;

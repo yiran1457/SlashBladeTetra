@@ -35,3 +35,8 @@ SlashBladeTetra是基于原版SlashBlade模组与Tetra模组的集成模组，�
 
 如果有Bug，请加入QQ群：2157051200 拷打作者（不是
 
+## 开源协议
+
+本项目采用 [GNU Lesser General Public License v3.0](LICENSE.txt)（LGPL-3.0）协议开源。
+
+Copyright (C) 2026 _yi_ran_

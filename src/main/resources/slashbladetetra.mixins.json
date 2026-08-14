@@ -8,18 +8,18 @@
     "jei.InternalRecipeManagerPluginMixin",
     "jei.RecipeSlotMixin",
     "minecraft.ItemStackMixin",
-    "recipe.SlashBladeIngredientMixin",
-    "recipe.SlashBladeShapedRecipeMixin",
-    "recipe.SlashBladeSmithingRecipeMixin",
     "slashblade.EntityAbstractSummonedSwordMixin",
+    "slashblade.SlashBladeIngredientMixin",
+    "slashblade.SlashBladeShapedRecipeMixin",
+    "slashblade.SlashBladeSmithingRecipeMixin",
     "tetra.ModuleRegistryMixin",
     "tetra.OutcomeMaterialMixin",
     "tetra.SchematicRegistryMixin",
     "tetra.StatGetterDurabilityMixin"
   ],
   "client": [
-    "test.SlashEffectRendererMixin",
-    "test.SummonedSwordRendererMixin",
+    "slashblade.SlashEffectRendererMixin",
+    "slashblade.SummonedSwordRendererMixin",
     "tetra.ItemModuleMixin"
   ],
   "injectors": {

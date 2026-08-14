@@ -98,11 +98,30 @@ public class Config {
     public static class Client {
         public static final ForgeConfigSpec SPEC;
         public static final ForgeConfigSpec.ConfigValue<Boolean> EnableRenderWrapper;
+        public static final ForgeConfigSpec.ConfigValue<Double> SlashEffectMinLuminance;
+        public static final ForgeConfigSpec.ConfigValue<Double> SlashEffectAlphaMultiplier;
+        public static final ForgeConfigSpec.ConfigValue<Integer> SummonedSwordAlpha;
         private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
 
         static {
             EnableRenderWrapper = BUILDER
                     .define("EnableRenderWrapper", true);
+            BUILDER.push("SlashEffectRender");
+            SlashEffectMinLuminance = BUILDER
+                    .comment(
+                            "刀光亮度分流阈值 (0.0~1.0)。",
+                            "感知亮度低于此值的颜色（如黑色/深色）使用标准混合渲染原色，保证可见；",
+                            "高于此值的颜色使用加法辉光渲染（发光）。",
+                            "0.0 表示所有颜色都走加法辉光（纯原版行为，黑色不可见）。"
+                    )
+                    .defineInRange("slashEffectMinLuminance", 0.25, 0.0, 1.0);
+            SlashEffectAlphaMultiplier = BUILDER
+                    .comment("刀光透明度系数 (0.0~1.0)。")
+                    .defineInRange("slashEffectAlphaMultiplier", 1.0, 0.0, 1.0);
+            SummonedSwordAlpha = BUILDER
+                    .comment("幻影剑透明度 (0~255)，255 为原版不透明。")
+                    .defineInRange("summonedSwordAlpha", 255, 0, 255);
+            BUILDER.pop();
             SPEC = BUILDER.build();
         }
     }

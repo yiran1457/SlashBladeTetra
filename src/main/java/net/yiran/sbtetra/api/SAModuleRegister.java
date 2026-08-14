@@ -1,6 +1,7 @@
 package net.yiran.sbtetra.api;
 
 import com.google.common.collect.ArrayListMultimap;
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -9,11 +10,11 @@ import net.yiran.sbtetra.itemeffect.SBItemEffects;
 import se.mickelus.tetra.module.data.EffectData;
 import se.mickelus.tetra.module.data.VariantData;
 
-import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public class SAModuleRegister {
-    public static HashMap<ResourceLocation, ModuleData> dataHashMap = new HashMap<>();
+    public static Map<ResourceLocation, ModuleData> dataHashMap = new Object2ObjectOpenHashMap<>();
     public static ModuleData defaultModuleData = new ModuleData();
 
     static {

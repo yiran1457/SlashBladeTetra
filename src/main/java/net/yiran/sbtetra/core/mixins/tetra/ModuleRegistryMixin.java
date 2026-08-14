@@ -1,5 +1,7 @@
 package net.yiran.sbtetra.core.mixins.tetra;
 
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.resources.ResourceLocation;
 import net.yiran.sbtetra.core.IModuleRegistry;
 import net.yiran.sbtetra.module.SlashBladeSoulModule;
@@ -15,13 +17,15 @@ import se.mickelus.tetra.module.data.ModuleData;
 import se.mickelus.tetra.module.data.VariantData;
 import se.mickelus.tetra.module.schematic.InvalidSchematicException;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 @Mixin(value = ModuleRegistry.class,remap = false)
 public class ModuleRegistryMixin implements IModuleRegistry {
     @Shadow
     private Map<ResourceLocation, ItemModule> moduleMap;
-    private Map<ResourceLocation, ItemModule> sb$moduleMap = new HashMap<>();
+    private final Map<ResourceLocation, ItemModule> sb$moduleMap = new Object2ObjectOpenHashMap<>();
 
     @Inject(method = "setupModules", at = @At(value = "RETURN"))
     private void sb$setupModules(Map<ResourceLocation, ModuleData> data, CallbackInfo ci) {
@@ -30,7 +34,7 @@ public class ModuleRegistryMixin implements IModuleRegistry {
             if (module != null && entry.getValue() instanceof SlashBladeSoulModule soulModule) {
                 List<String> dataData = Arrays.stream(module.getVariantData()).map(v -> v.key).toList();
                 List<VariantData> javaData = Arrays.stream(soulModule.getVariantData()).filter(v -> !dataData.contains(v.key)).toList();
-                List<VariantData> outData = new ArrayList<>();
+                List<VariantData> outData = new ObjectArrayList<>();
                 outData.addAll(javaData);
                 outData.addAll(List.of(module.getVariantData()));
                 soulModule.setVariantData(outData.toArray(new VariantData[0]));

@@ -6,6 +6,7 @@ import mods.flammpfeil.slashblade.capability.slashblade.ISlashBladeState;
 import mods.flammpfeil.slashblade.event.SlashBladeEvent;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import mods.flammpfeil.slashblade.item.SwordType;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -15,6 +16,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.MinecraftForge;
@@ -28,10 +30,12 @@ import se.mickelus.tetra.ConfigHandler;
 import se.mickelus.tetra.effect.ItemEffect;
 import se.mickelus.tetra.effect.ItemEffectHandler;
 import se.mickelus.tetra.effect.SculkTaintEffect;
+import se.mickelus.tetra.event.ModularItemDamageEvent;
 import se.mickelus.tetra.gui.GuiModuleOffsets;
 import se.mickelus.tetra.items.modular.IModularItem;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.data.EffectData;
+import se.mickelus.tetra.module.data.SynergyData;
 import se.mickelus.tetra.properties.AttributeHelper;
 
 import javax.annotation.Nullable;
@@ -54,6 +58,11 @@ public interface ISlashBladeTetra extends IModularItem, IForgeItem {
     @Override
     default String[] getRequiredModules(ItemStack itemStack) {
         return ModuleSlotManager.getMajorModuleKeys(itemStack);
+    }
+
+    @Override
+    default SynergyData[] getAllSynergyData(ItemStack itemStack) {
+        return new SynergyData[0];
     }
 
     @Override
@@ -226,6 +235,34 @@ public interface ISlashBladeTetra extends IModularItem, IForgeItem {
         IModularItem.putModuleInSlot(itemStack, "slashblade/blade", "slashblade/blade/blade", "blade/unnamed");
         IModularItem.putModuleInSlot(itemStack, "slashblade/tsuba", "slashblade/tsuba/tsuba", "tsuba/unnamed");
         IModularItem.putModuleInSlot(itemStack, "slashblade/scabbard", "slashblade/scabbard/scabbard", "scabbard/unnamed");
+    }
+
+    static ItemStack sbt$createDefaultInstance(Item item) {
+        ItemStack stack = new ItemStack(item);
+        putDefaultModule(stack);
+        return stack;
+    }
+
+    default void sbt$appendTetraTooltip(ItemStack stack, @Nullable Level world, List<Component> tooltip, TooltipFlag flag) {
+        tooltip.addAll(this.getTooltip(stack, world, flag));
+    }
+
+    default int sbt$getRefineLevel(ItemStack stack) {
+        return this.getEffectLevel(stack, SBItemEffects.REFINE);
+    }
+
+    default boolean sbt$hasSoul(ItemStack stack) {
+        return ModuleSlotManager.hasSoul(stack);
+    }
+
+    default void sbt$tryAddSoul(ItemStack stack, boolean delete) {
+        ModuleSlotManager.tryAddSoul(stack, delete);
+    }
+
+    default int sbt$onDamageItem(ItemStack stack, int amount, LivingEntity entity) {
+        ModularItemDamageEvent event = new ModularItemDamageEvent(entity, stack, amount);
+        MinecraftForge.EVENT_BUS.post(event);
+        return event.getAmount();
     }
 
 

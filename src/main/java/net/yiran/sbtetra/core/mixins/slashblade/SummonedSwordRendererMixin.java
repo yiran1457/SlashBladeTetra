@@ -1,4 +1,4 @@
-package net.yiran.sbtetra.core.mixins.test;
+package net.yiran.sbtetra.core.mixins.slashblade;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
@@ -23,19 +23,17 @@ public class SummonedSwordRendererMixin<T extends EntityAbstractSummonedSword> {
     private void r(ItemStack stack, WavefrontObject model, String target, ResourceLocation texture, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn, Operation<Void> original, @Local(argsOnly = true) T entity) {
         if (Config.Client.EnableRenderWrapper.get()) {
             int color = entity.getColor() & 16777215;
-            int alpha = MyBladeRenderState.getAlpha();
+            int alpha = Config.Client.SummonedSwordAlpha.get() << 24;
 
-            int brightened = MyBladeRenderState.brightenColor(color, 1.8f);
-            BladeRenderState.setCol(brightened | alpha);
-            MyBladeRenderState.renderOverridedNoDepthWrite(stack, model, target, texture, matrixStackIn, bufferIn, packedLightIn);
-
-            matrixStackIn.pushPose();
-            matrixStackIn.scale(1.02f, 1.02f, 1.02f);
-            MyBladeRenderState.t(matrixStackIn);
-            int highlight = 0x12FFFFFF;
-            BladeRenderState.setCol(highlight);
-            BladeRenderState.renderOverridedLuminous(stack, model, target, texture, matrixStackIn, bufferIn, packedLightIn);
-            matrixStackIn.popPose();
+            if (MyBladeRenderState.getBrightness(color) >= Config.Client.SlashEffectMinLuminance.get().floatValue()) {
+                // 亮色：加法辉光
+                BladeRenderState.setCol(color | alpha);
+                BladeRenderState.renderOverridedLuminous(stack, model, target, texture, matrixStackIn, bufferIn, packedLightIn);
+            } else {
+                // 暗色/黑色：标准混合渲染原色，保证任意 RGB 都可见
+                BladeRenderState.setCol(color | alpha);
+                BladeRenderState.renderOverrided(stack, model, target, texture, matrixStackIn, bufferIn, packedLightIn);
+            }
         } else
             original.call(stack, model, target, texture, matrixStackIn, bufferIn, packedLightIn);
 
