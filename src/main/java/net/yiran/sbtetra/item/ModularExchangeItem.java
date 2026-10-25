@@ -682,9 +682,13 @@ public class ModularExchangeItem extends Item {
         return slash >= 0 ? id.substring(slash + 1) : id;
     }
 
-    private static String improvementName(String improvementKey, int level) {
+    private static String improvementName(String improvementKey, int level, ItemStack stack) {
         try {
+            //? if <6.10 {
             String name = IModularItem.getImprovementName(improvementKey, level);
+            //?} else {
+            /*String name = IModularItem.getImprovementName(improvementKey, level, stack);
+            *///?}
             if (name != null && !name.isEmpty()) {
                 String stripped = ChatFormatting.stripFormatting(name);
                 return stripped == null || stripped.isEmpty() ? name : stripped;
@@ -807,7 +811,7 @@ public class ModularExchangeItem extends Item {
         }
     }
 
-    private static void appendStoredDataTooltip(CompoundTag data, List<Component> tooltip, boolean expanded) {
+    private static void appendStoredDataTooltip(CompoundTag data, List<Component> tooltip, boolean expanded, ItemStack stack) {
         TransferSettings settings = TransferSettings.fromStoredData(data);
         List<String> moduleSlots = new ObjectArrayList<>();
         Set<String> seenSlots = new ObjectOpenHashSet<>();
@@ -866,7 +870,7 @@ public class ModularExchangeItem extends Item {
                 String improvementId = key.substring(slotPrefix.length());
                 int level = data.contains(key, Tag.TAG_ANY_NUMERIC) ? data.getInt(key) : 0;
                 tooltip.add(prefix(PREFIX_DETAIL, ChatFormatting.DARK_GRAY)
-                        .append(Component.literal(improvementName(improvementId, level)).withStyle(ChatFormatting.DARK_GRAY)));
+                        .append(Component.literal(improvementName(improvementId, level, stack)).withStyle(ChatFormatting.DARK_GRAY)));
             }
 
             if (settings.enchantments) {
@@ -928,7 +932,7 @@ public class ModularExchangeItem extends Item {
             return;
         }
 
-        appendStoredDataTooltip(getModuleData(stack), tooltip, isShiftDown());
+        appendStoredDataTooltip(getModuleData(stack), tooltip, isShiftDown(), stack);
     }
 
     @Override

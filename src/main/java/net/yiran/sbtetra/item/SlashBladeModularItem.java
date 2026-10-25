@@ -32,14 +32,12 @@ import java.util.function.Consumer;
 public class SlashBladeModularItem extends ItemSlashBlade implements ISlashBladeTetra {
 
     private final Cache<String, Multimap<Attribute, AttributeModifier>> attributeCache;
-    private final Cache<String, ToolData> toolCache;
     private final Cache<String, EffectData> effectCache;
     private final Cache<String, ItemProperties> propertyCache;
 
     public SlashBladeModularItem() {
         super(Tiers.IRON, 0, 0, new Properties().stacksTo(1));
         this.attributeCache = CacheBuilder.newBuilder().maximumSize(1000L).expireAfterWrite(5L, TimeUnit.MINUTES).build();
-        this.toolCache = CacheBuilder.newBuilder().maximumSize(1000L).expireAfterWrite(5L, TimeUnit.MINUTES).build();
         this.effectCache = CacheBuilder.newBuilder().maximumSize(1000L).expireAfterWrite(5L, TimeUnit.MINUTES).build();
         this.propertyCache = CacheBuilder.newBuilder().maximumSize(1000L).expireAfterWrite(5L, TimeUnit.MINUTES).build();
         DataManager.instance.moduleData.onReload(this::clearCaches);
@@ -54,7 +52,6 @@ public class SlashBladeModularItem extends ItemSlashBlade implements ISlashBlade
     @Override
     public void clearCaches() {
         this.attributeCache.invalidateAll();
-        this.toolCache.invalidateAll();
         this.effectCache.invalidateAll();
         this.propertyCache.invalidateAll();
     }

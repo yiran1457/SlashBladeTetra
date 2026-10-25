@@ -69,7 +69,7 @@ side = "BOTH"
 [[dependencies.${ mod_id }]]
 modId = "tetra"
 mandatory = true
-versionRange = "6.9.0"
+versionRange = "${tetra_version_range}"
 ordering = "NONE"
 side = "BOTH"
 # Features are specific properties of the game environment, that you may want to declare you require. This example declares
