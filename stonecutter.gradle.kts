@@ -3,9 +3,7 @@ plugins {
     id("net.neoforged.moddev.legacyforge") version "2.0.141" apply false
 }
 
-import org.gradle.api.tasks.bundling.Jar
-
-stonecutter.active("6.9.0")
+stonecutter.active("6.17.0")
 
 // Collects every node's reobfuscated jar into build/libs/<mod version>/ so both nodes
 // produce distinct file names in one folder.

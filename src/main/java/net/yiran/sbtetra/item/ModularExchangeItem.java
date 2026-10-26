@@ -30,12 +30,7 @@ import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.data.ImprovementData;
 import se.mickelus.tetra.module.data.TweakData;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
@@ -685,10 +680,10 @@ public class ModularExchangeItem extends Item {
     private static String improvementName(String improvementKey, int level, ItemStack stack) {
         try {
             //? if <6.10 {
-            String name = IModularItem.getImprovementName(improvementKey, level);
-            //?} else {
-            /*String name = IModularItem.getImprovementName(improvementKey, level, stack);
-            *///?}
+            /*String name = IModularItem.getImprovementName(improvementKey, level);
+            *///?} else {
+            String name = IModularItem.getImprovementName(improvementKey, level, stack);
+            //?}
             if (name != null && !name.isEmpty()) {
                 String stripped = ChatFormatting.stripFormatting(name);
                 return stripped == null || stripped.isEmpty() ? name : stripped;

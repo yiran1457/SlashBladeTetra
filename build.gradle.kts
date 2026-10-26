@@ -1,15 +1,6 @@
 import net.neoforged.moddevgradle.legacyforge.dsl.LegacyForgeExtension
 import net.neoforged.moddevgradle.legacyforge.dsl.MixinExtension
 import net.neoforged.moddevgradle.legacyforge.dsl.ObfuscationExtension
-import org.gradle.api.artifacts.Configuration
-import org.gradle.api.plugins.BasePluginExtension
-import org.gradle.api.plugins.JavaPluginExtension
-import org.gradle.api.publish.PublishingExtension
-import org.gradle.api.tasks.bundling.Jar
-import org.gradle.api.tasks.compile.JavaCompile
-import org.gradle.api.tasks.wrapper.Wrapper
-import org.gradle.jvm.toolchain.JavaLanguageVersion
-import org.gradle.language.jvm.tasks.ProcessResources
 import org.gradle.plugins.ide.idea.model.IdeaModel
 import org.slf4j.event.Level
 
@@ -50,7 +41,7 @@ extensions.configure<BasePluginExtension> {
 
 // Mojang ships Java 17 to end users in 1.20.1, so mods should target Java 17.
 extensions.configure<JavaPluginExtension> {
-    toolchain.languageVersion.set(JavaLanguageVersion.of(17))
+    toolchain.languageVersion.set(JavaLanguageVersion.of(21))
 }
 
 val sourceSets = extensions.getByType(org.gradle.api.tasks.SourceSetContainer::class.java)
@@ -97,8 +88,8 @@ extensions.configure<LegacyForgeExtension> {
 
         configureEach {
             systemProperty("forge.logging.markers", "REGISTRIES")
-            jvmArguments.add("-XX:+AllowEnhancedClassRedefinition")
-            jvmArguments.add("-XX:HotswapAgent=fatjar")
+            //jvmArguments.add("-XX:+AllowEnhancedClassRedefinition")
+            //jvmArguments.add("-XX:HotswapAgent=fatjar")
             logLevel.set(Level.DEBUG)
         }
     }
@@ -140,7 +131,8 @@ dependencies {
     modImplementation("io.github.llamalad7:mixinextras-forge:0.2.0-rc.2")
     jarJar("io.github.llamalad7:mixinextras-forge:0.2.0-rc.2")
 
-    modImplementation("curse.maven:jei-238222:6600311")
+    //modImplementation("curse.maven:jei-238222:6600311")
+    modImplementation("curse.maven:jei-238222:9298209")
     modImplementation("curse.maven:mutil-351914:${mutilFileId}")
     modImplementation("curse.maven:tetra-289712:${tetraFileId}")
     modCompileOnly("curse.maven:extraholopage-1301292:7021781")
