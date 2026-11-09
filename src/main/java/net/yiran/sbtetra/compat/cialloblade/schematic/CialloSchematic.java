@@ -6,6 +6,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.ToolAction;
+import net.yiran.sbtetra.Config;
 import net.yiran.sbtetra.item.ISlashBladeTetra;
 import org.jetbrains.annotations.Nullable;
 import se.mickelus.tetra.TetraToolActions;
@@ -79,7 +80,7 @@ public class CialloSchematic implements UpgradeSchematic {
 
     @Override
     public boolean isRelevant(ItemStack itemStack) {
-        return itemStack.getItem() instanceof ISlashBladeTetra;
+        return Config.Server.EnableCiallo.get() && itemStack.getItem() instanceof ISlashBladeTetra;
     }
 
     @Override

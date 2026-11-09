@@ -2,12 +2,16 @@ package net.yiran.sbtetra.item;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
+import com.google.common.collect.Multimaps;
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import mods.flammpfeil.slashblade.capability.slashblade.ISlashBladeState;
 import mods.flammpfeil.slashblade.event.SlashBladeEvent;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import mods.flammpfeil.slashblade.item.SwordType;
+import net.minecraft.Util;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -33,6 +37,7 @@ import se.mickelus.tetra.effect.SculkTaintEffect;
 import se.mickelus.tetra.event.ModularItemDamageEvent;
 import se.mickelus.tetra.gui.GuiModuleOffsets;
 import se.mickelus.tetra.items.modular.IModularItem;
+import se.mickelus.tetra.items.modular.ModularItem;
 import se.mickelus.tetra.module.ItemModuleMajor;
 import se.mickelus.tetra.module.data.EffectData;
 import se.mickelus.tetra.module.data.SynergyData;
@@ -228,6 +233,36 @@ public interface ISlashBladeTetra extends IModularItem, IForgeItem {
         }
         return result;
     }
+
+    Map<String, UUID> attributeIdMap = Util.make(new Object2ObjectOpenHashMap<>(), map -> {
+        map.put(AttributeHelper.getAttributeKey(Attributes.ATTACK_DAMAGE, AttributeModifier.Operation.ADDITION), ModularItem.attackDamageModifier);
+        map.put(AttributeHelper.getAttributeKey(Attributes.ATTACK_SPEED, AttributeModifier.Operation.ADDITION), ModularItem.attackSpeedModifier);
+    });
+
+    static AttributeModifier sbt$fixIdentifiers(Map.Entry<Attribute, AttributeModifier> entry) {
+        AttributeModifier attributeModifier = entry.getValue();
+        return new AttributeModifier(getAttributeId(entry.getKey(), attributeModifier.getOperation()), "sbt_modifier" + attributeModifier.getName(), attributeModifier.getAmount(), attributeModifier.getOperation());
+    }
+
+    static UUID getAttributeId(Attribute attribute, AttributeModifier.Operation operation) {
+        return attributeIdMap.computeIfAbsent(AttributeHelper.getAttributeKey(attribute, operation), (k) -> Mth.createInsecureUUID());
+    }
+
+    @Override
+    default Multimap<Attribute, AttributeModifier> fixIdentifiers(Multimap<Attribute, AttributeModifier> modifiers) {
+        return Optional.ofNullable(modifiers)
+                .map(Multimap::entries)
+                .map(Collection::stream)
+                .map((entries) -> entries.collect(
+                        Multimaps.toMultimap(
+                                Map.Entry::getKey,
+                                ISlashBladeTetra::sbt$fixIdentifiers,
+                                ArrayListMultimap::create
+                        )
+                ))
+                .orElse(null);
+    }
+
 
     static void putDefaultModule(ItemStack itemStack) {
         itemStack.getOrCreateTag().putString("id", "DefaultInstance");

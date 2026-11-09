@@ -74,9 +74,9 @@ public class SlashBladeTetra {
         MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGHEST, SlashBladeTetra::onBladeStandAttack);
         //MinecraftForge.EVENT_BUS.register(SummonSwordHandler.class);
 
-        SchematicRegisterManager.registerStaticSchematic(SoulExtractionSchematic::new);
-        SchematicRegisterManager.registerStaticSchematic(EnchantedSoulExtractionSchematic::new);
-        SchematicRegisterManager.registerStaticSchematic(TintingSchematic::new);
+        SchematicRegisterManager.registerProvider(SoulExtractionSchematic::new);
+        SchematicRegisterManager.registerProvider(EnchantedSoulExtractionSchematic::new);
+        SchematicRegisterManager.registerProvider(TintingSchematic::new);
     }
 
     public static void clientInit(IEventBus bus) {

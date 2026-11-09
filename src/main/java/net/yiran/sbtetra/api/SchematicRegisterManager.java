@@ -13,32 +13,12 @@ import java.util.function.Supplier;
 
 public class SchematicRegisterManager {
     public static List<SchematicProvider> providers = new ObjectArrayList<>();
-    public static List<SchematicProvider> staticSchematic = new ObjectArrayList<>();
 
-    public static void registerStaticSchematic(SchematicProvider schematic) {
-        if (staticSchematic != null)
-            staticSchematic.add(schematic);
+    public static void registerProvider(SchematicProvider schematic) {
+        if (providers != null)
+            providers.add(schematic);
         else
-            throw new RuntimeException("static schematic is already register");
-    }
-
-    public static void onCommonSetup(FMLCommonSetupEvent event) {
-        event.enqueueWork(() -> {
-            staticSchematic.stream()
-                    .map(SchematicProvider::get)
-                    .filter(Objects::nonNull)
-                    .forEach(SchematicRegistry.instance::registerSchematic);
-            staticSchematic.clear();
-            staticSchematic = null;
-        });
-    }
-
-    public static ResourceLocation genSchematicKey(UpgradeSchematic schematic) {
-        return new ResourceLocation("sbt", schematic.getKey());
-    }
-
-    public static void registerProvider(SchematicProvider provider) {
-        providers.add(provider);
+            throw new RuntimeException("schematic is already register");
     }
 
     public static void registerProvider(Supplier<Boolean> match, SchematicProvider schematic) {
@@ -49,11 +29,19 @@ public class SchematicRegisterManager {
         registerProvider(match, () -> schematic);
     }
 
-    public static List<UpgradeSchematic> getSchematic() {
-        return providers.stream()
-                .map(SchematicProvider::get)
-                .filter(Objects::nonNull)
-                .toList();
+    public static void onCommonSetup(FMLCommonSetupEvent event) {
+        event.enqueueWork(() -> {
+            providers.stream()
+                    .map(SchematicProvider::get)
+                    .filter(Objects::nonNull)
+                    .forEach(SchematicRegistry.instance::registerSchematic);
+            providers.clear();
+            providers = null;
+        });
+    }
+
+    public static ResourceLocation genSchematicKey(UpgradeSchematic schematic) {
+        return new ResourceLocation("sbt", schematic.getKey());
     }
 
     @FunctionalInterface

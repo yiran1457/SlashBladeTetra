@@ -12,7 +12,6 @@
     "slashblade.SlashBladeSmithingRecipeMixin",
     "tetra.ModuleRegistryMixin",
     "tetra.OutcomeMaterialMixin",
-    "tetra.SchematicRegistryMixin",
     "tetra.StatGetterDurabilityMixin"
   ],
   "client": [

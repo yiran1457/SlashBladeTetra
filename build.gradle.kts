@@ -125,6 +125,7 @@ repositories {
 
 dependencies {
     implementation("org.jetbrains:annotations:24.0.1")
+    modImplementation("curse.maven:cialloblade-1281291:8067707")
 
     modCompileOnly("io.github.llamalad7:mixinextras-common:0.2.0-rc.2")
     annotationProcessor("io.github.llamalad7:mixinextras-common:0.2.0-rc.2")

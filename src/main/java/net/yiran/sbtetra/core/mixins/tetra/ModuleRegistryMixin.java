@@ -8,6 +8,7 @@ import net.yiran.sbtetra.module.SlashBladeSoulModule;
 import net.yiran.sbtetra.module.SlashBladeSoulRegistry;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -25,6 +26,7 @@ import java.util.Map;
 public class ModuleRegistryMixin implements IModuleRegistry {
     @Shadow
     private Map<ResourceLocation, ItemModule> moduleMap;
+    @Unique
     private final Map<ResourceLocation, ItemModule> sb$moduleMap = new Object2ObjectOpenHashMap<>();
 
     @Inject(method = "setupModules", at = @At(value = "RETURN"))
