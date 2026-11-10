@@ -31,6 +31,46 @@ SlashBladeTetra是基于原版SlashBlade模组与Tetra模组的集成模组，�
 - 兼容CialloBlade、ExtraHoloPage等模组
 - 灵魂提取标签和替换机制
 
+## 构建
+
+需要 JDK 17（Gradle 自身用 JDK 21 启动，编译产物固定为 Java 17 字节码）。
+
+```bash
+# 构建全部三个模块（common + 每个 Tetra 版本各一个）
+gradlew build
+
+# 只构建某一个 Tetra 版本的 jar
+gradlew :tetra-6.17.0:build      # 产物: tetra-6.17.0/build/libs/
+gradlew :tetra-6.9.0:build       # 产物: tetra-6.9.0/build/libs/
+
+# 离线构建（依赖已缓存时）
+gradlew --offline build
+```
+
+Windows 的 MSYS/Git Bash 里 `./gradlew` 不可用（缺 `cygpath`），请用 `gradlew.bat`：
+
+```bash
+cmd //c "gradlew.bat --console=plain build"
+```
+
+### 项目结构
+
+| 模块 | 内容 |
+| --- | --- |
+| `:common` | 全部共享代码、资源、mixin。只依赖最低支持版本的 Tetra API，保证向上兼容 |
+| `:tetra-6.9.0` | 面向 Tetra 6.9.0 的版本差异实现（构建脚本 3 行） |
+| `:tetra-6.17.0` | 面向 Tetra 6.17.0 的版本差异实现（构建脚本 3 行） |
+
+版本差异全部收敛在 `:common` 的 `net.yiran.sbtetra.api` 接口之后，各版本模块用 ServiceLoader 注册自己的实现。
+
+### 新增一个 Tetra 版本
+
+1. 在 `settings.gradle.kts` 的 `include` 列表里加一行模块名。
+2. 新建目录，放入 3 行 `build.gradle.kts`（只 apply `net.neoforged.moddev.legacyforge`）。
+3. 放入 4 行 `gradle.properties`：`tetra_version`、`tetra_file_id`、`mutil_file_id`、`tetra_version_range`（必须写真实区间，裸版本号是软约束，会匹配任意更高版本）。
+
+其余配置由根 `build.gradle.kts` 统一驱动，无需复制任何脚本。
+
 ## 报告Bug
 
 如果有Bug，请加入QQ群：2157051200 拷打作者（不是

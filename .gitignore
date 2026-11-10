@@ -14,6 +14,8 @@ out
 .idea
 
 # gradle
+# Both patterns are unanchored, so they match at any depth: build/ and run/ cover the
+# subprojects too, not just the root.
 build
 .gradle
 
@@ -24,7 +26,6 @@ run
 # Files from Forge MDK
 forge*changelog.txt
 
-# Stonecutter per-node generated output
-versions/*/build
-versions/*/run
-versions/*/src
+# JVM crash dumps (a build can hit the Windows commit limit while remapping)
+hs_err_pid*.log
+replay_pid*.log

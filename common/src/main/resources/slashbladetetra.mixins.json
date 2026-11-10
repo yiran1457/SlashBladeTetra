@@ -1,0 +1,25 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.yiran.sbtetra.core.mixins",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "slashbladetetra.refmap.json",
+  "mixins": [
+    "minecraft.ItemStackMixin",
+    "slashblade.EntityAbstractSummonedSwordMixin",
+    "slashblade.SlashBladeIngredientMixin",
+    "slashblade.SlashBladeShapedRecipeMixin",
+    "slashblade.SlashBladeSmithingRecipeMixin",
+    "tetra.ModuleRegistryMixin",
+    "tetra.OutcomeMaterialMixin",
+    "tetra.StatGetterDurabilityMixin"
+  ],
+  "client": [
+    "slashblade.SlashEffectRendererMixin",
+    "slashblade.SummonedSwordRendererMixin",
+    "tetra.ItemModuleMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
