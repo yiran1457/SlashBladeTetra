@@ -1,5 +1,6 @@
 plugins {
     id("net.neoforged.moddev.legacyforge")
+    id("me.modmuss50.mod-publish-plugin")
 }
 
 // Everything this module needs is configured by the root script from this module's own

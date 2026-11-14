@@ -63,6 +63,7 @@ fun Project.configureTetraNode() {
     // module's compileJava, which has no mixin annotation processor, and javac reports every one of
     // those options as unrecognised. The refmap reaches the jar through mirrorMixinMetadata below.
     extensions.configure<MixinExtension> {
+        add(mainSourceSet, "$modId.refmap.json")
         config("$modId.mixins.json")
     }
 
@@ -163,7 +164,12 @@ fun Project.configureTetraNode() {
     }
 
     registerChangelogTask()
-    configurePublishing(modId, tetraVersion)
+    // Guarded by the publish plugin's own id: when it is listed in the module's plugins {} block it
+    // is applied AFTER legacyforge, so configuring its extension from the legacyforge callback would
+    // run too early ("Extension of type 'ModPublishExtension' does not exist").
+    plugins.withId("me.modmuss50.mod-publish-plugin") {
+        configurePublishing(modId, tetraVersion)
+    }
 }
 
 // Changelog for CurseForge: taken from git, so the notes cannot drift from the actual history.
@@ -197,7 +203,7 @@ abstract class GenerateChangelog : DefaultTask() {
     private fun git(vararg args: String): String {
         val out = java.io.ByteArrayOutputStream()
         val process = ProcessBuilder(listOf("git") + args.toList())
-            .directory(java.io.File(repositoryPath.get()))
+            .directory(File(repositoryPath.get()))
             .redirectErrorStream(true)
             .start()
         process.inputStream.copyTo(out)
@@ -209,16 +215,14 @@ abstract class GenerateChangelog : DefaultTask() {
     fun generate() {
         val version = currentVersion.get()
         val previousRelease = git("log", "--format=%H %s", "-n", "60")
-            .lineSequence()
-            .mapNotNull { line ->
+            .lineSequence().firstNotNullOfOrNull { line ->
                 val hash = line.substringBefore(' ')
                 val subject = line.substringAfter(' ', "")
                 val found = Regex("^(\\d+(?:\\.\\d+)+)").find(subject)?.groupValues?.get(1)
                 if (found != null && found != version) hash else null
             }
-            .firstOrNull()
 
-        val range = if (previousRelease != null) previousRelease + "..HEAD" else "-10"
+        val range = if (previousRelease != null) "$previousRelease..HEAD" else "-10"
         val raw = git("log", "--format=%s%x1f%b%x1e", range)
             .split('\u001e')
             .map { it.trim() }
@@ -237,8 +241,8 @@ abstract class GenerateChangelog : DefaultTask() {
                     else if (acc.isNotEmpty()) acc[acc.size - 1] = acc.last() + " " + line
                     acc
                 }
-                .joinToString("\n") { "  " + it }
-            if (bullets.isEmpty()) "- " + subject else "- " + subject + "\n" + bullets
+                .joinToString("\n") { "  $it" }
+            if (bullets.isEmpty()) "- $subject" else "- $subject\n$bullets"
         }.ifEmpty { "- No changes recorded." }
 
         val table = LinkedHashMap<String, String>()
@@ -259,7 +263,7 @@ abstract class GenerateChangelog : DefaultTask() {
 
         outputFile.get().asFile.writeText(
             "### 变更 (" + version + ")\n\n" + rendered +
-                "\n\n### Changes (" + version + ")\n\n" + english,
+                    "\n\n### Changes (" + version + ")\n\n" + english,
             Charsets.UTF_8
         )
     }
@@ -281,7 +285,9 @@ fun Project.registerChangelogTask() {
 // The plugin is applied per module rather than once at the root, because each module has its own
 // mods.toml (different tetra_version_range) and its own jar, so publishing is a per-module act.
 fun Project.configurePublishing(modId: String, nodeVersion: String) {
-    apply(plugin = "me.modmuss50.mod-publish-plugin")
+    // The plugin is declared in each version module's own plugins {} block instead of applied here
+    // imperatively: the root declares it with "apply false" so the version resolves once, and the
+    // plugins {} form is the supported way to bring a plugin into a project.
 
     // The CurseForge token lives in ~/.gradle/gradle.properties (or the env for CI) and is never
     // written into a tracked file.
@@ -314,19 +320,20 @@ fun Project.configurePublishing(modId: String, nodeVersion: String) {
         // ordinary `build` never needs it.
         val declaredType = findProperty("publish_type")?.toString() ?: System.getenv("PUBLISH_TYPE")
         type.set(
-            providers.provider<ReleaseType> {
+            providers.provider {
                 when (declaredType?.lowercase()) {
                     "alpha" -> ALPHA
                     "beta" -> BETA
                     "stable", "release" -> STABLE
                     null -> throw GradleException(
                         "publish_type is not set. Pick the CurseForge release channel explicitly: " +
-                            "put publish_type (stable|beta|alpha) in gradle.properties, or pass " +
-                            "-Ppublish_type=<value>. There is no default because CurseForge cannot " +
-                            "change the Alpha/Beta/Release badge after a file is uploaded."
+                                "put publish_type (stable|beta|alpha) in gradle.properties, or pass " +
+                                "-Ppublish_type=<value>. There is no default because CurseForge cannot " +
+                                "change the Alpha/Beta/Release badge after a file is uploaded."
                     )
+
                     else -> throw GradleException(
-                        "publish_type must be stable, beta or alpha (got '" + declaredType + "')"
+                        "publish_type must be stable, beta or alpha (got '$declaredType')"
                     )
                 }
             }
@@ -395,39 +402,24 @@ subprojects {
         }
     }
 
-    // Dependencies every module shares.
-    //
-    // add("configName", "...") instead of the usual accessors: inside subprojects{} the Kotlin
-    // DSL accessors (modCompileOnly, jarJar, ...) are not generated, so the configuration name has
-    // to be a string. Kept inline rather than in buildSrc (needs the Kotlin compiler toolchain,
-    // unavailable offline here) or apply(from=) (deprecated, and loses completion as well).
     plugins.withId("net.neoforged.moddev.legacyforge") {
         dependencies {
             add("modCompileOnly", "io.github.llamalad7:mixinextras-common:0.2.0-rc.2")
             add("annotationProcessor", "io.github.llamalad7:mixinextras-common:0.2.0-rc.2")
             add("modImplementation", "io.github.llamalad7:mixinextras-forge:0.2.0-rc.2")
             add("jarJar", "io.github.llamalad7:mixinextras-forge:0.2.0-rc.2")
-
-            // jarJar does not propagate through a project dependency, so each module re-embeds
-            // these. Without it the shipped jar loads but MixinExtras/expressionlib are missing.
             add("implementation", "com.github.yiran1457:YiRanExpressionLib:1.0.0-universal:universal")
             add("jarJar", "com.github.yiran1457:YiRanExpressionLib:1.0.0-universal:universal")
+            add("annotationProcessor", "org.spongepowered:mixin:0.8.7:processor")
         }
 
-        // The Tetra version modules re-embed the pair they actually compile against. :common only
-        // compiles against the oldest supported API (tetra_api_file_id), so it never picks a
-        // version of its own by accident.
         if (tetraVersion() != null) {
             dependencies {
-                // The shared code lives in :common; the version module only holds the seam.
                 add("implementation", project(":common"))
                 add("modImplementation", "curse.maven:tetra-289712:" + prop("tetra_file_id"))
                 add("modImplementation", "curse.maven:mutil-351914:" + prop("mutil_file_id"))
-
-                // In-game block model/state editor, loaded by runClient only. modRuntimeOnly keeps it
-                // off the compile classpath and out of the shipped jar (and it is not jarJar'd), so
-                // nothing in the mod can accidentally depend on a debug tool.
                 add("modRuntimeOnly", "curse.maven:ibe-editor-256822:" + prop("ibe_file_id"))
+
             }
             configureTetraNode()
         }
